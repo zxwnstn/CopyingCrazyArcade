@@ -49,12 +49,16 @@ void mainGame::render()
 	
 
 
+	
+	SCENEMANAGER->render();
+
 	if (m_showRect)
 		SCENEMANAGER->debugRender();
-	SCENEMANAGER->render();
 
 	if (m_showFPS)
 		TIMEMANAGER->render(getMemDC());
+
+
 
 
 

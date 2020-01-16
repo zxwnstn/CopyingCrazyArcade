@@ -32,7 +32,7 @@ bool Block::init(int x, int y)
 
 	pos.x = x * BLOCK_WIDTH + MAPOFFSET_X;
 	pos.y = y * BLOCK_HEIGHT + MAPOFFSET_Y;
-	rect = FRectMake(x * BLOCK_WIDTH + MAPOFFSET_X, y * BLOCK_HEIGHT + MAPOFFSET_Y, BLOCK_WIDTH, BLOCK_HEIGHT);
+	rect = RectMake(x * BLOCK_WIDTH + MAPOFFSET_X, y * BLOCK_HEIGHT + MAPOFFSET_Y, BLOCK_WIDTH, BLOCK_HEIGHT);
 
 	if(type == BlockType::BlockSoft)
 		innerItem = make_shared<Item>(rect, pos);
@@ -41,12 +41,14 @@ bool Block::init(int x, int y)
 	{
 	case BlockType::BlockHard:
 		curBlockImage = IMAGEMANAGER->findImage("하드블록");
-		//curBlockIdx = RND->getInt(3);
 		curBlockIdx = 0;
+		//curBlockIdx = RND->getInt(3);
 		break;
 	case BlockType::BlockSoft:
 		break;
 	case BlockType::BlockNone:
+		curBlockImage = IMAGEMANAGER->findImage("타일");
+		curBlockIdx = 0;
 		break;
 	}
 
@@ -58,7 +60,7 @@ bool Block::init(BlockType _type, int x, int y) {
 
 	pos.x = x * BLOCK_WIDTH + MAPOFFSET_X;
 	pos.y = y * BLOCK_HEIGHT + MAPOFFSET_Y;
-	rect = FRectMake(x * BLOCK_WIDTH + MAPOFFSET_X, y * BLOCK_HEIGHT + MAPOFFSET_Y, BLOCK_WIDTH, BLOCK_HEIGHT);
+	rect = RectMake(x * BLOCK_WIDTH + MAPOFFSET_X, y * BLOCK_HEIGHT + MAPOFFSET_Y, BLOCK_WIDTH, BLOCK_HEIGHT);
 
 	if (type == BlockType::BlockSoft)
 		innerItem = make_shared<Item>(rect, pos);
@@ -86,16 +88,11 @@ void Block::update(float deltaTime)
 void Block::render(HDC hdc)
 {
 	if (curBlockImage) {
-		switch (type)
-		{
-		case BlockType::BlockHard:
+		if(type == BlockType::BlockHard)
 			curBlockImage->render(hdc, rect.left, rect.top - 30, curBlockIdx * BLOCK_WIDTH, 0, BLOCK_WIDTH, BLOCK_HEIGHT + 30);
-			break;
-		case BlockType::BlockSoft:
-			break;
-		case BlockType::BlockNone:
-			break;
-		}
+		else
+			curBlockImage->render(hdc, rect.left, rect.top, curBlockIdx * BLOCK_WIDTH, 0, BLOCK_WIDTH, BLOCK_HEIGHT + 30);
+
 	}
 }
 

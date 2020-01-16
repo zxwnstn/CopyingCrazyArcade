@@ -67,5 +67,11 @@ enum Direction {
 	eUp,
 	eDown,
 	eRight,
-	eLeft
+	eLeft,
+	eSlipUp,
+	eSlipDown,
+	eSlipRight,
+	eSlipLeft,
+	eNoMove,
+	eMove
 };

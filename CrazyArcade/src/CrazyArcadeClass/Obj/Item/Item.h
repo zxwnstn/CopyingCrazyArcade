@@ -3,7 +3,7 @@
 class Item
 {
 public:
-	Item(const FRECT& _rect, const BlockPosition _pos);
+	Item(const RECT& _rect, const BlockPosition _pos);
 
 	~Item();
 
@@ -13,15 +13,15 @@ public:
 	void release();
 
 	ItemType getType() { return type; }
-	const FRECT& getRect() { return rect; }
+	const RECT& getRect() { return rect; }
 
 private:
 	ItemType		type;
 	Image*			image = nullptr;
-	FRECT			rect;
+	RECT			rect;
 	BlockPosition	pos;
-	const int xMargin = 5;
-	const int yMargin = 5;
+	const int		xMargin = 5;
+	const int		yMargin = 5;
 
 	//100 is max;
 	int ItemCreationPer = 50;

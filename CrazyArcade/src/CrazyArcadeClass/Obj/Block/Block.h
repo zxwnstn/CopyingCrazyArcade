@@ -19,7 +19,7 @@ public:
 	void triggerDis(float time);
 	void resetType(BlockType type);
 
-	FRECT& getRect() { return rect; }
+	RECT& getRect() { return rect; }
 	BlockType getType() { return type; }
 	bool isWillDis() { return willDis; }
 
@@ -30,7 +30,7 @@ private:
 	int					curBlockIdx = 0;
 	shared_ptr<Item>	innerItem = nullptr;
 	BlockType			type;
-	FRECT				rect;
+	RECT				rect;
 	BlockPosition		pos;
 
 	//soft blcok Destroy를 위한 변수

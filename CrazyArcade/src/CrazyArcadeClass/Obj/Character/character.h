@@ -13,11 +13,11 @@ public:
 	virtual void update(float deltaTime) = 0;
 	virtual void render(HDC hdc) = 0;
 	virtual void debugRender(HDC hdc) = 0;
-	virtual void move(Direction dir, float dist);
 
+	Direction move(Direction dir, int dist);
 	void checkGetItem();
 	void fallDown();
-	bool isCanMove();
+	Direction isCanMove(Direction dir);
 
 	auto& getBombs() { return curBombList; }
 	auto& getRect() { return rect; }
@@ -28,11 +28,11 @@ protected:
 	FPOINT			prevPos;
 	int				bombRange;
 	int				bombLimit;
-	int				speed = 200.f;
-	FRECT			rect;
+	int				speed = 2;
+	RECT			rect;
 	CharacterState	state;
-	const int		xMargin = 2;
-	const int		yMargin = 2;
+	const int		xMargin = 0;
+	const int		yMargin = 0;
 
 	//this info is not to collision last bomb drop area
 	BlockPosition	lastBlockPos;
@@ -43,6 +43,9 @@ protected:
 
 	bool usableItemList[20]{ 0, };
 	vector<shared_ptr<Bomb>> curBombList;
+
+private:
+	const int slipperyDist = 30;
 
 };
 

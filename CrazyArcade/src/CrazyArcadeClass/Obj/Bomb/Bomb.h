@@ -15,7 +15,7 @@ public:
 	void explosionNow();
 
 public:
-	FRECT& getRect(){ return rect; }
+	RECT& getRect(){ return rect; }
 	int getExplosionRange() { return explosionRange; }
 	BlockPosition getPos() { return pos; }
 
@@ -25,6 +25,6 @@ private:
 	float pastTime = 0.f;
 	int explosionRange;
 	BlockPosition pos;
-	FRECT rect;
+	RECT rect;
 };
 

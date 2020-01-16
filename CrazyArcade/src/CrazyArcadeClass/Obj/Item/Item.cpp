@@ -2,7 +2,7 @@
 #include "Item.h"
 
 
-Item::Item(const FRECT & _rect, const BlockPosition _pos)
+Item::Item(const RECT & _rect, const BlockPosition _pos)
 	: rect(_rect), pos(_pos)
 {
 	int temp = RND->getInt(100);

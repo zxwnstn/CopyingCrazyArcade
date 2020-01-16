@@ -39,25 +39,35 @@ bool Player::init()
 void Player::update(float deltaTime) 
 {
 	//player movement
-	float dist = deltaTime * speed;
 	if (state != CharacterState::CharacterDead) {
 		if (state != CharacterState::CharacterInBalloon) {
-			if (KEYMANAGER->isStayKeyDown(VK_UP)) {
-				move(eUp, dist);
+			
+			bool isAreadyMove = false;
+			if (KEYMANAGER->isStayKeyDown(VK_UP) && !isAreadyMove) {
+				move(eUp, speed);
 				state = CharacterState::CharacterOnUpMove;
+				isAreadyMove = true;
 			}
-			if (KEYMANAGER->isStayKeyDown(VK_DOWN)) {
-				move(eDown, dist);
+			if (KEYMANAGER->isStayKeyDown(VK_DOWN) && !isAreadyMove){
+				move(eDown, speed);
 				state = CharacterState::CharacterOnDownMove;
+				isAreadyMove = true;
 			}
-			if (KEYMANAGER->isStayKeyDown(VK_LEFT)) {
-				move(eLeft, dist);
+
+			if (KEYMANAGER->isStayKeyDown(VK_LEFT) && !isAreadyMove) {
+				move(eLeft, speed);
 				state = CharacterState::CharacterOnLeftMove;
+				isAreadyMove = true;
 			}
-			if (KEYMANAGER->isStayKeyDown(VK_RIGHT)) {
-				move(eRight, dist);
+			if (KEYMANAGER->isStayKeyDown(VK_RIGHT) && !isAreadyMove) {
+				move(eRight, speed);
+				isAreadyMove = true;
 				state = CharacterState::CharacterOnRightMove;
 			}
+			if (KEYMANAGER->isOnceKeyDown('A')) {
+				speed += 2;
+			}
+
 			if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
 				dropBomb();
 			}
