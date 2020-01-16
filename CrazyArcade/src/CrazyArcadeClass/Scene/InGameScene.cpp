@@ -13,10 +13,16 @@ InGameScene::~InGameScene()
 
 HRESULT InGameScene::init()
 {
+	//image settup
+	IMAGEMANAGER->addImage("¸Ê", "images/map.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("ÇÃ·¹ÀÌ¾î", "images/bazziReadyCharacter.bmp", 54, 63, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("ÇÏµåºí·Ï", "images/house.bmp", 180, 90, true, RGB(255, 0, 255));
+
 	GET_SINGLE(BlockManager)->init();
 	GET_SINGLE(CharacterManager)->init();
 	GET_SINGLE(BombManager)->init();
 	GET_SINGLE(ItemManager)->init();
+
 
 	return S_OK;
 }
@@ -39,10 +45,11 @@ void InGameScene::update(float deltaTime)
 
 void InGameScene::render()
 {
-	GET_SINGLE(BlockManager)->render(getMemDC());
 	GET_SINGLE(CharacterManager)->render(getMemDC());
+	GET_SINGLE(BlockManager)->render(getMemDC());
 	GET_SINGLE(BombManager)->render(getMemDC());
 	GET_SINGLE(ItemManager)->render(getMemDC());
+	IMAGEMANAGER->render("¸Ê", getMemDC(), 0, 0);
 }
 
 void InGameScene::debugRender()
@@ -51,4 +58,5 @@ void InGameScene::debugRender()
 	GET_SINGLE(CharacterManager)->debugRender(getMemDC());
 	GET_SINGLE(BombManager)->debugRender(getMemDC());
 	GET_SINGLE(ItemManager)->debugRender(getMemDC());
+	
 }

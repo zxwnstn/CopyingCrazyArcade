@@ -24,6 +24,12 @@ void mainGame::release()
 {
 	gameNode::release();
 	SCENEMANAGER->release();
+	SCENEMANAGER->releaseSingleton();
+	KEYMANAGER->release();
+	KEYMANAGER->releaseSingleton();
+	TIMEMANAGER->release();
+	TIMEMANAGER->releaseSingleton();
+
 }  
 
 void mainGame::update()
@@ -41,13 +47,16 @@ void mainGame::render()
 {
 	PatBlt(getMemDC(), 0, 0, WINSIZEX, WINSIZEY, WHITENESS);
 	
-	//SCENEMANAGER->render();
+
 
 	if (m_showRect)
 		SCENEMANAGER->debugRender();
+	SCENEMANAGER->render();
 
 	if (m_showFPS)
 		TIMEMANAGER->render(getMemDC());
+
+
 
 	getBackBuffer()->render(getHDC(), 0, 0);
 }

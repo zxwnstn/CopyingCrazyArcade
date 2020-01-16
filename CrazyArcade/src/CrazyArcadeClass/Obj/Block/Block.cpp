@@ -37,6 +37,18 @@ bool Block::init(int x, int y)
 	if(type == BlockType::BlockSoft)
 		innerItem = make_shared<Item>(rect, pos);
 
+	switch (type)
+	{
+	case BlockType::BlockHard:
+		curBlockImage = IMAGEMANAGER->findImage("하드블록");
+		//curBlockIdx = RND->getInt(3);
+		curBlockIdx = 0;
+		break;
+	case BlockType::BlockSoft:
+		break;
+	case BlockType::BlockNone:
+		break;
+	}
 
 	return true;
 }
@@ -77,6 +89,7 @@ void Block::render(HDC hdc)
 		switch (type)
 		{
 		case BlockType::BlockHard:
+			curBlockImage->render(hdc, rect.left, rect.top - 30, curBlockIdx * BLOCK_WIDTH, 0, BLOCK_WIDTH, BLOCK_HEIGHT + 30);
 			break;
 		case BlockType::BlockSoft:
 			break;

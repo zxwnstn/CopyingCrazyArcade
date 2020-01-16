@@ -27,6 +27,7 @@ public:
 
 private:
 	Image*				curBlockImage = nullptr;
+	int					curBlockIdx = 0;
 	shared_ptr<Item>	innerItem = nullptr;
 	BlockType			type;
 	FRECT				rect;

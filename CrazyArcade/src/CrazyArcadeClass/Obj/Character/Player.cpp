@@ -91,7 +91,7 @@ void Player::update(float deltaTime)
 
 }
 void Player::render(HDC hdc) {
-
+	IMAGEMANAGER->render("플레이어", hdc, pos.x - BLOCK_WIDTH / 2 + 3, pos.y - BLOCK_HEIGHT/ 2);
 }
 
 void Player::debugRender(HDC hdc)
