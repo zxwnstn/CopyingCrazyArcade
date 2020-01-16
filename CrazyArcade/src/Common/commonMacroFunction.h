@@ -23,10 +23,21 @@ inline RECT RectMake(int x, int y, int width, int height)
 	RECT rc = { x,y, x + width, y + height };
 	return rc;
 }
+inline UTIL::FRECT FRectMake(float x, float y, float width, float height)
+{
+	UTIL::FRECT rc = { x,y, x + width, y + height };
+	return rc;
+}
 //RECT만들기(중심점으로 부터)
 inline RECT RectMakeCenter(int x, int y, int width, int height)
 {
 	RECT rc = { x - width / 2, y - height / 2, x + width / 2, y + height / 2 };
+
+	return rc;
+}
+inline UTIL::FRECT FRectMakeCenter(float x, float y, float width, float height)
+{
+	UTIL::FRECT rc = { x - width / 2, y - height / 2, x + width / 2, y + height / 2 };
 
 	return rc;
 }
@@ -44,6 +55,14 @@ inline void drawRect(HDC hdc, const UTIL::FRECT& rect)
 	Rectangle(hdc, rect.left, rect.top, rect.right, rect.bottom);
 }
 inline void DrawColorRect(HDC hdc, const RECT& rect, COLORREF color = RGB(0, 0, 0)) {
+	HBRUSH oldBrush, curBrush;
+	curBrush = CreateSolidBrush(color);
+	oldBrush = (HBRUSH)SelectObject(hdc, curBrush);
+	Rectangle(hdc, rect.left, rect.top, rect.right, rect.bottom);
+	SelectObject(hdc, oldBrush);
+	DeleteObject(curBrush);
+}
+inline void DrawColorRect(HDC hdc, const UTIL::FRECT& rect, COLORREF color = RGB(0, 0, 0)) {
 	HBRUSH oldBrush, curBrush;
 	curBrush = CreateSolidBrush(color);
 	oldBrush = (HBRUSH)SelectObject(hdc, curBrush);

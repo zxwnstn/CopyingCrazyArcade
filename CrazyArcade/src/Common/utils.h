@@ -25,7 +25,9 @@ namespace UTIL
 	bool isCircleRectCollision(Circle& c1, FRECT rect);
 
 	bool isRectRectCollision(const RECT & rect1, const RECT& rect2);
+	bool isRectRectCollision(const RECT & rect1, const FRECT & rect2);
 	bool isRectRectCollision(const FRECT & rect1, const FRECT & rect2);
+
 
 	bool isPointRectCollison(const POINT & point, const RECT& rect);
 	bool isPointRectCollicson(const POINT & point, const FRECT& rect);
