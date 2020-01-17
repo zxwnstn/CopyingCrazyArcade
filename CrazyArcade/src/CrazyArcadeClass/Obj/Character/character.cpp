@@ -2,12 +2,12 @@
 #include "CrazyArcadeClass/Manager/BlockManager.h"
 #include "CrazyArcadeClass/Manager/ItemManager.h"
 #include "CrazyArcadeClass/Manager/BombManager.h"
+#include <iostream>
 
 //init
 character::character()
 {
-	lastBlockPos = { -1, -1 };
-	prevLastBlcokPos = { -1,  -1 };
+	resetDropPos();
 }
 character::~character()
 {
@@ -72,34 +72,28 @@ Direction character::move(Direction dir, int dist)
 {
 	switch (dir)
 	{
-
 	//UP move can be change Right or Left
 	case eUp:
-		blockCollisionRect.top -= dist;
-		blockCollisionRect.bottom -= dist;
+		blockCollisionRect.moveUp(dist);
 		dir = isCanMove(eDown);
 
 		//no need change
 		if (dir == eMove) {
 			pos.y -= dist;
-			otherCollisionRect.bottom -= dist;
-			otherCollisionRect.top -= dist;
+			otherCollisionRect.moveUp(dist);
 			return eUp;
 		}
 
 		//need change
-		blockCollisionRect.top += dist;
-		blockCollisionRect.bottom += dist;
+		blockCollisionRect.moveDown(dist);
 		//Left change
 		if (dir == eLeft) {
 			if (needSpeedAdjust) {
 				dist = adjustSpeed(eLeft);
 				needSpeedAdjust = false;
 			}
-			blockCollisionRect.left -= dist;
-			blockCollisionRect.right -= dist;
-			otherCollisionRect.left -= dist;
-			otherCollisionRect.right -= dist;
+			blockCollisionRect.moveLeft(dist);
+			otherCollisionRect.moveLeft(dist);
 			pos.x -= dist;
 			return eLeft;
 		}
@@ -109,10 +103,8 @@ Direction character::move(Direction dir, int dist)
 				dist = adjustSpeed(eRight);
 				needSpeedAdjust = false;
 			}
-			blockCollisionRect.left += dist;
-			blockCollisionRect.right += dist;
-			otherCollisionRect.left += dist;
-			otherCollisionRect.right += dist;
+			blockCollisionRect.moveRight(dist);
+			otherCollisionRect.moveRight(dist);
 			pos.x += dist;
 			return eRight;
 		}	
@@ -120,31 +112,26 @@ Direction character::move(Direction dir, int dist)
 	
 	//Down Move can be change Right or Left
 	case eDown:
-		blockCollisionRect.top += dist;
-		blockCollisionRect.bottom += dist;
+		blockCollisionRect.moveDown(dist);
 		dir = isCanMove(eDown);
 
 		//No need change
 		if (dir == eMove) {
 			pos.y += dist;
-			otherCollisionRect.top += dist;
-			otherCollisionRect.bottom += dist;
+			otherCollisionRect.moveDown(dist);
 			return eDown;
 		}
 
 		//need Change
-		blockCollisionRect.top -= dist;
-		blockCollisionRect.bottom -= dist;
+		blockCollisionRect.moveUp(dist);
 		//Right
 		if (dir == eLeft) {
 			if (needSpeedAdjust) {
 				dist = adjustSpeed(eLeft);
 				needSpeedAdjust = false;
 			}
-			blockCollisionRect.left -= dist;
-			blockCollisionRect.right -= dist;
-			otherCollisionRect.left -= dist;
-			otherCollisionRect.right -= dist;
+			blockCollisionRect.moveLeft(dist);
+			otherCollisionRect.moveLeft(dist);
 			pos.x -= dist;
 			return eLeft;
 		}
@@ -154,10 +141,8 @@ Direction character::move(Direction dir, int dist)
 				dist = adjustSpeed(eRight);
 				needSpeedAdjust = false;
 			}
-			blockCollisionRect.left += dist;
-			blockCollisionRect.right += dist;
-			otherCollisionRect.left += dist;
-			otherCollisionRect.right += dist;
+			blockCollisionRect.moveRight(dist);
+			otherCollisionRect.moveRight(dist);
 			pos.x += dist;
 			return eRight;
 		}		
@@ -165,32 +150,26 @@ Direction character::move(Direction dir, int dist)
 
 	//Right Move can be change Up or Down
 	case eRight:
-
-		blockCollisionRect.left += dist;
-		blockCollisionRect.right += dist;
+		blockCollisionRect.moveRight(dist);
 		dir = isCanMove(eRight);
 		
 		//No need change
 		if (dir == eMove) {
 			pos.x += dist;
-			otherCollisionRect.left += dist;
-			otherCollisionRect.right += dist;
+			otherCollisionRect.moveRight(dist);
 			return eRight;
 		}
 
 		//need change
-		blockCollisionRect.left -= dist;
-		blockCollisionRect.right -= dist;
+		blockCollisionRect.moveLeft(dist);
 		//Up change
 		if (dir == eUp) {
 			if (needSpeedAdjust) {
 				dist = adjustSpeed(eUp);
 				needSpeedAdjust = false;
 			}
-			blockCollisionRect.top -= dist;
-			blockCollisionRect.bottom -= dist;
-			otherCollisionRect.top -= dist;
-			otherCollisionRect.bottom -= dist;
+			blockCollisionRect.moveUp(dist);
+			otherCollisionRect.moveUp(dist);
 			pos.y -= dist;
 			return eUp;
 		}
@@ -200,10 +179,8 @@ Direction character::move(Direction dir, int dist)
 				dist = adjustSpeed(eDown);
 				needSpeedAdjust = false;
 			}
-			blockCollisionRect.top += dist;
-			blockCollisionRect.bottom += dist;
-			otherCollisionRect.top += dist;
-			otherCollisionRect.bottom += dist;
+			blockCollisionRect.moveDown(dist);
+			otherCollisionRect.moveDown(dist);
 			pos.y += dist;
 			return eDown;
 		}
@@ -211,31 +188,26 @@ Direction character::move(Direction dir, int dist)
 
 	//Left Move can be change Up or Down
 	case eLeft:
-		blockCollisionRect.left -= dist;
-		blockCollisionRect.right -= dist;
+		blockCollisionRect.moveLeft(dist);
 		dir = isCanMove(eLeft);
 
 		//no need change
 		if (dir == eMove) {
 			pos.x -= dist;
-			otherCollisionRect.left -= dist;
-			otherCollisionRect.right -= dist;
+			otherCollisionRect.moveLeft(dist);
 			return eLeft;
 		}
 
 		//need change
-		blockCollisionRect.left += dist;
-		blockCollisionRect.right += dist;
+		blockCollisionRect.moveRight(dist);
 		//Up change
 		if (dir == eUp) {
 			if (needSpeedAdjust) {
 				dist = adjustSpeed(eUp);
 				needSpeedAdjust = false;
 			}
-			blockCollisionRect.top -= dist;
-			blockCollisionRect.bottom -= dist;
-			otherCollisionRect.top -= dist;
-			otherCollisionRect.bottom -= dist;
+			blockCollisionRect.moveUp(dist);
+			otherCollisionRect.moveUp(dist);
 			pos.y -= dist;
 			return eUp;
 		}
@@ -245,10 +217,8 @@ Direction character::move(Direction dir, int dist)
 				dist = adjustSpeed(eDown);
 				needSpeedAdjust = false;
 			}
-			blockCollisionRect.top += dist;
-			blockCollisionRect.bottom += dist;
-			otherCollisionRect.top += dist;
-			otherCollisionRect.bottom += dist;
+			blockCollisionRect.moveDown(dist);
+			otherCollisionRect.moveDown(dist);
 			pos.y += dist;
 			return eDown;
 		}		
@@ -262,13 +232,30 @@ Direction character::isCanMove(Direction dir)
 		return eNoMove;
 	}
 
-	/*auto& bombs = GET_SINGLE(BombManager)->GetBombs();
-	for (int i = 0; i < bombs.size(); ++i) {
-		if (lastBlockPos == bombs[i]->getPos())
+	auto& bombs = GET_SINGLE(BombManager)->GetBombs();
+	for (auto it = bombs.begin(); it != bombs.end(); ++it) {
+		IRECT temp = (*it)->getCollisionRect();
+		auto bombPos = (*it)->getPos();
+		if (isDropBombArea) {
 			continue;
-		else if (isRectRectCollision(bombs[i]->getRect(), rect))
-			return false;
-	}*/
+		}
+
+		if (isRectRectCollision(temp, blockCollisionRect)) {
+			if (dir == eUp || dir == eDown) {
+				if (temp.left < blockCollisionRect.left)
+					return eRight;
+				if (blockCollisionRect.right < temp.right)
+					return eLeft;
+			}
+			if (dir == eLeft || dir == eRight) {
+				if (temp.bottom < blockCollisionRect.bottom)
+					return eDown;
+				if (blockCollisionRect.top < temp.top)
+					return eUp;
+			}
+			return eNoMove;
+		}
+	}
 
 	auto& blocks = GET_SINGLE(BlockManager)->GetBlocks();
 	for (int i = 0; i < NUM_BLOCK_Y; ++i) {
@@ -304,18 +291,41 @@ void character::dropBomb()
 
 		shared_ptr<Bomb> newBomb = make_shared<Bomb>(pos, bombRange);
 
-		lastBlockPos = newBomb->getPos();
-		dropAndMoveRect = IRectMake(
-			lastBlockPos.x * BLOCK_WIDTH + MAPOFFSET_X,
-			lastBlockPos.y * BLOCK_HEIGHT + MAPOFFSET_Y,
-			BLOCK_WIDTH, BLOCK_HEIGHT
-		);
+		prevDrop_bPos = lastDrop_bPos;
+		lastDrop_bPos = newBomb->getPos();
+		lastDrop_rect = GET_SINGLE(BlockManager)->getIRectFromIdx(lastDrop_bPos.x, lastDrop_bPos.y);
+
 
 		curBombList.push_back(newBomb);
 		GET_SINGLE(BombManager)->GetBombs().push_back(newBomb);
+
+		isDropBombArea = true;
 	}
 
 
+}
+void character::updateBlcokPosition()
+{
+
+	int x = (pos.x - MAPOFFSET_X) / BLOCK_WIDTH;
+	int y = (pos.y - MAPOFFSET_Y) / BLOCK_HEIGHT;
+	if ((bPos.x != x || bPos.y != y)) {
+		bPos.x = x;
+		bPos.y = y;
+		//cout << "get Log" << endl;
+		//cout << bPos.x << " " << bPos.y << endl;
+		//cout << lastDrop_bPos.x << " " << lastDrop_bPos.y << endl;
+		//cout << prevDrop_bPos.x << " " << prevDrop_bPos.y << endl;
+		
+		if (!isRectRectCollision(blockCollisionRect, lastDrop_rect)) {
+	 		isDropBombArea = false;
+		}
+	}
+}
+void character::resetDropPos()
+{ 
+  	lastDrop_bPos = { -1, -1 };
+	prevDrop_bPos = { -1, -1 };
 }
 void character::fallDown()
 {

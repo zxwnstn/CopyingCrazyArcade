@@ -29,6 +29,8 @@ public:
 	//state
 	void fallDown();
 	void dropBomb();
+	void updateBlcokPosition();
+	void resetDropPos();
 
 public:
 	//getter
@@ -38,18 +40,17 @@ public:
 	CharacterState getState(){ return state; }
 
 public:
-	void speedUp() { speed++; needSpeedAdjust = true; }
+	//item get
+	void speedUp() { if(speed < 6) speed++; needSpeedAdjust = true; }
 	void rangeUp() { bombRange++; }
 	void bombLimitUp() { bombLimit++; }
-	void getUsableItem(ItemType type) {
-		usableItemList[int(type)] = true;
-	}
+	void getUsableItem(ItemType type) {usableItemList[int(type)] = true;}
 
 //member var
 protected:
 	//theses are character basic info
-	int				bombRange = 1;
-	int				bombLimit = 1;
+	int				bombRange = 3;
+	int				bombLimit = 3;
 	int				speed = 2;
 	bool			needSpeedAdjust = false;
 
@@ -65,9 +66,10 @@ protected:
 	const int		yMargin = 20;
 
 	//this info is not to collision last bomb drop area
-	IRECT			dropAndMoveRect;
-	BlockPosition	lastBlockPos;
-	BlockPosition	prevLastBlcokPos;
+	IRECT			lastDrop_rect;
+	BlockPosition	lastDrop_bPos;
+	BlockPosition	prevDrop_bPos;
+	bool			isDropBombArea = false;
 
 	//collsion with bomb
 	float deadTime = 5.f;

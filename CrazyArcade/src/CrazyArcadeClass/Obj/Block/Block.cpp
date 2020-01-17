@@ -138,6 +138,8 @@ void Block::resetType(BlockType _type)
 		innerItem = make_shared<Item>(collisionRect, bPos);
 		break;
 	case BlockType::BlockNone:
+		innerItem = nullptr;
+		curBlockImage = IMAGEMANAGER->findImage("≈∏¿œ");
 		break;
 	}
 }

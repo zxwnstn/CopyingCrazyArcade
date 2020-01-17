@@ -21,6 +21,14 @@ Bomb::Bomb(const POINT & _pos, int _explosionRange)
 		}
 	}
 }
+
+Bomb::Bomb(const BlockPosition & _bPos, int _explosionRange)
+{
+	explosionRange = _explosionRange;
+	bPos = _bPos;
+	collisionRect = GET_SINGLE(BlockManager)->getIRectFromIdx(_bPos.x, _bPos.y);
+}
+
 Bomb::~Bomb()
 {
 }

@@ -4,6 +4,7 @@ class Bomb{
 public:
 	Bomb();
 	Bomb(const POINT & _pos, int _explosionRange);
+	Bomb(const BlockPosition& _bPos, int _explosionRange);
 	~Bomb();
 
 public:
@@ -25,14 +26,14 @@ public:
 
 private:
 	//for explosion time
-	const float		explosionTime = 2.5f;
+	const float		explosionTime = 2.f;
 	bool			timeEnd = false;
 	float			pastTime = 0.f;
 	
 	//basic info
 	int				explosionRange;
 	IRECT			collisionRect;
-	BlockPosition	bPos;
 	Image*			curImage = nullptr;
+	BlockPosition	bPos;
 };
 

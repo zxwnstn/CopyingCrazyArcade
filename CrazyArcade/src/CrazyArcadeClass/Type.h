@@ -21,9 +21,11 @@ struct BlockPosition {
 			return true;
 		return false;
 	}
-	//void operator=(const BlockPosition& b) {
-
-	//}
+	bool operator!=(const BlockPosition& b) {
+		if ((x != b.x) || (y != b.y))
+			return true;
+		return false;
+	}
 };
 
 enum class BoomState {

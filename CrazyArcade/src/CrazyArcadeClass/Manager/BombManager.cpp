@@ -40,6 +40,7 @@ void BombManager::update(float deltaTime)
 
 	collisionBoom();
 	collisionPlayer();
+	collisionItem();
 }
 void BombManager::render(HDC hdc)
 {
@@ -169,7 +170,7 @@ void BombManager::collisionPlayer()
 void BombManager::collisionItem() {
 	auto& items = GET_SINGLE(ItemManager)->GetItems();
 	for (auto& boom : booms) {
-		for (auto it = items.begin(); it != items.end(); ++it) {
+		for (auto it = items.begin(); it != items.end(); ) {
 			if (isRectRectCollision(boom->getCollisionRect(), (*it)->getCollisionRect())) 
 				it = items.erase(it);
 			else ++it;

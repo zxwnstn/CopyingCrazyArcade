@@ -16,8 +16,11 @@ Player::~Player()
 
 bool Player::init(BlockPosition _blockPos = BlockPosition(0,0))
 {
-	pos.x = BLOCK_WIDTH / 2 + MAPOFFSET_X;
-	pos.y = BLOCK_HEIGHT / 2 + MAPOFFSET_Y;
+	pos.x = BLOCK_WIDTH / 2 + _blockPos.x * BLOCK_WIDTH + MAPOFFSET_X;
+	pos.y = BLOCK_HEIGHT / 2 + _blockPos.y * BLOCK_HEIGHT + MAPOFFSET_Y;
+
+	bPos = _blockPos;
+
 	rectSetFromPos();
 
 	state = CharacterState::CharacterOnIdle;
@@ -40,7 +43,7 @@ void Player::update(float deltaTime)
 					if (ret != eNoMove)
 						needSpeedAdjust = false;
 				}
-				else move(eUp, speed);
+				else ret = move(eUp, speed);
 				state = CharacterState::CharacterOnUpMove;
 				isAreadyMove = true;
 			}
@@ -50,51 +53,50 @@ void Player::update(float deltaTime)
 					if (ret != eNoMove)
 						needSpeedAdjust = false;
 				}
-				else move(eDown, speed);
+				else ret = move(eDown, speed);
 				state = CharacterState::CharacterOnDownMove;
 				isAreadyMove = true;
 			}
 			if (KEYMANAGER->isStayKeyDown(VK_LEFT) && !isAreadyMove) {
 				if (needSpeedAdjust) {
-					move(eLeft, adjustSpeed(eLeft));
+					ret = move(eLeft, adjustSpeed(eLeft));
 					if (ret != eNoMove)
 						needSpeedAdjust = false;
 				}
-				else move(eLeft, speed);
+				else ret = move(eLeft, speed);
 				state = CharacterState::CharacterOnLeftMove;
 				isAreadyMove = true;
 			}
 			if (KEYMANAGER->isStayKeyDown(VK_RIGHT) && !isAreadyMove) {
 				if (needSpeedAdjust) {
-					move(eRight, adjustSpeed(eRight));
+					ret = move(eRight, adjustSpeed(eRight));
 					if (ret != eNoMove)
 						needSpeedAdjust = false;
 				}
-				else move(eRight, speed);
+				else ret = move(eRight, speed);
 				isAreadyMove = true;
 				state = CharacterState::CharacterOnRightMove;
 			}
+			if (ret != eNoMove) {
+				updateBlcokPosition();
+			}
+
+
 			if (KEYMANAGER->isOnceKeyDown('A')) {
 				if (speed < 6) {
 					speed += 1;
 					needSpeedAdjust = true;
 				}
 			}
-
+			
 			if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
 				dropBomb();
 			}
 		}
 	}
-
-	//for drop and move 
-	/*if ((lastBlockPos.x != -1)) {
-		if (!isRectRectCollision(dropAndMoveRect, rect)) {
-			lastBlockPos.x = -1;
-			lastBlockPos.y = -1;
-		}
-	}*/
-
+	if (KEYMANAGER->isOnceKeyDown(VK_TAB)) {
+		state = CharacterState::CharacterOnIdle;
+	}
 	//Inballoon
 	if (state != CharacterState::CharacterDead && state == CharacterState::CharacterInBalloon) {
 		deadPastTime += deltaTime;

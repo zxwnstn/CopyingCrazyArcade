@@ -47,21 +47,14 @@ void mainGame::render()
 {
 	PatBlt(getMemDC(), 0, 0, WINSIZEX, WINSIZEY, WHITENESS);
 	
-
-
-	
 	SCENEMANAGER->render();
 	SCENEMANAGER->afterRender();
 
-	if (m_showRect)
+	if (m_showRect == true)
 		SCENEMANAGER->debugRender();
 
 	if (m_showFPS)
 		TIMEMANAGER->render(getMemDC());
-
-
-
-
 
 	getBackBuffer()->render(getHDC(), 0, 0);
 }

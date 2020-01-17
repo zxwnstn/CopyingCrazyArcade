@@ -28,6 +28,11 @@ bool BlockManager::init()
 	blocks[6][7].resetType(BlockType::BlockSoft);
 	blocks[10][10].resetType(BlockType::BlockSoft);
 	blocks[6][9].resetType(BlockType::BlockSoft);
+	blocks[6][9].resetType(BlockType::BlockSoft);
+	blocks[5][5].resetType(BlockType::BlockNone);
+	blocks[7][7].resetType(BlockType::BlockNone);
+	blocks[5][7].resetType(BlockType::BlockNone);
+	blocks[7][5].resetType(BlockType::BlockNone);
 
 	return true;
 }

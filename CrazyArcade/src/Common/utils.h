@@ -63,4 +63,6 @@ namespace UTIL
 	bool isPointRectCollision(const FPOINT & point, const RECT& rect);
 	bool isPointRectCollision(const FPOINT & point, const FRECT& rect);
 	bool isPointRectCollision(const POINT & point, const IRECT & rect);
+
+	bool operator==(const IRECT& rect1, const IRECT& rect2);
 }
