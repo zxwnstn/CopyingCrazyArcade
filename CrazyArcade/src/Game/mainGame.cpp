@@ -51,6 +51,7 @@ void mainGame::render()
 
 	
 	SCENEMANAGER->render();
+	SCENEMANAGER->afterRender();
 
 	if (m_showRect)
 		SCENEMANAGER->debugRender();

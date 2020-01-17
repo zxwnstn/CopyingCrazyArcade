@@ -20,6 +20,7 @@ public:
 	virtual void release();
 	virtual void update(float deltaTime);
 	virtual void render();
+	virtual void afterRender() {};
 	virtual void debugRender() {};
 
 	Image* getBackBuffer() { return _backBuffer; }

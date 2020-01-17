@@ -1,11 +1,11 @@
 #pragma once
 
-class Item
-{
+class Item{
 public:
-	Item(const RECT& _rect, const BlockPosition _pos);
-
+	Item(const IRECT& _rect, const BlockPosition _pos);
 	~Item();
+
+public:
 
 	void update(float deltaTime);
 	void render(HDC hdc);
@@ -13,16 +13,18 @@ public:
 	void release();
 
 	ItemType getType() { return type; }
-	const RECT& getRect() { return rect; }
+	const IRECT& getCollisionRect() { return collisionRect; }
 
 private:
 	ItemType		type;
 	Image*			image = nullptr;
-	RECT			rect;
+	IRECT			collisionRect;
 	BlockPosition	pos;
-	const int		xMargin = 5;
-	const int		yMargin = 5;
 
+private:
+	const int xMargin = 5;
+	const int yMargin = 5;
+	
 	//100 is max;
 	int ItemCreationPer = 50;
 };

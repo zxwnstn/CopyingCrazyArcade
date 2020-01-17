@@ -52,6 +52,14 @@ void sceneManager::render()
 		_currentScene->render();
 }
 
+void sceneManager::afterRender()
+{
+	if (_currentScene)
+	{
+		_currentScene->afterRender();
+	}
+}
+
 void sceneManager::debugRender()
 {
 	if (m_showRect) 

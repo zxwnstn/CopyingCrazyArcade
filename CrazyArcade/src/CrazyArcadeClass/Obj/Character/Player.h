@@ -3,20 +3,12 @@
 
 class Player : public character
 {
-	void rectSetFromPos();
-	void dropBomb();
-
 public:
 	Player();
 	~Player();
 
-	bool init() override;
+	bool init(BlockPosition _blockPos);
 	void update(float deltaTime) override;
-	void render(HDC hdc) override;
-	void debugRender(HDC hdc) override;
-	
-private:
-	RECT dropAndMoveRect;
 
 };
 

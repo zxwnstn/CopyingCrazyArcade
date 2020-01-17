@@ -2,8 +2,8 @@
 #include "Item.h"
 
 
-Item::Item(const RECT & _rect, const BlockPosition _pos)
-	: rect(_rect), pos(_pos)
+Item::Item(const IRECT & _rect, const BlockPosition _pos)
+	: collisionRect(_rect), pos(_pos)
 {
 	int temp = RND->getInt(100);
 	if (temp < ItemCreationPer) {
@@ -14,10 +14,10 @@ Item::Item(const RECT & _rect, const BlockPosition _pos)
 		type = ItemType::ItemNone;
 	}
 
-	rect.left += xMargin;
-	rect.right -= xMargin;
-	rect.top += yMargin;
-	rect.bottom -= yMargin;
+	collisionRect.left	 += xMargin;
+	collisionRect.right	 -= xMargin;
+	collisionRect.top	 += yMargin;
+	collisionRect.bottom -= yMargin;
 	
 	//image match
 	switch (type)
@@ -34,7 +34,6 @@ Item::Item(const RECT & _rect, const BlockPosition _pos)
 		break;
 	}
 }
-
 Item::~Item()
 {
 }
@@ -42,33 +41,30 @@ Item::~Item()
 void Item::update(float deltaTime)
 {
 }
-
 void Item::render(HDC hdc)
 {
 }
-
 void Item::debugRender(HDC hdc)
 {
 	switch (type)
 	{
 	case ItemType::ItemRangeUp:
-		DrawColorRect(hdc, rect, RGB(0, 0, 0));
+		DrawColorRect(hdc, collisionRect, RGB(0, 0, 0));
 		break;
 	case ItemType::ItemSpeedUp:
-		DrawColorRect(hdc, rect, RGB(255, 0, 0));
+		DrawColorRect(hdc, collisionRect, RGB(255, 0, 0));
 		break;
 	case ItemType::ItemBombLimitUp:
-		DrawColorRect(hdc, rect, RGB(0, 255, 0));
+		DrawColorRect(hdc, collisionRect, RGB(0, 255, 0));
 		break;
 	case ItemType::ItemKick:
-		DrawColorRect(hdc, rect, RGB(0, 0, 255));
+		DrawColorRect(hdc, collisionRect, RGB(0, 0, 255));
 		break;
 	case ItemType::ItemDart:
-		DrawColorRect(hdc, rect, RGB(255, 255, 0));
+		DrawColorRect(hdc, collisionRect, RGB(255, 255, 0));
 		break;
 	}
 }
-
 void Item::release()
 {
 }

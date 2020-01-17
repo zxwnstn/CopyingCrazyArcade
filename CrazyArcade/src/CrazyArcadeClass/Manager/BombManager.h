@@ -2,28 +2,30 @@
 #include "CrazyArcadeClass/Obj/Bomb/Bomb.h"
 #include "CrazyArcadeClass/Obj/Bomb/Boom.h"
 
-class BombManager
-{
+class BombManager{
 private:
+	//GenerateBoom
+	bool inRange(int x, int y);
 	void generateBoom(const BlockPosition& startPoint, int explosionRange);
 	void rangeCheckAndGenBoom(const BlockPosition& startPoint, int dx, int dy, int Range);
-	bool inRange(int x, int y);
 
 private:
 	void collisionBoom();
 	void collisionPlayer();
+	void collisionItem();
 
 public:
+	//interface
 	bool init();
-
 	void update(float deltaTime);
 	void render(HDC hdc);
 	void debugRender(HDC hdc);
 	void release();
 	
+public:
+	//getter
 	auto& GetBombs() { return bombs; }
 	auto& GetBooms() { return booms; }
-	
 
 private:
 	vector<shared_ptr<Bomb>> bombs;

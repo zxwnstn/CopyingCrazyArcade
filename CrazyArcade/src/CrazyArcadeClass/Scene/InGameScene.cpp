@@ -46,11 +46,16 @@ void InGameScene::update(float deltaTime)
 
 void InGameScene::render()
 {
+	IMAGEMANAGER->render("¸Ê", getMemDC(), 0, 0);
 	GET_SINGLE(BlockManager)->render(getMemDC());
 	GET_SINGLE(CharacterManager)->render(getMemDC());
 	GET_SINGLE(BombManager)->render(getMemDC());
 	GET_SINGLE(ItemManager)->render(getMemDC());
-	IMAGEMANAGER->render("¸Ê", getMemDC(), 0, 0);
+}
+
+void InGameScene::afterRender()
+{
+	GET_SINGLE(BlockManager)->afterRender(getMemDC());
 }
 
 void InGameScene::debugRender()

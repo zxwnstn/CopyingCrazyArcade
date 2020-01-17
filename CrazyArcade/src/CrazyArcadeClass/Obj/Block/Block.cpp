@@ -1,22 +1,79 @@
 #include "Etc/stdafx.h"
 #include "Block.h"
 #include "CrazyArcadeClass/Manager/ItemManager.h"
+#include "CrazyArcadeClass/Manager/BlockManager.h"
 
-void Block::softToNoneBlock()
+void Block::init()
 {
-	onDis = false;
-	type = BlockType::BlockNone;
-	curBlockImage = nullptr;
+	if (type == BlockType::BlockSoft) {
+		innerItem = nullptr;
+		innerItem = make_shared<Item>(collisionRect, bPos);
+	}
 
-	//TODO : set innerItem push
-	if(innerItem->getType() != ItemType::ItemNone)
-		GET_SINGLE(ItemManager)->push_Item(innerItem);
-	innerItem = nullptr;
+	switch (type)
+	{
+	case BlockType::BlockHard:
+		curBlockImage = IMAGEMANAGER->findImage("하드블록");
+		curBlockIdx = 0;
+		break;
+	case BlockType::BlockSoft:
+		curBlockImage = IMAGEMANAGER->findImage("소프트블록");
+		curBlockIdx = 0;
+		break;
+	case BlockType::BlockNone:
+		curBlockImage = IMAGEMANAGER->findImage("타일");
+		curBlockIdx = 0;
+		break;
+	}
 }
+void Block::init(int x, int y) 
+{
+	if (x % 2 == 1 && y % 2 == 1) type = BlockType::BlockHard;
+	else type = BlockType::BlockNone;
 
+	bPos.x = x;
+	bPos.y = y;
+	collisionRect = GET_SINGLE(BlockManager)->getIRectFromIdx(x, y);
+	init();
+}
 
 Block::Block()
 {
+}
+Block::Block(int x, int y)
+{
+	if (x % 2 == 1 && y % 2 == 1) type = BlockType::BlockHard;
+	else type = BlockType::BlockNone;
+
+	bPos.x = x;
+	bPos.y = y;
+	collisionRect = GET_SINGLE(BlockManager)->getIRectFromIdx(x, y);
+	init();
+}
+Block::Block(BlockPosition _bPos)
+{
+	if (_bPos.x % 2 == 1 && _bPos.y % 2 == 1) type = BlockType::BlockHard;
+	else type = BlockType::BlockNone;
+
+	bPos = _bPos;
+	collisionRect = GET_SINGLE(BlockManager)->getIRectFromIdx(_bPos.x, _bPos.y);
+	init();
+}
+
+Block::Block(BlockType _blockType, int x, int y)
+{
+	type = _blockType;
+	bPos.x = x;
+	bPos.y = y;
+	collisionRect = GET_SINGLE(BlockManager)->getIRectFromIdx(x, y);
+	init();
+}
+Block::Block(BlockType _blockType, BlockPosition _bPos)
+{
+	type = _blockType;
+	bPos = _bPos;
+	collisionRect = GET_SINGLE(BlockManager)->getIRectFromIdx(_bPos.x, _bPos.x);
+	init();
 }
 
 
@@ -24,49 +81,6 @@ Block::~Block()
 {
 }
 
-bool Block::init(int x, int y)
-{
-	//temporary
-	if (x % 2 == 1 && y % 2 == 1) type = BlockType::BlockHard;
-	else type = BlockType::BlockNone;
-
-	pos.x = x * BLOCK_WIDTH + MAPOFFSET_X;
-	pos.y = y * BLOCK_HEIGHT + MAPOFFSET_Y;
-	rect = RectMake(x * BLOCK_WIDTH + MAPOFFSET_X, y * BLOCK_HEIGHT + MAPOFFSET_Y, BLOCK_WIDTH, BLOCK_HEIGHT);
-
-	if(type == BlockType::BlockSoft)
-		innerItem = make_shared<Item>(rect, pos);
-
-	switch (type)
-	{
-	case BlockType::BlockHard:
-		curBlockImage = IMAGEMANAGER->findImage("하드블록");
-		curBlockIdx = 0;
-		//curBlockIdx = RND->getInt(3);
-		break;
-	case BlockType::BlockSoft:
-		break;
-	case BlockType::BlockNone:
-		curBlockImage = IMAGEMANAGER->findImage("타일");
-		curBlockIdx = 0;
-		break;
-	}
-
-	return true;
-}
-
-bool Block::init(BlockType _type, int x, int y) {
-	type = _type;
-
-	pos.x = x * BLOCK_WIDTH + MAPOFFSET_X;
-	pos.y = y * BLOCK_HEIGHT + MAPOFFSET_Y;
-	rect = RectMake(x * BLOCK_WIDTH + MAPOFFSET_X, y * BLOCK_HEIGHT + MAPOFFSET_Y, BLOCK_WIDTH, BLOCK_HEIGHT);
-
-	if (type == BlockType::BlockSoft)
-		innerItem = make_shared<Item>(rect, pos);
-
-	return true;
-}
 
 void Block::update(float deltaTime)
 {
@@ -84,30 +98,46 @@ void Block::update(float deltaTime)
 		}
 	}
 }
-
 void Block::render(HDC hdc)
 {
 	if (curBlockImage) {
 		if(type == BlockType::BlockHard)
-			curBlockImage->render(hdc, rect.left, rect.top - 30, curBlockIdx * BLOCK_WIDTH, 0, BLOCK_WIDTH, BLOCK_HEIGHT + 30);
+			//TODO : Edit 30 : this is can't be litteral
+			curBlockImage->render(hdc, collisionRect.left, collisionRect.top - 30, curBlockIdx * BLOCK_WIDTH, 0, BLOCK_WIDTH, BLOCK_HEIGHT + 30);
 		else
-			curBlockImage->render(hdc, rect.left, rect.top, curBlockIdx * BLOCK_WIDTH, 0, BLOCK_WIDTH, BLOCK_HEIGHT + 30);
-
+			curBlockImage->render(hdc, collisionRect.left, collisionRect.top, curBlockIdx * BLOCK_WIDTH, 0, BLOCK_WIDTH, BLOCK_HEIGHT + 30);
 	}
 }
-
 void Block::debugRender(HDC hdc)
 {
 	switch (type)
 	{
 	case BlockType::BlockHard:
-		DrawColorRect(hdc, rect, RGB(181, 239, 20));
+		DrawColorRect(hdc, collisionRect, RGB(181, 239, 20));
 		break;
 	case BlockType::BlockSoft:
-		DrawColorRect(hdc, rect, RGB(0, 255, 0));
+		DrawColorRect(hdc, collisionRect, RGB(0, 255, 0));
 		break;
 	case BlockType::BlockNone:
-		DrawColorRect(hdc, rect, RGB(255, 255, 255));
+		DrawColorRect(hdc, collisionRect, RGB(255, 255, 255));
+		break;
+	}
+}
+void Block::release()
+{
+}
+
+void Block::resetType(BlockType _type)
+{
+	type = _type;
+	switch (type)
+	{
+	case BlockType::BlockHard:
+		break;
+	case BlockType::BlockSoft:
+		innerItem = make_shared<Item>(collisionRect, bPos);
+		break;
+	case BlockType::BlockNone:
 		break;
 	}
 }
@@ -117,23 +147,14 @@ void Block::triggerDis(float time)
 	willDis = true;
 	willDisTime = time;
 }
-
-void Block::resetType(BlockType _type)
+void Block::softToNoneBlock()
 {
-	type = _type;
-	//TODO : image
-	switch (type)
-	{
-	case BlockType::BlockHard:
-		break;
-	case BlockType::BlockSoft:
-		innerItem = make_shared<Item>(rect, pos);
-		//break;
-	case BlockType::BlockNone:
-		break;
-	}
-}
+	onDis = false;
+	type = BlockType::BlockNone;
+	curBlockImage = IMAGEMANAGER->findImage("타일");
 
-void Block::release()
-{
+	//TODO : set innerItem push
+	if (innerItem->getType() != ItemType::ItemNone)
+		GET_SINGLE(ItemManager)->GetItems().push_back(innerItem);
+	innerItem = nullptr;
 }

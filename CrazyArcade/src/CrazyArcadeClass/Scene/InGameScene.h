@@ -16,6 +16,7 @@ public:
 	void release();
 	void update(float deltaTime);
 	void render();
+	void afterRender();
 	void debugRender();
 };
 

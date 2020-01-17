@@ -1,39 +1,52 @@
 #pragma once
 #include "CrazyArcadeClass/Obj/Item/Item.h"
 
-class Block
-{
-private:
-	void softToNoneBlock();
-
+class Block {
 public:
 	Block();
+	Block(int x, int y);
+	Block(BlockPosition _bPos);
+	Block(BlockType _blockType, int x, int y);
+	Block(BlockType _blockType, BlockPosition _bPos);
 	~Block();
 
-	bool init(int x, int y);
-	//this is fot map edit
-	bool init(BlockType type, int x, int y);
+	void init(int x, int y);
+
+private:
+	void init();
+
+public:
+	//interface
 	void update(float deltaTime);
 	void render(HDC hdc);
 	void debugRender(HDC hdc);
 	void triggerDis(float time);
 	void resetType(BlockType type);
+	void release();
 
-	RECT& getRect() { return rect; }
+public:
+	//getter
+	IRECT& getCollisionRect() { return collisionRect; }
 	BlockType getType() { return type; }
 	bool isWillDis() { return willDis; }
 
-	void release();
+private:
+	void softToNoneBlock();
 
 private:
+	//image
 	Image*				curBlockImage = nullptr;
 	int					curBlockIdx = 0;
-	shared_ptr<Item>	innerItem = nullptr;
-	BlockType			type;
-	RECT				rect;
-	BlockPosition		pos;
+	
+	//inneritem
+	shared_ptr<Item>	innerItem;
 
-	//soft blcok Destroy를 위한 변수
+	//basic info
+	IRECT				collisionRect;
+	BlockPosition		bPos;
+	BlockType			type;
+
+	//for soft blcok destroy
 	bool				willDis = false;
 	float				willDisTime;
 	float				willDisPastTime = 0.f;

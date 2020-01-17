@@ -9,10 +9,7 @@ public:
 	Enemy();
 	~Enemy();
 
-
-	bool init() override;
 	void update (float deltaTime) override;
-	void render (HDC hdc) override;
-	void debugRender(HDC hdc) override;
+
 };
 

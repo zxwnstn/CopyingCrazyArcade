@@ -1,14 +1,14 @@
 #include "Etc/stdafx.h"
 #include "BombManager.h"
-#include "CharacterManager.h"
+
 #include "BlockManager.h"
+#include "CharacterManager.h"
+#include "ItemManager.h"
 DEFINITION_SINGLE(BombManager)
 
 BombManager::BombManager()
 {
 }
-
-
 BombManager::~BombManager()
 {
 }
@@ -17,7 +17,6 @@ bool BombManager::init()
 {
 	return true;
 }
-
 void BombManager::update(float deltaTime)
 {
 	for (auto&e : bombs)
@@ -42,28 +41,29 @@ void BombManager::update(float deltaTime)
 	collisionBoom();
 	collisionPlayer();
 }
-
 void BombManager::render(HDC hdc)
 {
 	for (auto& e : bombs)
 		e->render(hdc);
 }
-
 void BombManager::debugRender(HDC hdc)
 {
 	for (auto& e : bombs)
 		e->debugRender(hdc);
-	if (booms.size() > 0)
-		int a = 1;
 	for (auto& e : booms)
 		e->debugRender(hdc);
 }
-
 void BombManager::release()
 {
 }
 
-
+bool BombManager::inRange(int x, int y)
+{
+	if ((0 <= x && x < NUM_BLOCK_X) &&
+		(0 <= y && y < NUM_BLOCK_Y))
+		return true;
+	return false;
+}
 void BombManager::rangeCheckAndGenBoom(const BlockPosition& startPoint, int dx, int dy, int Range)
 {
 	BoomState state;
@@ -135,15 +135,6 @@ void BombManager::rangeCheckAndGenBoom(const BlockPosition& startPoint, int dx, 
 		else break;
 	}
 }
-
-bool BombManager::inRange(int x, int y)
-{
-	if ((0 <= x && x < NUM_BLOCK_X) &&
-		(0 <= y && y < NUM_BLOCK_Y))
-		return true;
-	return false;
-}
-
 void BombManager::generateBoom(const BlockPosition& startPoint, int explosionRange)
 {
 	booms.push_back(make_shared<Boom>(BoomState::BoomCenter, 0.f, startPoint));//ºæ≈Õ
@@ -157,22 +148,31 @@ void BombManager::collisionBoom()
 {
 	for (int i = 0; i < bombs.size(); ++i) {
 		for (int j = 0; j < booms.size(); ++j) {
-			if (isRectRectCollision(booms[j]->getRect(), bombs[i]->getRect()))
+			if (isRectRectCollision(booms[j]->getCollisionRect(), bombs[i]->getCollisionRect()))
 				bombs[i]->explosionNow();
 		}
 	}
 }
-
 void BombManager::collisionPlayer()
 {
 	auto& characters = GET_SINGLE(CharacterManager)->getCharacters();
 	for (auto& character : characters) {
 		for (auto& boom : booms) {
 			if (character->getState() != CharacterState::CharacterInBalloon) {
-				if (isRectRectCollision(boom->getRect(), character->getRect())) {
+				if (isRectRectCollision(boom->getCollisionRect(), character->getOtherCollisionRect())) {
 					character->fallDown();
 				}
 			}			
+		}
+	}
+}
+void BombManager::collisionItem() {
+	auto& items = GET_SINGLE(ItemManager)->GetItems();
+	for (auto& boom : booms) {
+		for (auto it = items.begin(); it != items.end(); ++it) {
+			if (isRectRectCollision(boom->getCollisionRect(), (*it)->getCollisionRect())) 
+				it = items.erase(it);
+			else ++it;
 		}
 	}
 }

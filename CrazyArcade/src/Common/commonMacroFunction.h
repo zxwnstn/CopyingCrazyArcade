@@ -50,10 +50,6 @@ inline void drawRect(HDC hdc, const RECT& rect)
 {
 	Rectangle(hdc, rect.left, rect.top, rect.right, rect.bottom);
 }
-inline void drawRect(HDC hdc, const UTIL::FRECT& rect)
-{
-	Rectangle(hdc, rect.left, rect.top, rect.right, rect.bottom);
-}
 inline void DrawColorRect(HDC hdc, const RECT& rect, COLORREF color = RGB(0, 0, 0)) {
 	HBRUSH oldBrush, curBrush;
 	curBrush = CreateSolidBrush(color);
@@ -62,15 +58,6 @@ inline void DrawColorRect(HDC hdc, const RECT& rect, COLORREF color = RGB(0, 0, 
 	SelectObject(hdc, oldBrush);
 	DeleteObject(curBrush);
 }
-inline void DrawColorRect(HDC hdc, const UTIL::FRECT& rect, COLORREF color = RGB(0, 0, 0)) {
-	HBRUSH oldBrush, curBrush;
-	curBrush = CreateSolidBrush(color);
-	oldBrush = (HBRUSH)SelectObject(hdc, curBrush);
-	Rectangle(hdc, rect.left, rect.top, rect.right, rect.bottom);
-	SelectObject(hdc, oldBrush);
-	DeleteObject(curBrush);
-}
-
 //사각형 그리기(중심점)
 inline void RectangleMakeCenter(HDC hdc, int x, int y, int width, int height)
 {
@@ -79,9 +66,6 @@ inline void RectangleMakeCenter(HDC hdc, int x, int y, int width, int height)
 inline void DrawRect(HDC hdc, const RECT& rect) {
 	Rectangle(hdc, rect.left, rect.top, rect.right, rect.bottom);
 }
-
-
-
 //원그리기
 inline void EllipseMake(HDC hdc, int x, int y, int width, int height)
 {
@@ -91,4 +75,29 @@ inline void EllipseMake(HDC hdc, int x, int y, int width, int height)
 inline void EllipseMakeCenter(HDC hdc, int x, int y, int width, int height)
 {
 	Ellipse(hdc, x - (width / 2), y - (height / 2), x + (width / 2), y + (height / 2));
+}
+
+//IRECT
+inline void DrawColorRect(HDC hdc, const UTIL::IRECT& rect, COLORREF color = RGB(0, 0, 0)) {
+	HBRUSH oldBrush, curBrush;
+	curBrush = CreateSolidBrush(color);
+	oldBrush = (HBRUSH)SelectObject(hdc, curBrush);
+	Rectangle(hdc, rect.left, rect.top, rect.right, rect.bottom);
+	SelectObject(hdc, oldBrush);
+	DeleteObject(curBrush);
+}
+inline void drawRect(HDC hdc, const UTIL::IRECT& rect)
+{
+	Rectangle(hdc, rect.left, rect.top, rect.right, rect.bottom);
+}
+inline UTIL::IRECT IRectMake(int x, int y, int width, int height)
+{
+	UTIL::IRECT rc = { x,y, x + width, y + height };
+	return rc;
+}
+inline UTIL::IRECT IRectMakeCenter(int x, int y, int width, int height)
+{
+	UTIL::IRECT rc = { x - width / 2, y - height / 2, x + width / 2, y + height / 2 };
+
+	return rc;
 }

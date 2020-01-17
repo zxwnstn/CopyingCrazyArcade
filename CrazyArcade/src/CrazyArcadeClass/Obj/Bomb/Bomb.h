@@ -1,30 +1,38 @@
 #pragma once
 
-class Bomb
-{
+class Bomb{
 public:
 	Bomb();
+	Bomb(const POINT & _pos, int _explosionRange);
 	~Bomb();
 
-	bool init(const FPOINT& _pos, int _explosionRange);
-	bool isTimeEnd() { return timeEnd; }
+public:
+	//basic
 	void update(float deltaTime);
 	void render(HDC hdc);
 	void debugRender(HDC hdc);
-	void release();
+
+public:
+	//logic
+	bool isTimeEnd() { return timeEnd; }
 	void explosionNow();
 
 public:
-	RECT& getRect(){ return rect; }
+	//getter
+	IRECT& getCollisionRect() { return collisionRect; }
 	int getExplosionRange() { return explosionRange; }
-	BlockPosition getPos() { return pos; }
+	BlockPosition getPos() { return bPos; }
 
 private:
-	const float explosionTime = 2.5f;
-	bool timeEnd = false;
-	float pastTime = 0.f;
-	int explosionRange;
-	BlockPosition pos;
-	RECT rect;
+	//for explosion time
+	const float		explosionTime = 2.5f;
+	bool			timeEnd = false;
+	float			pastTime = 0.f;
+	
+	//basic info
+	int				explosionRange;
+	IRECT			collisionRect;
+	BlockPosition	bPos;
+	Image*			curImage = nullptr;
 };
 

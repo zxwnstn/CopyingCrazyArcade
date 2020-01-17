@@ -2,18 +2,40 @@
 #include "Boom.h"
 
 
-Boom::Boom(BoomState _boomstate, float addedTime, BlockPosition _pos)
-	:boomState(_boomstate), pos(_pos)
+Boom::Boom(BoomState _boomstate, float addedTime, BlockPosition _bPos)
+	:state(_boomstate), bPos(_bPos)
 {
 	explosionDuring += addedTime;
-	rect.left = _pos.x * BLOCK_WIDTH + MAPOFFSET_X;
-	rect.right = (_pos.x + 1) * (BLOCK_WIDTH) + MAPOFFSET_X;
-	rect.top = _pos.y * BLOCK_HEIGHT + MAPOFFSET_Y;
-	rect.bottom = (_pos.y + 1) * (BLOCK_HEIGHT) + MAPOFFSET_Y;
-}
+	collisionRect.left = _bPos.x * BLOCK_WIDTH + MAPOFFSET_X;
+	collisionRect.right = (_bPos.x + 1) * (BLOCK_WIDTH) + MAPOFFSET_X;
+	collisionRect.top = _bPos.y * BLOCK_HEIGHT + MAPOFFSET_Y;
+	collisionRect.bottom = (_bPos.y + 1) * (BLOCK_HEIGHT) + MAPOFFSET_Y;
 
+	switch (state)
+	{
+	case BoomState::BoomCenter:
+		break;
+	case BoomState::BoomHorizenRight:
+		break;
+	case BoomState::BoomHorizenRightEnd:
+		break;
+	case BoomState::BoomHorizenLeft:
+		break;
+	case BoomState::BoomHorizenLeftEnd:
+		break;
+	case BoomState::BoomVerticalUp:
+		break;
+	case BoomState::BoomVerticalUpEnd:
+		break;
+	case BoomState::BoomVerticalDown:
+		break;
+	case BoomState::BoomVerticalDownEnd:
+		break;
+	}
+}
 Boom::~Boom()
 {
+	curImage = nullptr;
 }
 
 void Boom::update(float deltaTime)
@@ -22,13 +44,32 @@ void Boom::update(float deltaTime)
 	if (pastTime > explosionDuring)
 		timeEnd = true;
 }
-
 void Boom::render(HDC hdc)
 {
+	switch (state)
+	{
+	case BoomState::BoomCenter:
+		break;
+	case BoomState::BoomHorizenRight:
+		break;
+	case BoomState::BoomHorizenRightEnd:
+		break;
+	case BoomState::BoomHorizenLeft:
+		break;
+	case BoomState::BoomHorizenLeftEnd:
+		break;
+	case BoomState::BoomVerticalUp:
+		break;
+	case BoomState::BoomVerticalUpEnd:
+		break;
+	case BoomState::BoomVerticalDown:
+		break;
+	case BoomState::BoomVerticalDownEnd:
+		break;
+	}
 }
-
 void Boom::debugRender(HDC hdc)
 {
-	DrawColorRect(hdc, rect, RGB(22,237,237));
+	DrawColorRect(hdc, collisionRect, RGB(22,237,237));
 }
 

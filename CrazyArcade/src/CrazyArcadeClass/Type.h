@@ -21,6 +21,9 @@ struct BlockPosition {
 			return true;
 		return false;
 	}
+	//void operator=(const BlockPosition& b) {
+
+	//}
 };
 
 enum class BoomState {
