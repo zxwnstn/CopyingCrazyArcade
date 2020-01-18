@@ -1,14 +1,6 @@
 #pragma once
 #define BIT(x) (1 << x)
 
-#define BLOCK_WIDTH 60
-#define BLOCK_HEIGHT 60
-#define NUM_BLOCK_X 15
-#define NUM_BLOCK_Y 13
-
-#define SPEED_UP_RATE 50.f
-#define BLOCK_DIS_DELAY 0.2f
-
 struct BlockPosition {
 	int x, y;
 	BlockPosition() {}

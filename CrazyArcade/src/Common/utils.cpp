@@ -1,4 +1,5 @@
 #include "Etc/stdafx.h"
+#include "utils.h"
 
 namespace UTIL
 {
@@ -132,5 +133,33 @@ namespace UTIL
 			rect1.top == rect2.top && rect1.bottom == rect2.bottom)
 			return true;
 		return false;
+	}
+	void IRECT::setBpos() {
+		bPos_x = (left - MAPOFFSET_X) / BLOCK_WIDTH;
+		bPos_y = (top - MAPOFFSET_Y) / BLOCK_HEIGHT;
+	}
+	void IRECT::moveUp(int dist) {
+		top -= dist;
+		bottom -= dist;
+	}
+	void IRECT::moveDown(int dist) {
+		top += dist;
+		bottom += dist;
+	}
+	void IRECT::moveLeft(int dist) {
+		left -= dist;
+		right -= dist;
+	}
+	void IRECT::moveRight(int dist) {
+		left += dist;
+		right += dist;
+	}
+	void IRECT::reset() {
+		bPos_x = -11;
+		bPos_y = -1;
+		left = -11;
+		top = -11;
+		right = -11;
+		bottom = -11;
 	}
 }

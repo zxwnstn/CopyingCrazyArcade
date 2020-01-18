@@ -4,7 +4,6 @@ class Bomb{
 public:
 	Bomb();
 	Bomb(const POINT & _pos, int _explosionRange);
-	Bomb(const BlockPosition& _bPos, int _explosionRange);
 	~Bomb();
 
 public:

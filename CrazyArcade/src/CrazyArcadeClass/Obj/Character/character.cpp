@@ -7,7 +7,6 @@
 //init
 character::character()
 {
-	resetDropPos();
 }
 character::~character()
 {
@@ -44,54 +43,27 @@ void character::debugRender(HDC hdc)
 }
 
 //move
-int character::adjustSpeed(Direction dir)
-{
-	int ret = speed;
-	switch (dir)
-	{
-	case eUp:
-		while ((blockCollisionRect.bottom - MAPOFFSET_Y - ret) % speed != 0)
-			--ret;
-		break;
-	case eDown:
-		while ((blockCollisionRect.bottom - MAPOFFSET_Y + ret) % speed != 0)
-			--ret;
-		break;
-	case eRight:
-		while ((blockCollisionRect.left - MAPOFFSET_X + ret) % speed != 0)
-			--ret;
-		break;
-	case eLeft:
-		while ((blockCollisionRect.right - MAPOFFSET_X - ret) % speed != 0)
-			--ret;
-		break;
-	}
-	return ret;
-}
 Direction character::move(Direction dir, int dist)
 {
 	switch (dir)
 	{
 	//UP move can be change Right or Left
 	case eUp:
+		dist = adjustSpeed(eUp);
 		blockCollisionRect.moveUp(dist);
-		dir = isCanMove(eDown);
-
-		//no need change
+		dir = isCanMove(eDown, dir);
+	//no need change
 		if (dir == eMove) {
 			pos.y -= dist;
 			otherCollisionRect.moveUp(dist);
 			return eUp;
 		}
 
-		//need change
+	//need change
 		blockCollisionRect.moveDown(dist);
 		//Left change
 		if (dir == eLeft) {
-			if (needSpeedAdjust) {
-				dist = adjustSpeed(eLeft);
-				needSpeedAdjust = false;
-			}
+			dist = adjustSpeed(eLeft);
 			blockCollisionRect.moveLeft(dist);
 			otherCollisionRect.moveLeft(dist);
 			pos.x -= dist;
@@ -99,37 +71,31 @@ Direction character::move(Direction dir, int dist)
 		}
 		//Right change
 		if (dir == eRight) {
-			if (needSpeedAdjust) {
-				dist = adjustSpeed(eRight);
-				needSpeedAdjust = false;
-			}
+			dist = adjustSpeed(eRight);
 			blockCollisionRect.moveRight(dist);
 			otherCollisionRect.moveRight(dist);
 			pos.x += dist;
 			return eRight;
-		}	
+		}
 		return eNoMove;
-	
+
 	//Down Move can be change Right or Left
 	case eDown:
+		dist = adjustSpeed(eDown);
 		blockCollisionRect.moveDown(dist);
-		dir = isCanMove(eDown);
-
-		//No need change
+		dir = isCanMove(eDown, dir);
+	//No need change
 		if (dir == eMove) {
 			pos.y += dist;
 			otherCollisionRect.moveDown(dist);
 			return eDown;
 		}
 
-		//need Change
+	//need Change
 		blockCollisionRect.moveUp(dist);
 		//Right
 		if (dir == eLeft) {
-			if (needSpeedAdjust) {
-				dist = adjustSpeed(eLeft);
-				needSpeedAdjust = false;
-			}
+			dist = adjustSpeed(eLeft);
 			blockCollisionRect.moveLeft(dist);
 			otherCollisionRect.moveLeft(dist);
 			pos.x -= dist;
@@ -137,37 +103,31 @@ Direction character::move(Direction dir, int dist)
 		}
 		//Left
 		if (dir == eRight) {
-			if (needSpeedAdjust) {
-				dist = adjustSpeed(eRight);
-				needSpeedAdjust = false;
-			}
+			dist = adjustSpeed(eRight);
 			blockCollisionRect.moveRight(dist);
 			otherCollisionRect.moveRight(dist);
 			pos.x += dist;
 			return eRight;
-		}		
+		}
 		return eNoMove;
 
 	//Right Move can be change Up or Down
 	case eRight:
+		dist = adjustSpeed(eRight);
 		blockCollisionRect.moveRight(dist);
-		dir = isCanMove(eRight);
-		
-		//No need change
+		dir = isCanMove(eRight, dir);
+	//No need change
 		if (dir == eMove) {
 			pos.x += dist;
 			otherCollisionRect.moveRight(dist);
 			return eRight;
 		}
 
-		//need change
+	//need change
 		blockCollisionRect.moveLeft(dist);
 		//Up change
 		if (dir == eUp) {
-			if (needSpeedAdjust) {
-				dist = adjustSpeed(eUp);
-				needSpeedAdjust = false;
-			}
+			dist = adjustSpeed(eUp);
 			blockCollisionRect.moveUp(dist);
 			otherCollisionRect.moveUp(dist);
 			pos.y -= dist;
@@ -175,10 +135,7 @@ Direction character::move(Direction dir, int dist)
 		}
 		//Down change
 		if (dir == eDown) {
-			if (needSpeedAdjust) {
-				dist = adjustSpeed(eDown);
-				needSpeedAdjust = false;
-			}
+			dist = adjustSpeed(eDown);
 			blockCollisionRect.moveDown(dist);
 			otherCollisionRect.moveDown(dist);
 			pos.y += dist;
@@ -188,9 +145,9 @@ Direction character::move(Direction dir, int dist)
 
 	//Left Move can be change Up or Down
 	case eLeft:
+		dist = adjustSpeed(eLeft);
 		blockCollisionRect.moveLeft(dist);
-		dir = isCanMove(eLeft);
-
+		dir = isCanMove(eLeft, dir);
 		//no need change
 		if (dir == eMove) {
 			pos.x -= dist;
@@ -202,45 +159,53 @@ Direction character::move(Direction dir, int dist)
 		blockCollisionRect.moveRight(dist);
 		//Up change
 		if (dir == eUp) {
-			if (needSpeedAdjust) {
-				dist = adjustSpeed(eUp);
-				needSpeedAdjust = false;
-			}
+			dist = adjustSpeed(eUp);
 			blockCollisionRect.moveUp(dist);
 			otherCollisionRect.moveUp(dist);
 			pos.y -= dist;
 			return eUp;
 		}
 		//Down change
-		if(dir == eDown){
-			if (needSpeedAdjust) {
-				dist = adjustSpeed(eDown);
-				needSpeedAdjust = false;
-			}
+		if (dir == eDown) {
+			dist = adjustSpeed(eDown);
 			blockCollisionRect.moveDown(dist);
 			otherCollisionRect.moveDown(dist);
 			pos.y += dist;
 			return eDown;
-		}		
+		}
 		return eNoMove;
 	}
 }
-Direction character::isCanMove(Direction dir)
+Direction character::isCanMove(Direction dir, Direction originDir)
 {
 	if (blockCollisionRect.left < MAPOFFSET_X || blockCollisionRect.right > MAPOFFSET_X + NUM_BLOCK_X * BLOCK_WIDTH ||
 		blockCollisionRect.top < MAPOFFSET_Y || blockCollisionRect.bottom > MAPOFFSET_Y + NUM_BLOCK_Y * BLOCK_HEIGHT) {
 		return eNoMove;
 	}
 
+	//check collision bomb
 	auto& bombs = GET_SINGLE(BombManager)->GetBombs();
 	for (auto it = bombs.begin(); it != bombs.end(); ++it) {
 		IRECT temp = (*it)->getCollisionRect();
-		auto bombPos = (*it)->getPos();
-		if (isDropBombArea) {
-			continue;
-		}
-
-		if (isRectRectCollision(temp, blockCollisionRect)) {
+		if (isRectRectCollision(blockCollisionRect, temp)) {
+			//sequence bomb handle
+			if (temp == prevDorp_rect && isSequenceDrop) {
+				auto temp2 = prevDorp_rect - lastDrop_rect;
+				int dx = temp2.first;
+				int dy = temp2.second;
+				if (dx == 1 && originDir == eRight)
+					return eNoMove;
+				if (dx == -1 && originDir == eLeft)
+					return eNoMove;
+				if (dy == -1 && originDir == eUp)
+					return eNoMove;
+				if (dy == 1 && originDir == eDown)
+					return eNoMove;
+			}
+			//if character in drop area can move any direction
+			if (isDropBombArea) {
+				continue;
+			}
 			if (dir == eUp || dir == eDown) {
 				if (temp.left < blockCollisionRect.left)
 					return eRight;
@@ -257,6 +222,7 @@ Direction character::isCanMove(Direction dir)
 		}
 	}
 
+	//check collision with block
 	auto& blocks = GET_SINGLE(BlockManager)->GetBlocks();
 	for (int i = 0; i < NUM_BLOCK_Y; ++i) {
 		for (int j = 0; j < NUM_BLOCK_X; ++j) {
@@ -282,6 +248,38 @@ Direction character::isCanMove(Direction dir)
 
 	return eMove;
 }
+int character::adjustSpeed(Direction dir)
+{
+	int ret = speed;
+	switch (dir)
+	{
+	case eUp:
+		while ((blockCollisionRect.bottom - MAPOFFSET_Y - ret) % speed != 0)
+			--ret;
+		break;
+	case eDown:
+		while ((blockCollisionRect.bottom - MAPOFFSET_Y + ret) % speed != 0)
+			--ret;
+		break;
+	case eRight:
+		while ((blockCollisionRect.left - MAPOFFSET_X + ret) % speed != 0)
+			--ret;
+		break;
+	case eLeft:
+		while ((blockCollisionRect.right - MAPOFFSET_X - ret) % speed != 0)
+			--ret;
+		break;
+	}
+	return ret;
+}
+void character::stayDropArea()
+{
+	if (!isRectRectCollision(blockCollisionRect, lastDrop_rect)) {
+		prevDorp_rect.reset();
+		lastDrop_rect.reset();
+		isDropBombArea = false;
+	}
+}
 
 
 //state
@@ -291,41 +289,32 @@ void character::dropBomb()
 
 		shared_ptr<Bomb> newBomb = make_shared<Bomb>(pos, bombRange);
 
-		prevDrop_bPos = lastDrop_bPos;
-		lastDrop_bPos = newBomb->getPos();
-		lastDrop_rect = GET_SINGLE(BlockManager)->getIRectFromIdx(lastDrop_bPos.x, lastDrop_bPos.y);
+		prevDorp_rect = lastDrop_rect;
+		lastDrop_rect = newBomb->getCollisionRect();
+		lastDrop_rect.setBpos();
 
-
-		curBombList.push_back(newBomb);
-		GET_SINGLE(BombManager)->GetBombs().push_back(newBomb);
-
-		isDropBombArea = true;
+		if (!(lastDrop_rect == prevDorp_rect)) {
+			curBombList.push_back(newBomb);
+			GET_SINGLE(BombManager)->GetBombs().push_back(newBomb);
+			checkSequenceDrop();
+			isDropBombArea = true;
+		}		
 	}
-
-
 }
-void character::updateBlcokPosition()
+void character::checkSequenceDrop()
 {
-
-	int x = (pos.x - MAPOFFSET_X) / BLOCK_WIDTH;
-	int y = (pos.y - MAPOFFSET_Y) / BLOCK_HEIGHT;
-	if ((bPos.x != x || bPos.y != y)) {
-		bPos.x = x;
-		bPos.y = y;
-		//cout << "get Log" << endl;
-		//cout << bPos.x << " " << bPos.y << endl;
-		//cout << lastDrop_bPos.x << " " << lastDrop_bPos.y << endl;
-		//cout << prevDrop_bPos.x << " " << prevDrop_bPos.y << endl;
-		
-		if (!isRectRectCollision(blockCollisionRect, lastDrop_rect)) {
-	 		isDropBombArea = false;
-		}
+	auto ret = lastDrop_rect - prevDorp_rect;
+	int dx = ret.first;
+	int dy = ret.second;
+	if (dx < 0)
+		dx = -dx;
+	if (dy < 0)
+		dy = -dy;
+	if ((dx + dy) == 1) {
+		isSequenceDrop =  true;
+		return;
 	}
-}
-void character::resetDropPos()
-{ 
-  	lastDrop_bPos = { -1, -1 };
-	prevDrop_bPos = { -1, -1 };
+	isSequenceDrop = false;
 }
 void character::fallDown()
 {

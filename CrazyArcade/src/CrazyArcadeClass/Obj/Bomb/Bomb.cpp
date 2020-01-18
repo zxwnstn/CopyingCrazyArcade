@@ -8,25 +8,10 @@ Bomb::Bomb()
 Bomb::Bomb(const POINT & _pos, int _explosionRange)
 {
 	explosionRange = _explosionRange;
-	auto& blocks = GET_SINGLE(BlockManager)->GetBlocks();
-	for (int i = 0; i < NUM_BLOCK_Y; ++i) {
-		for (int j = 0; j < NUM_BLOCK_X; ++j) {
-			auto temp = blocks[i][j].getCollisionRect();
-			if (isPointRectCollision(_pos, temp)) {
-				bPos.x = j;
-				bPos.y = i;
-				collisionRect = temp;
-				return;
-			}
-		}
-	}
-}
+	bPos.x = (_pos.x - MAPOFFSET_X) / BLOCK_WIDTH;
+	bPos.y = (_pos.y - MAPOFFSET_Y) / BLOCK_HEIGHT;
+	collisionRect = GET_SINGLE(BlockManager)->getIRectFromIdx(bPos.x, bPos.y);
 
-Bomb::Bomb(const BlockPosition & _bPos, int _explosionRange)
-{
-	explosionRange = _explosionRange;
-	bPos = _bPos;
-	collisionRect = GET_SINGLE(BlockManager)->getIRectFromIdx(_bPos.x, _bPos.y);
 }
 
 Bomb::~Bomb()

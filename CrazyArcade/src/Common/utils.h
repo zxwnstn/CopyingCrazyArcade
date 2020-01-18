@@ -17,7 +17,7 @@ namespace UTIL
 	};
 	struct IRECT {
 		int left, top, right, bottom;
-
+		int bPos_x, bPos_y;
 		IRECT()
 			:left(0), top(0), right(0), bottom(0)
 		{}
@@ -25,22 +25,24 @@ namespace UTIL
 			: left(_left), top(_top), right(_right), bottom(_bottom)
 		{}
 		
-
-		void moveUp(int dist) {
-			top -= dist;
-			bottom -= dist;
+		void setBpos();
+		void moveUp(int dist);
+		void moveDown(int dist);
+		void moveLeft(int dist);
+		void moveRight(int dist);
+		void reset();
+		void operator=(const IRECT& rect) {
+			left = rect.left;
+			right = rect.right;
+			top = rect.top;
+			bottom = rect.bottom;
+			bPos_x = rect.bPos_x;
+			bPos_y = rect.bPos_y;
 		}
-		void moveDown(int dist) {
-			top += dist;
-			bottom += dist;
-		}
-		void moveLeft(int dist) {
-			left -= dist;
-			right -= dist;
-		}
-		void moveRight(int dist) {
-			left += dist;
-			right += dist;
+		std::pair<int, int> operator-(const IRECT& rect) {
+			int dx = bPos_x - rect.bPos_x;
+			int dy = bPos_y - rect.bPos_y;
+			return  std::make_pair(dx, dy);
 		}
 	};
 

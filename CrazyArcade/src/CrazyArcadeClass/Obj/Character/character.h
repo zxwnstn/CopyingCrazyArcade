@@ -24,13 +24,13 @@ public:
 	//move
 	int adjustSpeed(Direction dir);
 	Direction move(Direction dir, int dist);
-	Direction isCanMove(Direction dir);
+	Direction isCanMove(Direction dir, Direction origindir);
+	void stayDropArea();
 
 	//state
 	void fallDown();
 	void dropBomb();
-	void updateBlcokPosition();
-	void resetDropPos();
+	void checkSequenceDrop();
 
 public:
 	//getter
@@ -41,7 +41,7 @@ public:
 
 public:
 	//item get
-	void speedUp() { if(speed < 6) speed++; needSpeedAdjust = true; }
+	void speedUp() { if (speed < 6) speed++; } 
 	void rangeUp() { bombRange++; }
 	void bombLimitUp() { bombLimit++; }
 	void getUsableItem(ItemType type) {usableItemList[int(type)] = true;}
@@ -52,7 +52,6 @@ protected:
 	int				bombRange = 3;
 	int				bombLimit = 3;
 	int				speed = 2;
-	bool			needSpeedAdjust = false;
 
 	IRECT			blockCollisionRect;		
 	IRECT			otherCollisionRect;
@@ -61,15 +60,15 @@ protected:
 	CharacterState	state;
 
 	//this Margin var is Set warter BombCollision judge loosen
-	//this can't be more than player width and height (right now in on 60) 
+	//this can't be more than half of player width and height (right now is setted 60) 
 	const int		xMargin = 20;
 	const int		yMargin = 20;
 
 	//this info is not to collision last bomb drop area
 	IRECT			lastDrop_rect;
-	BlockPosition	lastDrop_bPos;
-	BlockPosition	prevDrop_bPos;
+	IRECT			prevDorp_rect;
 	bool			isDropBombArea = false;
+	bool			isSequenceDrop = false;
 
 	//collsion with bomb
 	float deadTime = 5.f;

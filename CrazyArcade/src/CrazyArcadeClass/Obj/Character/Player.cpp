@@ -38,55 +38,57 @@ void Player::update(float deltaTime)
 			bool isAreadyMove = false;
 			Direction ret = eNoMove;
 			if (KEYMANAGER->isStayKeyDown(VK_UP) && !isAreadyMove) {
-				if (needSpeedAdjust) {
+				/*if (needSpeedAdjust) {
 					ret = move(eUp, adjustSpeed(eUp));
 					if (ret != eNoMove)
 						needSpeedAdjust = false;
 				}
-				else ret = move(eUp, speed);
+				else */
+					ret = move(eUp, speed);
 				state = CharacterState::CharacterOnUpMove;
 				isAreadyMove = true;
 			}
 			if (KEYMANAGER->isStayKeyDown(VK_DOWN) && !isAreadyMove) {
-				if (needSpeedAdjust) {
+				/*if (needSpeedAdjust) {
 					ret = move(eDown, adjustSpeed(eDown));
 					if (ret != eNoMove)
 						needSpeedAdjust = false;
 				}
-				else ret = move(eDown, speed);
+				else */
+					ret = move(eDown, speed);
 				state = CharacterState::CharacterOnDownMove;
 				isAreadyMove = true;
 			}
 			if (KEYMANAGER->isStayKeyDown(VK_LEFT) && !isAreadyMove) {
-				if (needSpeedAdjust) {
+				/*if (needSpeedAdjust) {
 					ret = move(eLeft, adjustSpeed(eLeft));
 					if (ret != eNoMove)
 						needSpeedAdjust = false;
 				}
-				else ret = move(eLeft, speed);
+				else */
+					ret = move(eLeft, speed);
 				state = CharacterState::CharacterOnLeftMove;
 				isAreadyMove = true;
 			}
 			if (KEYMANAGER->isStayKeyDown(VK_RIGHT) && !isAreadyMove) {
-				if (needSpeedAdjust) {
+				/*if (needSpeedAdjust) {
 					ret = move(eRight, adjustSpeed(eRight));
 					if (ret != eNoMove)
 						needSpeedAdjust = false;
 				}
-				else ret = move(eRight, speed);
+				else */
+					ret = move(eRight, speed);
 				isAreadyMove = true;
 				state = CharacterState::CharacterOnRightMove;
 			}
-			if (ret != eNoMove) {
-				updateBlcokPosition();
+			if (ret != eNoMove && isDropBombArea) {
+				stayDropArea();
 			}
 
 
 			if (KEYMANAGER->isOnceKeyDown('A')) {
-				if (speed < 6) {
-					speed += 1;
-					needSpeedAdjust = true;
-				}
+				speedUp();
+					//needSpeedAdjust = true;
 			}
 			
 			if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
