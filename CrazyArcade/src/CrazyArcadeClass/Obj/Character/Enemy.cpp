@@ -6,6 +6,11 @@ Enemy::Enemy()
 {
 }
 
+Enemy::Enemy(int x, int y)
+	: character(x, y)
+{
+}
+
 
 Enemy::~Enemy()
 {
@@ -23,5 +28,10 @@ void Enemy::update(float deltaTime)
 		if (deadPastTime > deadTime)
 			die();
 	}
+}
+
+bool Enemy::init()
+{
+	return true;
 }
 

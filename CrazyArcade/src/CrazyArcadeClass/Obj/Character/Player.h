@@ -5,10 +5,10 @@ class Player : public character
 {
 public:
 	Player();
+	Player(int x, int y);
 	~Player();
 
-	bool init(BlockPosition _blockPos);
+	bool init();
 	void update(float deltaTime) override;
-
 };
 

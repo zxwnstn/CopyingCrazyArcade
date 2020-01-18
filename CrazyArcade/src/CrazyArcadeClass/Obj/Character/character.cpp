@@ -5,8 +5,21 @@
 #include <iostream>
 
 //init
-character::character()
+character::character() 
 {
+}
+character::character(int x, int y)
+{
+	pos.x = BLOCK_WIDTH / 2 + x * BLOCK_WIDTH + MAPOFFSET_X;
+	pos.y = BLOCK_HEIGHT / 2 + y * BLOCK_HEIGHT + MAPOFFSET_Y;
+
+	bPos = BlockPosition(x, y);
+
+	//set your character ablility	
+
+	rectSetFromPos();
+
+	state = CharacterState::CharacterOnIdle;
 }
 character::~character()
 {
@@ -321,7 +334,6 @@ void character::fallDown()
 	state = CharacterState::CharacterInBalloon;
 
 }
-
 void character::die()
 {
 	state = CharacterState::CharacterDead;

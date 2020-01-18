@@ -17,10 +17,14 @@ CharacterManager::~CharacterManager()
 bool CharacterManager::init()
 {
 	//TODO : add other
-	auto player = make_shared<Player>();
-	player->init(BlockPosition(0, 0));
+	auto player = make_shared<Player>(0, 0);
+	player->init();
+
+	auto enemy1 = make_shared<Enemy>(14, 10);
+	enemy1->init();
 
 	characters.push_back(player);
+	characters.push_back(enemy1);
 	return true;
 }
 void CharacterManager::update(float deltaTime)
@@ -83,9 +87,13 @@ void CharacterManager::collisionItem()
 }
 void CharacterManager::collisionCharacter()
 {
-	for (int i = 0; i < characters.size(); ++i) {
+	for (int i = 0; i < characters.size() - 1; ++i) {
 		for (int j = 1; j < characters.size(); ++j) {
-			//if()
+			if (characters[i]->getState() == CharacterState::CharacterInBalloon) {
+				if (isRectRectCollision(characters[i]->getBlockCollisionRect(), characters[j]->getOtherCollisionRect())) {
+					characters[i]->die();
+				}
+			}
 		}
 	}
 }

@@ -22,5 +22,8 @@ public:
 //for debug 
 	char str[100];
 	int len;
+
+	//for gameEnd
+	bool gameEnd;
 };
 

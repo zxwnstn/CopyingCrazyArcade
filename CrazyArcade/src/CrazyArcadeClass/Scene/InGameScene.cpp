@@ -25,10 +25,9 @@ HRESULT InGameScene::init()
 	GET_SINGLE(ItemManager)->init();
 
 	//for debugMode
-	if (m_debugMode) {
-		sprintf(str, "DEBUG ENABLED\nA : speed up\nS : limit up\nD : range up");
-		len = strlen(str);
-	}	
+	sprintf(str, "DEBUG ENABLED A : speed up S : limit up D : range up");
+	len = strlen(str);
+	
 	return S_OK;
 }
 
@@ -55,6 +54,12 @@ void InGameScene::render()
 	GET_SINGLE(CharacterManager)->render(getMemDC());
 	GET_SINGLE(BombManager)->render(getMemDC());
 	GET_SINGLE(ItemManager)->render(getMemDC());
+
+	if (m_debugMode) {
+		SetBkMode(getMemDC(), TRANSPARENT);
+		SetTextColor(getMemDC(), RGB(255, 0, 0));
+		TextOut(getMemDC(), 100, 20, str, len);
+	}
 }
 
 void InGameScene::afterRender()
@@ -69,10 +74,4 @@ void InGameScene::debugRender()
 	GET_SINGLE(BombManager)->debugRender(getMemDC());
 	GET_SINGLE(ItemManager)->debugRender(getMemDC());
 
-	if (m_debugMode) {
-		SetBkMode(getMemDC(), TRANSPARENT);
-		SetTextColor(getMemDC(), RGB(255, 0, 0));
-		TextOut(getMemDC(), 100, 20, str, len);
-	}
-	
 }

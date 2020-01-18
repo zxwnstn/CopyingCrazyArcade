@@ -9,24 +9,18 @@
 Player::Player()
 {
 }
-
+Player::Player(int x, int y)
+	: character(x, y)
+{
+}
 Player::~Player()
 {
 }
 
-bool Player::init(BlockPosition _blockPos = BlockPosition(0,0))
+
+bool Player::init()
 {
-	pos.x = BLOCK_WIDTH / 2 + _blockPos.x * BLOCK_WIDTH + MAPOFFSET_X;
-	pos.y = BLOCK_HEIGHT / 2 + _blockPos.y * BLOCK_HEIGHT + MAPOFFSET_Y;
-
-	bPos = _blockPos;
-
-	//set your character ablility	
-
-	rectSetFromPos();
-
-	state = CharacterState::CharacterOnIdle;
-
+	//TODO : init specific player info
 
 	return true;
 }

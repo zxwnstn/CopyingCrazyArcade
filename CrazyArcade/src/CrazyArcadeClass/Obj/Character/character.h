@@ -6,15 +6,16 @@
 class character{
 public:
 	character();
+	character(int x, int y);
 	~character();
 
 //member func
 public:
 	//update
 	virtual void update(float deltaTime) = 0;
+	virtual bool init() = 0;
 
 	//init
-	bool init() {};
 	void rectSetFromPos();
 
 	//render
