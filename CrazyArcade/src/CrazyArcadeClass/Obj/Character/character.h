@@ -29,6 +29,7 @@ public:
 
 	//state
 	void fallDown();
+	void die();
 	void dropBomb();
 	void checkSequenceDrop();
 
@@ -42,15 +43,15 @@ public:
 public:
 	//item get
 	void speedUp() { if (speed < 6) speed++; } 
-	void rangeUp() { bombRange++; }
-	void bombLimitUp() { bombLimit++; }
+	void bombRangeUp() { if(bombRange < 8) bombRange++; }
+	void bombLimitUp() { if(bombLimit < 10) bombLimit++; }
 	void getUsableItem(ItemType type) {usableItemList[int(type)] = true;}
 
 //member var
 protected:
 	//theses are character basic info
-	int				bombRange = 3;
-	int				bombLimit = 3;
+	int				bombRange = 1;
+	int				bombLimit = 1;
 	int				speed = 2;
 
 	IRECT			blockCollisionRect;		

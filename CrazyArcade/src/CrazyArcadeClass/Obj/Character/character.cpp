@@ -321,3 +321,8 @@ void character::fallDown()
 	state = CharacterState::CharacterInBalloon;
 
 }
+
+void character::die()
+{
+	state = CharacterState::CharacterDead;
+}

@@ -18,5 +18,9 @@ public:
 	void render();
 	void afterRender();
 	void debugRender();
+
+//for debug 
+	char str[100];
+	int len;
 };
 

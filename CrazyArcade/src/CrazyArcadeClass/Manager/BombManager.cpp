@@ -11,6 +11,7 @@ BombManager::BombManager()
 }
 BombManager::~BombManager()
 {
+	release();
 }
 
 bool BombManager::init()
@@ -56,6 +57,8 @@ void BombManager::debugRender(HDC hdc)
 }
 void BombManager::release()
 {
+	bombs.clear();
+	booms.clear();
 }
 
 bool BombManager::inRange(int x, int y)

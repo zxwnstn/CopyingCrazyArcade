@@ -24,6 +24,7 @@ public:
 	void release();
 	void update(float deltaTime);
 	void render();
+	void resetCurScenen();
 	void afterRender();
 	void debugRender();
 	

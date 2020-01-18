@@ -21,6 +21,8 @@ bool Player::init(BlockPosition _blockPos = BlockPosition(0,0))
 
 	bPos = _blockPos;
 
+	//set your character ablility	
+
 	rectSetFromPos();
 
 	state = CharacterState::CharacterOnIdle;
@@ -84,26 +86,29 @@ void Player::update(float deltaTime)
 			if (ret != eNoMove && isDropBombArea) {
 				stayDropArea();
 			}
-
-
-			if (KEYMANAGER->isOnceKeyDown('A')) {
-				speedUp();
-					//needSpeedAdjust = true;
-			}
-			
 			if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
 				dropBomb();
 			}
 		}
 	}
-	if (KEYMANAGER->isOnceKeyDown(VK_TAB)) {
-		state = CharacterState::CharacterOnIdle;
+
+	if (m_debugMode) {
+		if (KEYMANAGER->isOnceKeyDown(VK_TAB)) {
+			state = CharacterState::CharacterOnIdle;
+		}
+		if (KEYMANAGER->isOnceKeyDown('A'))
+			speedUp();
+		if (KEYMANAGER->isOnceKeyDown('S'))
+			bombLimitUp();
+		if (KEYMANAGER->isOnceKeyDown('D'))
+			bombRangeUp();
 	}
+
 	//Inballoon
 	if (state != CharacterState::CharacterDead && state == CharacterState::CharacterInBalloon) {
 		deadPastTime += deltaTime;
 		if (deadPastTime > deadTime)
-			state = CharacterState::CharacterDead;
+			die();
 	}
 
 	//player bomb check

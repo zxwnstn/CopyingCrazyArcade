@@ -38,6 +38,10 @@ void mainGame::update()
 		m_showRect = !m_showRect;
 	if (KEYMANAGER->isOnceKeyDown(VK_F2))
 		m_showFPS = !m_showFPS;
+	if (KEYMANAGER->isOnceKeyDown(VK_F3))
+		SCENEMANAGER->resetCurScenen();
+	if (KEYMANAGER->isOnceKeyDown(VK_F4))
+		m_debugMode = !m_debugMode;
 
 	TIMEMANAGER->update(60.f);
 	SCENEMANAGER->update(TIMEMANAGER->getElapsedTime());

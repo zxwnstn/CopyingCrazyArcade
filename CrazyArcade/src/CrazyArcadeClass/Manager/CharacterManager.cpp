@@ -11,6 +11,7 @@ CharacterManager::CharacterManager()
 }
 CharacterManager::~CharacterManager()
 {
+	release();
 }
 
 bool CharacterManager::init()
@@ -40,6 +41,7 @@ void CharacterManager::debugRender(HDC hdc)
 }
 void CharacterManager::release()
 {
+	characters.clear();
 }
 
 void CharacterManager::collision()
@@ -56,7 +58,7 @@ void CharacterManager::collisionItem()
 				switch ((*item)->getType())
 				{
 				case ItemType::ItemRangeUp:
-					(*character)->rangeUp();
+					(*character)->bombRangeUp();
 					break;
 				case ItemType::ItemSpeedUp:
 					(*character)->speedUp();
@@ -81,4 +83,9 @@ void CharacterManager::collisionItem()
 }
 void CharacterManager::collisionCharacter()
 {
+	for (int i = 0; i < characters.size(); ++i) {
+		for (int j = 1; j < characters.size(); ++j) {
+			//if()
+		}
+	}
 }

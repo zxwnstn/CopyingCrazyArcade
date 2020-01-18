@@ -52,6 +52,12 @@ void sceneManager::render()
 		_currentScene->render();
 }
 
+void sceneManager::resetCurScenen()
+{
+	_currentScene->release();
+	_currentScene->init();
+}
+
 void sceneManager::afterRender()
 {
 	if (_currentScene)

@@ -8,6 +8,7 @@ ItemManager::ItemManager()
 }
 ItemManager::~ItemManager()
 {
+	release();
 }
 
 bool ItemManager::init()

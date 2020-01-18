@@ -8,6 +8,7 @@ BlockManager::BlockManager()
 }
 BlockManager::~BlockManager()
 {
+	release();
 }
 
 bool BlockManager::init()
@@ -87,6 +88,7 @@ void BlockManager::release()
 	for (int i = 0; i < NUM_BLOCK_Y; ++i)
 		for (int j = 0; j < NUM_BLOCK_X; ++j)
 			blocks[i][j].release();
+	blocks.clear();
 }
 
 
