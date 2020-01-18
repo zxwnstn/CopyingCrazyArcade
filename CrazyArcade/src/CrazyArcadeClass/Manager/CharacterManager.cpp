@@ -89,9 +89,9 @@ void CharacterManager::collisionCharacter()
 {
 	for (int i = 0; i < characters.size() - 1; ++i) {
 		for (int j = 1; j < characters.size(); ++j) {
-			if (characters[i]->getState() == CharacterState::CharacterInBalloon) {
+			if (characters[j]->getState() == CharacterState::CharacterInBalloon) {
 				if (isRectRectCollision(characters[i]->getBlockCollisionRect(), characters[j]->getOtherCollisionRect())) {
-					characters[i]->die();
+					characters[j]->die();
 				}
 			}
 		}
