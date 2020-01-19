@@ -19,11 +19,11 @@ public:
 	void afterRender();
 	void debugRender();
 
-//for debug 
+	//for debug 
 	char str[100];
 	int len;
 
 	//for gameEnd
-	bool gameEnd;
+	bool gameEnd = false;
 };
 

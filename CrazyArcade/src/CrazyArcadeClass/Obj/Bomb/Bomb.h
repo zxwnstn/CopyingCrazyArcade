@@ -34,5 +34,11 @@ private:
 	IRECT			collisionRect;
 	Image*			curImage = nullptr;
 	BlockPosition	bPos;
+
+	//for frame render var
+	int frameIndex = 0;
+	float frameCounter = 0.f;
+	float frameChageTimer = 0.3f;
+	float deltaTime = 0.f;
 };
 

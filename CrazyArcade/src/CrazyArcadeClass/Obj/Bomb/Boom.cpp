@@ -14,22 +14,31 @@ Boom::Boom(BoomState _boomstate, float addedTime, BlockPosition _bPos)
 	switch (state)
 	{
 	case BoomState::BoomCenter:
+		curImage = IMAGEMANAGER->findImage("气惯季磐");
 		break;
 	case BoomState::BoomHorizenRight:
+		curImage = IMAGEMANAGER->findImage("气惯坷弗率");
 		break;
 	case BoomState::BoomHorizenRightEnd:
+		curImage = IMAGEMANAGER->findImage("气惯坷弗率场");
 		break;
 	case BoomState::BoomHorizenLeft:
+		curImage = IMAGEMANAGER->findImage("气惯哭率");
 		break;
 	case BoomState::BoomHorizenLeftEnd:
+		curImage = IMAGEMANAGER->findImage("气惯哭率场");
 		break;
 	case BoomState::BoomVerticalUp:
+		curImage = IMAGEMANAGER->findImage("气惯困率");
 		break;
 	case BoomState::BoomVerticalUpEnd:
+		curImage = IMAGEMANAGER->findImage("气惯困率场");
 		break;
 	case BoomState::BoomVerticalDown:
+		curImage = IMAGEMANAGER->findImage("气惯酒贰率");
 		break;
 	case BoomState::BoomVerticalDownEnd:
+		curImage = IMAGEMANAGER->findImage("气惯酒贰率场");
 		break;
 	}
 }
@@ -38,35 +47,21 @@ Boom::~Boom()
 	curImage = nullptr;
 }
 
-void Boom::update(float deltaTime)
+void Boom::update(float _deltaTime)
 {
+	deltaTime = _deltaTime;
 	pastTime += deltaTime;
 	if (pastTime > explosionDuring)
 		timeEnd = true;
 }
 void Boom::render(HDC hdc)
 {
-	switch (state)
-	{
-	case BoomState::BoomCenter:
-		break;
-	case BoomState::BoomHorizenRight:
-		break;
-	case BoomState::BoomHorizenRightEnd:
-		break;
-	case BoomState::BoomHorizenLeft:
-		break;
-	case BoomState::BoomHorizenLeftEnd:
-		break;
-	case BoomState::BoomVerticalUp:
-		break;
-	case BoomState::BoomVerticalUpEnd:
-		break;
-	case BoomState::BoomVerticalDown:
-		break;
-	case BoomState::BoomVerticalDownEnd:
-		break;
+	frameCounter += deltaTime;
+	if (frameCounter > frameChageTimer) {
+		frameIndex++;
+		frameCounter = 0.f;
 	}
+	curImage->frameRender(hdc, collisionRect.left, collisionRect.top, frameIndex, 0);
 }
 void Boom::debugRender(HDC hdc)
 {

@@ -12,8 +12,10 @@ workspace "CopyingGameProject"
 	}
 	characterset ("MBCS")
 
-
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+
+IncludeDir = {}
+IncludeDir["FMOD"] = "CrazyArcade/vendor/fmod/inc"
 
 project "CrazyArcade"
 	location "CrazyArcade"
@@ -31,6 +33,15 @@ project "CrazyArcade"
 	includedirs
 	{
 		"%{prj.name}/src",
+		"%{IncludeDir.FMOD}"
+	}
+	libdirs
+	{
+		{ "%{prj.name}/vendor/fmod/lib"}
+	}
+	links
+	{
+		"fmod_vc.lib"
 	}
 
 	filter "system:windows"
@@ -46,7 +57,7 @@ project "CrazyArcade"
 
 project "WhiteBoard"
 	location "WhiteBoard"
-	kind "WindowedApp"
+	kind "ConsoleApp"
 	language "C++"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")

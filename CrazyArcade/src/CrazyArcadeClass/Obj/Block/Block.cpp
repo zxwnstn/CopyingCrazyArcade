@@ -101,11 +101,12 @@ void Block::update(float deltaTime)
 void Block::render(HDC hdc)
 {
 	if (curBlockImage) {
+		IMAGEMANAGER->render("타일", hdc, collisionRect.left, collisionRect.top, 0, 0, 60, 60);
 		if(type == BlockType::BlockHard)
 			//TODO : Edit 30 : this is can't be litteral
-			curBlockImage->render(hdc, collisionRect.left, collisionRect.top - 30, curBlockIdx * BLOCK_WIDTH, 0, BLOCK_WIDTH, BLOCK_HEIGHT + 30);
-		else
-			curBlockImage->render(hdc, collisionRect.left, collisionRect.top, curBlockIdx * BLOCK_WIDTH, 0, BLOCK_WIDTH, BLOCK_HEIGHT + 30);
+			curBlockImage->render(hdc, collisionRect.left, collisionRect.top + 20, curBlockIdx * BLOCK_WIDTH, 50, BLOCK_WIDTH, BLOCK_HEIGHT - 20);
+		else if(type == BlockType::BlockSoft)
+			curBlockImage->render(hdc, collisionRect.left, collisionRect.top + 20, curBlockIdx * BLOCK_WIDTH, 27, BLOCK_WIDTH, BLOCK_HEIGHT - 20);
 	}
 }
 void Block::debugRender(HDC hdc)
@@ -123,6 +124,13 @@ void Block::debugRender(HDC hdc)
 		break;
 	}
 }
+void Block::afterRender(HDC hdc)
+{
+	if (type == BlockType::BlockHard)
+		curBlockImage->render(hdc, collisionRect.left, collisionRect.top - 30, curBlockIdx * BLOCK_WIDTH, 0, BLOCK_WIDTH, 50);
+	else if (type == BlockType::BlockSoft)
+		curBlockImage->render(hdc, collisionRect.left, collisionRect.top - 7, curBlockIdx * BLOCK_WIDTH, 0, BLOCK_WIDTH, 27);
+}
 void Block::release()
 {
 }
@@ -133,9 +141,12 @@ void Block::resetType(BlockType _type)
 	switch (type)
 	{
 	case BlockType::BlockHard:
+		innerItem = nullptr;
+		curBlockImage = IMAGEMANAGER->findImage("하드블록");
 		break;
 	case BlockType::BlockSoft:
 		innerItem = make_shared<Item>(collisionRect, bPos);
+		curBlockImage = IMAGEMANAGER->findImage("소프트블록");
 		break;
 	case BlockType::BlockNone:
 		innerItem = nullptr;

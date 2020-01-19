@@ -13,6 +13,7 @@ Image::Image()
 Image::~Image()
 {
 	SAFE_DELETE(_imageInfo);
+	SAFE_DELETE(_blendImage);
 }
 
 HRESULT Image::init(int width, int height)
@@ -417,23 +418,23 @@ void Image::loopAlphaRender(HDC hdc, LPRECT drawArea, int offsetX, int offsetY, 
 	}
 }
 
-//알파렌더 - 투명값 먹이기 범위 0 - 25
+//알파값 범위 0 - 255, 숫자가 커질수록 투명해진다.
 void Image::alphaRender(HDC hdc, BYTE alpha)
 {
 	_blendFunc.SourceConstantAlpha = alpha;
 	if (_isTrans) {
 		BitBlt(_blendImage->hMemDC, 0, 0, _imageInfo->width, _imageInfo->height, 
-			hdc, 0, 0, SRCCOPY);
+			hdc, _imageInfo->x, _imageInfo->y, SRCCOPY);
 
 		GdiTransparentBlt(_blendImage->hMemDC, 0, 0, _imageInfo->width, _imageInfo->height,
-			hdc, 0, 0, _imageInfo->width, _imageInfo->height, _transColor);
+			_imageInfo->hMemDC, 0, 0, _imageInfo->width, _imageInfo->height, _transColor);
 
 		AlphaBlend(hdc, _imageInfo->x, _imageInfo->y, _imageInfo->width, _imageInfo->height,
 			_blendImage->hMemDC, 0, 0, _imageInfo->width, _imageInfo->height, _blendFunc);
 	}
 	else {
 		AlphaBlend(hdc, _imageInfo->x, _imageInfo->y, _imageInfo->width, _imageInfo->height,
-			_blendImage->hMemDC, 0, 0, _imageInfo->width, _imageInfo->height, _blendFunc);
+			_imageInfo->hMemDC, 0, 0, _imageInfo->width, _imageInfo->height, _blendFunc);
 	}
 }
 
@@ -441,11 +442,11 @@ void Image::alphaRender(HDC hdc, int destX, int destY, BYTE alpha)
 {
 	_blendFunc.SourceConstantAlpha = alpha;
 	if (_isTrans) {
-		BitBlt(_blendImage->hMemDC, destX, destY, _imageInfo->width, _imageInfo->height,
-			hdc, 0, 0, SRCCOPY);
+		BitBlt(_blendImage->hMemDC, 0, 0, _imageInfo->width, _imageInfo->height,
+			hdc, destX, destY, SRCCOPY);
 
-		GdiTransparentBlt(_blendImage->hMemDC, destX, destY, _imageInfo->width, _imageInfo->height,
-			hdc, 0, 0, _imageInfo->width, _imageInfo->height, _transColor);
+		GdiTransparentBlt(_blendImage->hMemDC, 0, 0, _imageInfo->width, _imageInfo->height,
+			_imageInfo->hMemDC, 0, 0, _imageInfo->width, _imageInfo->height, _transColor);
 
 		AlphaBlend(hdc, destX, destY, _imageInfo->width, _imageInfo->height,
 			_blendImage->hMemDC, 0, 0, _imageInfo->width, _imageInfo->height, _blendFunc);
@@ -456,21 +457,47 @@ void Image::alphaRender(HDC hdc, int destX, int destY, BYTE alpha)
 	}
 }
 
+void Image::frameAlphaRender(HDC hdc, int destX, int destY, int frameX, int frameY, BYTE alpha) 
+{
+	_blendFunc.SourceConstantAlpha = alpha;
+
+	int sourWidth = _imageInfo->FrameWidth;
+	int sourHeight = _imageInfo->FrameHeight;
+
+	int sourX = frameX * sourWidth;
+	int sourY = frameY * sourHeight;
+
+	if (_isTrans) {
+		BitBlt(_blendImage->hMemDC, 0, 0, _imageInfo->width, _imageInfo->height,
+			hdc, destX, destY, SRCCOPY);
+
+		GdiTransparentBlt(_blendImage->hMemDC, 0, 0, sourWidth, sourHeight,
+			_imageInfo->hMemDC, sourX, sourY, sourWidth, sourHeight, _transColor);
+
+		AlphaBlend(hdc, destX, destY, sourWidth, sourHeight,
+			_blendImage->hMemDC, 0, 0, sourWidth, sourHeight, _blendFunc);
+	}
+	else {
+		AlphaBlend(hdc, destX, destY, sourWidth, sourHeight,
+			_imageInfo->hMemDC, 0, 0, sourWidth, sourHeight, _blendFunc);
+	}
+}
+
 void Image::alphaRender(HDC hdc, int destX, int destY, int sourX, int sourY, int sourWidth, int sourHeight, BYTE alpha)
 {
 	_blendFunc.SourceConstantAlpha = alpha;
 	if (_isTrans) {
-		BitBlt(_blendImage->hMemDC, destX, destY, sourWidth, sourHeight,
-			hdc, sourX, sourY, SRCCOPY);
+		BitBlt(_blendImage->hMemDC, 0, 0, _imageInfo->width, _imageInfo->height,
+			hdc, destX, destY, SRCCOPY);
 
-		GdiTransparentBlt(_blendImage->hMemDC, destX, destY, _imageInfo->width, _imageInfo->height,
-			hdc, sourX, sourY, sourWidth, sourHeight, _transColor);
+		GdiTransparentBlt(_blendImage->hMemDC, 0, 0, sourWidth, sourHeight,
+			_imageInfo->hMemDC, sourX, sourY, sourWidth, sourHeight, _transColor);
 
 		AlphaBlend(hdc, destX, destY, sourWidth, sourHeight,
 			_blendImage->hMemDC, sourX, sourY, sourWidth, sourHeight, _blendFunc);
 	} 
 	else {
 		AlphaBlend(hdc, destX, destY, sourWidth, sourHeight,
-			_blendImage->hMemDC, sourX, sourY, sourWidth, sourHeight, _blendFunc);
+			_imageInfo->hMemDC, sourX, sourY, sourWidth, sourHeight, _blendFunc);
 	}
 }

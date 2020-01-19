@@ -20,6 +20,7 @@ public:
 	void update(float deltaTime);
 	void render(HDC hdc);
 	void debugRender(HDC hdc);
+	void afterRender(HDC hdc);
 	void triggerDis(float time);
 	void resetType(BlockType type);
 	void release();

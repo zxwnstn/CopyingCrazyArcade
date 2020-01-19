@@ -42,22 +42,59 @@ enum class ItemType {
 	ItemRangeUp,
 	ItemSpeedUp,
 	ItemBombLimitUp,
-	ItemKick,
-	ItemDart,
+	//ItemKick,
+	//ItemDart,
 	ItemNone
 };
 
 
 
-enum class CharacterState {
-	CharacterOnLeftMove		= BIT(0),
-	CharacterOnRightMove	= BIT(1),
-	CharacterOnUpMove		= BIT(2),
-	CharacterOnDownMove		= BIT(3),
-	CharacterOnIdle			= BIT(4),
-	CharacterOnRide			= BIT(5),
-	CharacterInBalloon		= BIT(6),
-	CharacterDead			= BIT(7)
+enum CharacterState {
+	
+	CharacterOnMove			= BIT(0),
+	CharacterNoMove			= BIT(1),
+	CharacterOnLeftMove		= BIT(2),
+	CharacterOnRightMove	= BIT(3),
+	CharacterOnUpMove		= BIT(4),
+	CharacterOnDownMove		= BIT(5),
+	CharacterOnIdle			= BIT(6),
+	CharacterOnRide			= BIT(7),
+	CharacterInBalloon		= BIT(8),
+	CharacterDead			= BIT(9)
+};
+
+inline void operator ^=(CharacterState& state, const CharacterState& state2) {
+	int ret = (int)state;
+	ret ^= (int)state2;
+	state = (CharacterState)ret;
+}
+inline void operator &= (CharacterState& state, const CharacterState& state2) {
+	int ret = (int)state;
+	ret &= state2;
+	state = (CharacterState)ret;
+}
+inline void operator |= (CharacterState& state, const CharacterState& state2) {
+	int ret = (int)state;
+	ret |= state2;
+	state = (CharacterState)ret;
+}
+
+inline bool operator & (const CharacterState& state, const CharacterState& state2) {
+	return (int)state & (int)state2;
+}
+
+inline bool operator | (const CharacterState& state, const CharacterState& state2) {
+	return (int)state | (int)state2;
+}
+
+
+
+
+enum class CharacterType {
+	Dao,
+	Bazzi,
+	//TODO : add another character
+
 };
 
 enum Direction {

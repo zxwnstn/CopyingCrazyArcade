@@ -89,6 +89,8 @@ public:
 	void alphaRender(HDC hdc, BYTE alpha);
 	void alphaRender(HDC hdc,int destX, int destY, BYTE alpha);
 	void alphaRender(HDC hdc, int destX, int destY, int sourX, int sourY, int sourWidth, int sourHeight, BYTE alpha);
+	void frameAlphaRender(HDC hdc, int destX, int destY, int frameX, int frameY, BYTE alpha);
+
 
 
 	//이미지 핸들러

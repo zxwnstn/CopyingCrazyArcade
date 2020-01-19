@@ -1,5 +1,6 @@
 #include "Etc/stdafx.h"
 #include "gameNode.h"
+#include "Manager/SoundManager.h"
 
 gameNode::gameNode()
 {
@@ -34,6 +35,7 @@ HRESULT gameNode::init(bool managerInit)
 		IMAGEMANAGER->init();
 		TIMEMANAGER->init();
 		SCENEMANAGER->init();
+		GET_SINGLE(SoundManager)->init();
 	}
 	return E_NOTIMPL;
 }
@@ -47,6 +49,8 @@ void gameNode::release()
 		IMAGEMANAGER->releaseSingleton();
 		TIMEMANAGER->releaseSingleton();
 		RND->releaseSingleton();
+		GET_SINGLE(SoundManager)->release();
+		RELEASE_SINGLE(SoundManager);
 	}
 	ReleaseDC(m_hWnd, _hdc);
 }

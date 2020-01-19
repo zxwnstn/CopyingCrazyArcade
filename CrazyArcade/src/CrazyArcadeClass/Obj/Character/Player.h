@@ -8,7 +8,7 @@ public:
 	Player(int x, int y);
 	~Player();
 
-	bool init();
+	bool init(CharacterType _type) override;
 	void update(float deltaTime) override;
 };
 

@@ -20,11 +20,11 @@ bool BombManager::init()
 }
 void BombManager::update(float deltaTime)
 {
-	for (auto&e : bombs)
-		e->update(deltaTime);
 	for (auto&e : booms)
 		e->update(deltaTime);
-
+	for (auto&e : bombs)
+		e->update(deltaTime);
+	
 	for (auto it = bombs.begin(); it != bombs.end(); ) {
 		if ((*it)->isTimeEnd()) {
 			generateBoom((*it)->getPos(), (*it)->getExplosionRange());
@@ -46,6 +46,8 @@ void BombManager::update(float deltaTime)
 void BombManager::render(HDC hdc)
 {
 	for (auto& e : bombs)
+		e->render(hdc);
+	for (auto& e : booms)
 		e->render(hdc);
 }
 void BombManager::debugRender(HDC hdc)
@@ -76,9 +78,9 @@ void BombManager::rangeCheckAndGenBoom(const BlockPosition& startPoint, int dx, 
 	else if (dx < 0)
 		state = BoomState::BoomHorizenLeft;
 	else if(dy > 0)
-		state = BoomState::BoomVerticalUp;
-	else
 		state = BoomState::BoomVerticalDown;
+	else if(dy < 0)
+		state = BoomState::BoomVerticalUp;
 
 
 	auto& blocks = GET_SINGLE(BlockManager)->GetBlocks();
@@ -103,7 +105,6 @@ void BombManager::rangeCheckAndGenBoom(const BlockPosition& startPoint, int dx, 
 						blocks[nextY][nextX].triggerDis(addedTime + BLOCK_DIS_DELAY);
 					reachEnd = true;
 					break;
-					//blocks.
 				case BlockType::BlockNone:
 					if (state == BoomState::BoomHorizenRight)
 						state = BoomState::BoomHorizenRightEnd;
@@ -129,7 +130,6 @@ void BombManager::rangeCheckAndGenBoom(const BlockPosition& startPoint, int dx, 
 					reachEnd = true;
 					break;
 				case BlockType::BlockNone:
-					//this 0.2 seconds will be not coded with literal
 					booms.push_back(make_shared<Boom>(state, addedTime, BlockPosition(nextX, nextY)));
 					break;
 				}

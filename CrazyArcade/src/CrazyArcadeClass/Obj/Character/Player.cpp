@@ -3,7 +3,7 @@
 #include "CrazyArcadeClass/Manager/CharacterManager.h"
 #include "CrazyArcadeClass/Manager/BlockManager.h"
 #include "CrazyArcadeClass/Manager/ItemManager.h"
-
+#include "CrazyArcadeClass/Type.h"
 
 
 Player::Player()
@@ -18,68 +18,66 @@ Player::~Player()
 }
 
 
-bool Player::init()
+bool Player::init(CharacterType _type)
 {
 	//TODO : init specific player info
+	type = _type;
 
+	//imageSettup
+	switch (type)
+	{
+	case CharacterType::Dao:
+		break;
+	case CharacterType::Bazzi:
+		moveImage		=	IMAGEMANAGER->findImage("¹èÂîÀÌµ¿");
+		deadImage		=	IMAGEMANAGER->findImage("¹èÂîÁ×À½");
+		inBalloonImage	=	IMAGEMANAGER->findImage("¹èÂîÇ³¼±¾È");
+		break;
+	}
 	return true;
 }
 
-void Player::update(float deltaTime)
+void Player::update(float _deltaTime)
 {
+	deltaTime = _deltaTime;
 	//player movement
 	if (state != CharacterState::CharacterDead) {
 		if (state != CharacterState::CharacterInBalloon) {
-
 			bool isAreadyMove = false;
-			Direction ret = eNoMove;
+			Direction moveResult = eNoMove;
+			prevState = state;
 			if (KEYMANAGER->isStayKeyDown(VK_UP) && !isAreadyMove) {
-				/*if (needSpeedAdjust) {
-					ret = move(eUp, adjustSpeed(eUp));
-					if (ret != eNoMove)
-						needSpeedAdjust = false;
-				}
-				else */
-					ret = move(eUp, speed);
-				state = CharacterState::CharacterOnUpMove;
+				moveResult = move(eUp, speed);
 				isAreadyMove = true;
+				state = CharacterState::CharacterOnUpMove;
+				state |= CharacterState::CharacterOnMove;
 			}
 			if (KEYMANAGER->isStayKeyDown(VK_DOWN) && !isAreadyMove) {
-				/*if (needSpeedAdjust) {
-					ret = move(eDown, adjustSpeed(eDown));
-					if (ret != eNoMove)
-						needSpeedAdjust = false;
-				}
-				else */
-					ret = move(eDown, speed);
-				state = CharacterState::CharacterOnDownMove;
+				moveResult = move(eDown, speed);
 				isAreadyMove = true;
+				state = CharacterState::CharacterOnDownMove;
+				state |= CharacterState::CharacterOnMove;
 			}
 			if (KEYMANAGER->isStayKeyDown(VK_LEFT) && !isAreadyMove) {
-				/*if (needSpeedAdjust) {
-					ret = move(eLeft, adjustSpeed(eLeft));
-					if (ret != eNoMove)
-						needSpeedAdjust = false;
-				}
-				else */
-					ret = move(eLeft, speed);
-				state = CharacterState::CharacterOnLeftMove;
+				moveResult = move(eLeft, speed);
 				isAreadyMove = true;
+				state = CharacterState::CharacterOnLeftMove;
+				state |= CharacterState::CharacterOnMove;
 			}
 			if (KEYMANAGER->isStayKeyDown(VK_RIGHT) && !isAreadyMove) {
-				/*if (needSpeedAdjust) {
-					ret = move(eRight, adjustSpeed(eRight));
-					if (ret != eNoMove)
-						needSpeedAdjust = false;
-				}
-				else */
-					ret = move(eRight, speed);
+				moveResult = move(eRight, speed);
 				isAreadyMove = true;
 				state = CharacterState::CharacterOnRightMove;
+				state |= CharacterState::CharacterOnMove;
 			}
-			if (ret != eNoMove && isDropBombArea) {
+			if (!isAreadyMove) {
+				state ^= CharacterState::CharacterOnMove;
+				state ^= CharacterState::CharacterNoMove;
+			}
+			if (moveResult != eNoMove && isDropBombArea) {
 				stayDropArea();
 			}
+			
 			if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
 				dropBomb();
 			}
@@ -87,9 +85,8 @@ void Player::update(float deltaTime)
 	}
 
 	if (m_debugMode) {
-		if (KEYMANAGER->isOnceKeyDown(VK_TAB)) {
+		if (KEYMANAGER->isOnceKeyDown(VK_TAB))
 			state = CharacterState::CharacterOnIdle;
-		}
 		if (KEYMANAGER->isOnceKeyDown('A'))
 			speedUp();
 		if (KEYMANAGER->isOnceKeyDown('S'))

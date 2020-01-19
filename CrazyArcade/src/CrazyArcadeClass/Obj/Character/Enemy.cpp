@@ -30,7 +30,7 @@ void Enemy::update(float deltaTime)
 	}
 }
 
-bool Enemy::init()
+bool Enemy::init(CharacterType _type)
 {
 	return true;
 }

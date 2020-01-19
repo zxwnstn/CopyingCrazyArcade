@@ -29,7 +29,6 @@ void mainGame::release()
 	KEYMANAGER->releaseSingleton();
 	TIMEMANAGER->release();
 	TIMEMANAGER->releaseSingleton();
-
 }  
 
 void mainGame::update()
@@ -40,9 +39,7 @@ void mainGame::update()
 		m_showFPS = !m_showFPS;
 	if (KEYMANAGER->isOnceKeyDown(VK_F3))
 		SCENEMANAGER->resetCurScenen();
-	if (KEYMANAGER->isOnceKeyDown(VK_F4))
-		m_debugMode = !m_debugMode;
-
+	
 	TIMEMANAGER->update(60.f);
 	SCENEMANAGER->update(TIMEMANAGER->getElapsedTime());
 }
@@ -50,7 +47,8 @@ void mainGame::update()
 void mainGame::render()
 {
 	PatBlt(getMemDC(), 0, 0, WINSIZEX, WINSIZEY, WHITENESS);
-	
+
+
 	SCENEMANAGER->render();
 	SCENEMANAGER->afterRender();
 

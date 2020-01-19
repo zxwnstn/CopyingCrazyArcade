@@ -29,6 +29,12 @@ private:
 	//explosion logic var
 	bool			timeEnd = false;
 	float			pastTime = 0.f;
-	float			explosionDuring = 0.2f;
+	float			explosionDuring = 0.45f;
+
+	//for frame render var
+	int frameIndex = 0;
+	float frameCounter = 0.0f;
+	float frameChageTimer = 0.05f;
+	float deltaTime = 0.f;
 };
 

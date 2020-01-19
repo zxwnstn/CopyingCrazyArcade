@@ -56,20 +56,24 @@ void BlockManager::render(HDC hdc)
 				blocks[i][j].render(hdc);
 		}
 	}
+	for (int i = 0; i < NUM_BLOCK_Y; ++i)
+		for (int j = 0; j < NUM_BLOCK_X; ++j)
+			if (blocks[i][j].getType() == BlockType::BlockHard)
+				blocks[i][j].render(hdc);
 	for (int i = 0; i < NUM_BLOCK_Y; ++i) {
 		for (int j = 0; j < NUM_BLOCK_X; ++j) {
-			//if (blocks[i][j].getType() == BlockType::BlockSoft)
-				//blocks[i][j].render(hdc);
+			if (blocks[i][j].getType() == BlockType::BlockSoft)
+				blocks[i][j].render(hdc);
 		}
 	}
 }
 void BlockManager::afterRender(HDC hdc)
 {
 	//The hard block must be render last!
-	for (int i = 0; i < NUM_BLOCK_Y; ++i) 
-		for (int j = 0; j < NUM_BLOCK_X; ++j) 
-			if (blocks[i][j].getType() == BlockType::BlockHard)
-				blocks[i][j].render(hdc);
+	for (int i = 0; i < NUM_BLOCK_Y; ++i)
+		for (int j = 0; j < NUM_BLOCK_X; ++j)
+			if (blocks[i][j].getType() != BlockType::BlockNone)
+				blocks[i][j].afterRender(hdc);
 }
 void BlockManager::debugRender(HDC hdc)
 {

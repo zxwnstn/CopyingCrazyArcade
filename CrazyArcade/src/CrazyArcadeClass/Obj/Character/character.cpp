@@ -19,7 +19,9 @@ character::character(int x, int y)
 
 	rectSetFromPos();
 
-	state = CharacterState::CharacterOnIdle;
+	state = CharacterState::CharacterOnDownMove;
+	state |= CharacterState::CharacterNoMove;
+	prevState = state;
 }
 character::~character()
 {
@@ -38,8 +40,101 @@ void character::rectSetFromPos()
 }
 
 //render
-void character::render(HDC hdc) {
-	IMAGEMANAGER->render("플레이어", hdc, pos.x - BLOCK_WIDTH / 2 + 3, pos.y - BLOCK_HEIGHT / 2);
+void character::render(HDC hdc) 
+{
+	if (state & CharacterState::CharacterOnMove) {
+		if (state == prevState) {
+			if (state & CharacterState::CharacterOnDownMove) {
+				frameCounter += deltaTime;
+				if (frameCounter > frameChageTimer) {
+					frameIndex++;
+					frameCounter = 0.f;
+					if (frameIndex > moveImage->getMaxFrameX()) 
+						frameIndex = 0;
+				}
+				moveImage->frameRender(hdc, blockCollisionRect.left - 10, blockCollisionRect.top - 10, frameIndex, 0);
+			}
+			if (state & CharacterState::CharacterOnUpMove) {
+				frameCounter += deltaTime;
+				if (frameCounter > frameChageTimer) {
+					frameIndex++;
+					frameCounter = 0.f;
+					if (frameIndex > moveImage->getMaxFrameX()) 
+						frameIndex = 0;
+				}
+				moveImage->frameRender(hdc, blockCollisionRect.left - 10, blockCollisionRect.top - 10, frameIndex, 1);
+			}			
+			if (state & CharacterState::CharacterOnLeftMove) {
+				frameCounter += deltaTime;
+				if (frameCounter > frameChageTimer) {
+					frameIndex++;
+					frameCounter = 0.f;
+					if (frameIndex > moveImage->getMaxFrameX()) 
+						frameIndex = 0;
+				}
+				moveImage->frameRender(hdc, blockCollisionRect.left - 10, blockCollisionRect.top - 10, frameIndex, 2);
+			}
+			if (state & CharacterState::CharacterOnRightMove) {
+				frameCounter += deltaTime;
+				if (frameCounter > frameChageTimer){
+					frameIndex++;
+					frameCounter = 0.f;
+					if (frameIndex > moveImage->getMaxFrameX()) 
+						frameIndex = 0;
+				}
+				moveImage->frameRender(hdc, blockCollisionRect.left - 10, blockCollisionRect.top - 10, frameIndex, 3);
+			}		
+		}
+		else {
+			if (state & CharacterState::CharacterOnDownMove) {
+				frameIndex = 0;
+				frameCounter = 0.f;
+				moveImage->frameRender(hdc, blockCollisionRect.left - 10, blockCollisionRect.top - 10, frameIndex, 0);
+			}
+			if (state & CharacterState::CharacterOnUpMove) {
+				frameIndex = 0;
+				frameCounter = 0.f;
+				moveImage->frameRender(hdc, blockCollisionRect.left - 10, blockCollisionRect.top - 10, frameIndex, 1);
+			}
+			if (state & CharacterState::CharacterOnLeftMove) {
+				frameIndex = 0;
+				frameCounter = 0.f;
+				moveImage->frameRender(hdc, blockCollisionRect.left - 10, blockCollisionRect.top - 10, frameIndex, 2);
+			}
+			if (state & CharacterState::CharacterOnRightMove) {
+				frameIndex = 0;
+				frameCounter = 0.f;
+				moveImage->frameRender(hdc, blockCollisionRect.left - 10, blockCollisionRect.top - 10, frameIndex, 3);
+			}
+		}
+	}
+	if (state & CharacterState::CharacterNoMove) {
+		if (state & CharacterState::CharacterOnDownMove) {
+			moveImage->frameRender(hdc, blockCollisionRect.left - 10, blockCollisionRect.top - 10, frameIndex, 0);
+		}
+		if (state & CharacterState::CharacterOnUpMove) {
+			moveImage->frameRender(hdc, blockCollisionRect.left - 10, blockCollisionRect.top - 10, frameIndex, 1);
+		}
+		if (state & CharacterState::CharacterOnLeftMove) {
+			moveImage->frameRender(hdc, blockCollisionRect.left - 10, blockCollisionRect.top - 10, frameIndex, 2);
+		}
+		if (state & CharacterState::CharacterOnRightMove) {
+			moveImage->frameRender(hdc, blockCollisionRect.left - 10, blockCollisionRect.top - 10, frameIndex, 3);
+		}
+	}
+
+	if (state & CharacterInBalloon) {
+		frameCounter += deltaTime;
+		if (frameCounter > frameInballoonTimer) {
+			frameCounter = 0;
+			frameIndex++;
+			if (frameIndex > inBalloonImage->getMaxFrameX())
+				frameIndex = inBalloonImage->getMaxFrameX();
+		}
+		inBalloonImage->frameRender(hdc, blockCollisionRect.left, blockCollisionRect.top, frameIndex, 0);
+	}
+
+
 }
 void character::debugRender(HDC hdc)
 {
@@ -332,9 +427,12 @@ void character::checkSequenceDrop()
 void character::fallDown()
 {
 	state = CharacterState::CharacterInBalloon;
-
+	frameIndex = 0;
+	frameCounter = 0;
 }
 void character::die()
 {
 	state = CharacterState::CharacterDead;
+	frameIndex = 0;
 }
+

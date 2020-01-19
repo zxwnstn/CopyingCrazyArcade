@@ -18,13 +18,13 @@ bool CharacterManager::init()
 {
 	//TODO : add other
 	auto player = make_shared<Player>(0, 0);
-	player->init();
+	player->init(CharacterType::Bazzi);
 
-	auto enemy1 = make_shared<Enemy>(14, 10);
-	enemy1->init();
+	//auto enemy1 = make_shared<Enemy>(14, 10);
+	//enemy1->init(CharacterType::Bazzi);
 
 	characters.push_back(player);
-	characters.push_back(enemy1);
+	//characters.push_back(enemy1);
 	return true;
 }
 void CharacterManager::update(float deltaTime)
@@ -70,12 +70,12 @@ void CharacterManager::collisionItem()
 				case ItemType::ItemBombLimitUp:
 					(*character)->bombLimitUp();
 					break;
-				case ItemType::ItemKick:
+				/*case ItemType::ItemKick:
 					(*character)->getUsableItem(ItemType::ItemKick);
 					break;
 				case ItemType::ItemDart:
 					(*character)->getUsableItem(ItemType::ItemDart);
-					break;
+					break;*/
 				case ItemType::ItemNone:
 					break;
 				}
