@@ -43,7 +43,7 @@ public:
 
 public:
 	//item get
-	void speedUp()						{ if (speed < 6) speed++; } 
+	void speedUp();
 	void bombRangeUp()					{ if(bombRange < 8) bombRange++; }
 	void bombLimitUp()					{ if(bombLimit < 10) bombLimit++; }
 	void getUsableItem(ItemType type)	{ usableItemList[int(type)] = true;}
@@ -53,12 +53,15 @@ protected:
 	//theses are character basic info
 	int				bombRange = 1;
 	int				bombLimit = 1;
-	int				speed = 2;
+	int				speed = 3;
 	Image*			moveImage;
 	Image*			inBalloonImage;
 	Image*			deadImage;
 	CharacterType	type;
 	
+	bool			adjustSpeedHorizen = true;
+	bool			adjustSpeedVertical = true;
+
 
 	IRECT			blockCollisionRect;		
 	IRECT			otherCollisionRect;
@@ -79,7 +82,7 @@ protected:
 	bool			isSequenceDrop = false;
 
 	//collsion with bomb
-	float			deadTime = 4.8f;
+	float			deadTime = 6.5f;
 	float			deadPastTime = 0.f;
 
 	//item
@@ -87,11 +90,11 @@ protected:
 	vector<shared_ptr<Bomb>> curBombList;
 
 	//for frame render var
-	int frameIndex = 0;
-	float frameCounter = 0.f;
-	float frameChageTimer = 0.1f;
-	float frameInballoonTimer = 0.3f;
-	float deltaTime;
+	int				frameIndex = 0;
+	float			frameCounter = 0.f;
+	float			frameChageTimer = 0.1f;
+	float			frameInballoonTimer = 0.4f;
+	float			deltaTime;
 
 private:
 	//this for inertia witch is not consider use

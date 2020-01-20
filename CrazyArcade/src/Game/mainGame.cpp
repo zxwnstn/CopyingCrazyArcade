@@ -1,6 +1,7 @@
 #include "Etc/stdafx.h"
 #include "mainGame.h"
 #include "CrazyArcadeClass/Scene/InGameScene.h"
+#include "Manager/SoundManager.h"
 
 mainGame::mainGame()
 {
@@ -40,6 +41,7 @@ void mainGame::update()
 	if (KEYMANAGER->isOnceKeyDown(VK_F3))
 		SCENEMANAGER->resetCurScenen();
 	
+	GET_SINGLE(SoundManager)->update();
 	TIMEMANAGER->update(60.f);
 	SCENEMANAGER->update(TIMEMANAGER->getElapsedTime());
 }

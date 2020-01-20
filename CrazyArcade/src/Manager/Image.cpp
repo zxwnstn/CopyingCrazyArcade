@@ -418,7 +418,7 @@ void Image::loopAlphaRender(HDC hdc, LPRECT drawArea, int offsetX, int offsetY, 
 	}
 }
 
-//알파값 범위 0 - 255, 숫자가 커질수록 투명해진다.
+//알파값 범위 0 - 255, 숫자가 커질수록 진해진다.
 void Image::alphaRender(HDC hdc, BYTE alpha)
 {
 	_blendFunc.SourceConstantAlpha = alpha;

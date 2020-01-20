@@ -35,9 +35,7 @@ void Bomb::render(HDC hdc)
 		if (frameIndex > curImage->getMaxFrameX())
 			frameIndex = 0;
 	}
-	curImage->frameRender(hdc, collisionRect.left + 5, collisionRect.top - 7, frameIndex, 0);
-	//curImage->alphaRender(hdc, collisionRect.left + 5, collisionRect.top - 7, 0, 0, 55, 75, 50);
-
+	curImage->frameRender(hdc, collisionRect.left + 2, collisionRect.top - 7, frameIndex, 0);
 }
 void Bomb::debugRender(HDC hdc)
 {

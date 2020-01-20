@@ -19,9 +19,9 @@ auto some(int a, int b) {
 	return a + b;
 }
 
-int main() {
-	type t = type::etype1;
-
-	t ^= type::etype2;
-
-}
+//int main() {
+//	type t = type::etype1;
+//
+//	t ^= type::etype2;
+//
+//}

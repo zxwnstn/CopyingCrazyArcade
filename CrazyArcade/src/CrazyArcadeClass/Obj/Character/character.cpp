@@ -2,6 +2,7 @@
 #include "CrazyArcadeClass/Manager/BlockManager.h"
 #include "CrazyArcadeClass/Manager/ItemManager.h"
 #include "CrazyArcadeClass/Manager/BombManager.h"
+#include "Manager/SoundManager.h"
 #include <iostream>
 
 //init
@@ -157,7 +158,8 @@ Direction character::move(Direction dir, int dist)
 	{
 	//UP move can be change Right or Left
 	case eUp:
-		dist = adjustSpeed(eUp);
+		if(!adjustSpeedVertical)
+			dist = adjustSpeed(eUp);
 		blockCollisionRect.moveUp(dist);
 		dir = isCanMove(eDown, dir);
 	//no need change
@@ -171,7 +173,8 @@ Direction character::move(Direction dir, int dist)
 		blockCollisionRect.moveDown(dist);
 		//Left change
 		if (dir == eLeft) {
-			dist = adjustSpeed(eLeft);
+			if (!adjustSpeedHorizen)
+				dist = adjustSpeed(eLeft);
 			blockCollisionRect.moveLeft(dist);
 			otherCollisionRect.moveLeft(dist);
 			pos.x -= dist;
@@ -179,7 +182,8 @@ Direction character::move(Direction dir, int dist)
 		}
 		//Right change
 		if (dir == eRight) {
-			dist = adjustSpeed(eRight);
+			if (!adjustSpeedHorizen)
+				dist = adjustSpeed(eRight);
 			blockCollisionRect.moveRight(dist);
 			otherCollisionRect.moveRight(dist);
 			pos.x += dist;
@@ -189,7 +193,8 @@ Direction character::move(Direction dir, int dist)
 
 	//Down Move can be change Right or Left
 	case eDown:
-		dist = adjustSpeed(eDown);
+		if (!adjustSpeedVertical)
+			dist = adjustSpeed(eDown);
 		blockCollisionRect.moveDown(dist);
 		dir = isCanMove(eDown, dir);
 	//No need change
@@ -203,7 +208,8 @@ Direction character::move(Direction dir, int dist)
 		blockCollisionRect.moveUp(dist);
 		//Right
 		if (dir == eLeft) {
-			dist = adjustSpeed(eLeft);
+			if (!adjustSpeedHorizen)
+				dist = adjustSpeed(eLeft);
 			blockCollisionRect.moveLeft(dist);
 			otherCollisionRect.moveLeft(dist);
 			pos.x -= dist;
@@ -211,7 +217,8 @@ Direction character::move(Direction dir, int dist)
 		}
 		//Left
 		if (dir == eRight) {
-			dist = adjustSpeed(eRight);
+			if (!adjustSpeedHorizen)
+				dist = adjustSpeed(eRight);
 			blockCollisionRect.moveRight(dist);
 			otherCollisionRect.moveRight(dist);
 			pos.x += dist;
@@ -221,7 +228,8 @@ Direction character::move(Direction dir, int dist)
 
 	//Right Move can be change Up or Down
 	case eRight:
-		dist = adjustSpeed(eRight);
+		if (!adjustSpeedHorizen)
+			dist = adjustSpeed(eRight);
 		blockCollisionRect.moveRight(dist);
 		dir = isCanMove(eRight, dir);
 	//No need change
@@ -235,7 +243,8 @@ Direction character::move(Direction dir, int dist)
 		blockCollisionRect.moveLeft(dist);
 		//Up change
 		if (dir == eUp) {
-			dist = adjustSpeed(eUp);
+			if (!adjustSpeedVertical)
+				dist = adjustSpeed(eUp);
 			blockCollisionRect.moveUp(dist);
 			otherCollisionRect.moveUp(dist);
 			pos.y -= dist;
@@ -243,7 +252,8 @@ Direction character::move(Direction dir, int dist)
 		}
 		//Down change
 		if (dir == eDown) {
-			dist = adjustSpeed(eDown);
+			if (!adjustSpeedVertical)
+				dist = adjustSpeed(eDown);
 			blockCollisionRect.moveDown(dist);
 			otherCollisionRect.moveDown(dist);
 			pos.y += dist;
@@ -253,7 +263,8 @@ Direction character::move(Direction dir, int dist)
 
 	//Left Move can be change Up or Down
 	case eLeft:
-		dist = adjustSpeed(eLeft);
+		if (!adjustSpeedHorizen)
+			dist = adjustSpeed(eLeft);
 		blockCollisionRect.moveLeft(dist);
 		dir = isCanMove(eLeft, dir);
 		//no need change
@@ -267,7 +278,8 @@ Direction character::move(Direction dir, int dist)
 		blockCollisionRect.moveRight(dist);
 		//Up change
 		if (dir == eUp) {
-			dist = adjustSpeed(eUp);
+			if (!adjustSpeedVertical)
+				dist = adjustSpeed(eUp);
 			blockCollisionRect.moveUp(dist);
 			otherCollisionRect.moveUp(dist);
 			pos.y -= dist;
@@ -275,7 +287,8 @@ Direction character::move(Direction dir, int dist)
 		}
 		//Down change
 		if (dir == eDown) {
-			dist = adjustSpeed(eDown);
+			if (!adjustSpeedVertical)
+				dist = adjustSpeed(eDown);
 			blockCollisionRect.moveDown(dist);
 			otherCollisionRect.moveDown(dist);
 			pos.y += dist;
@@ -364,18 +377,22 @@ int character::adjustSpeed(Direction dir)
 	case eUp:
 		while ((blockCollisionRect.bottom - MAPOFFSET_Y - ret) % speed != 0)
 			--ret;
+		adjustSpeedVertical = true;
 		break;
 	case eDown:
 		while ((blockCollisionRect.bottom - MAPOFFSET_Y + ret) % speed != 0)
 			--ret;
+		adjustSpeedVertical = true;
 		break;
 	case eRight:
 		while ((blockCollisionRect.left - MAPOFFSET_X + ret) % speed != 0)
 			--ret;
+		adjustSpeedHorizen = true;
 		break;
 	case eLeft:
 		while ((blockCollisionRect.right - MAPOFFSET_X - ret) % speed != 0)
 			--ret;
+		adjustSpeedHorizen = true;
 		break;
 	}
 	return ret;
@@ -402,6 +419,16 @@ void character::dropBomb()
 		lastDrop_rect.setBpos();
 
 		if (!(lastDrop_rect == prevDorp_rect)) {
+			bool isInBomb = false;
+			auto& bombs = GET_SINGLE(BombManager)->GetBombs();
+			for (auto it = bombs.begin(); it != bombs.end(); ++it) {
+				if (lastDrop_rect == (*it)->getCollisionRect()) {
+					isInBomb = true;
+					break;
+				}
+			}
+			if (isInBomb) return;
+			GET_SINGLE(SoundManager)->playSound("ÆøÅº³õ±â", 4);
 			curBombList.push_back(newBomb);
 			GET_SINGLE(BombManager)->GetBombs().push_back(newBomb);
 			checkSequenceDrop();
@@ -426,13 +453,26 @@ void character::checkSequenceDrop()
 }
 void character::fallDown()
 {
+	GET_SINGLE(SoundManager)->playSound("Ç³¼±°®È÷±â", 5);
 	state = CharacterState::CharacterInBalloon;
 	frameIndex = 0;
 	frameCounter = 0;
 }
 void character::die()
 {
+	GET_SINGLE(SoundManager)->playSound("Ç³¼±Æø¹ß", 1);
 	state = CharacterState::CharacterDead;
 	frameIndex = 0;
+}
+
+//item get
+
+void character::speedUp() 
+{ 
+	if (speed < 6) {
+		adjustSpeedHorizen = false;
+		adjustSpeedVertical = false;
+		speed++; 
+	}
 }
 

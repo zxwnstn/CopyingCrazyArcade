@@ -25,5 +25,14 @@ public:
 
 	//for gameEnd
 	bool gameEnd = false;
+	bool gameStart = true;
+	float gameStartEnd = 1.5f;
+	float pastStart = 0.f;
+
+	bool mouseDis = false;
+	float mouseDisApearDelay = 1.0f;
+	float mousePastTime = 0.f;
+	POINT lastMousePos;
+
 };
 

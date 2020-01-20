@@ -7,7 +7,7 @@ Item::Item(const IRECT & _rect, const BlockPosition _pos)
 {
 	int temp = RND->getInt(100);
 	if (temp < ItemCreationPer) {
-		temp = RND->getInt((int)ItemType::ItemNone - 1);
+		temp = RND->getInt((int)ItemType::ItemNone);
 		type = (ItemType)temp;
 	}
 	else {
@@ -57,9 +57,7 @@ void Item::render(HDC hdc)
 		if (frameIndex > curImage->getMaxFrameX())
 			frameIndex = 0;
 	}
-	curImage->frameRender(hdc, collisionRect.left, collisionRect.top, frameIndex, frameIndexY);
-	//curImage->frameAlphaRender(hdc, collisionRect.left, collisionRect.top, frameIndex, frameIndexY, 20);
-
+	curImage->frameRender(hdc, collisionRect.left - 2, collisionRect.top - 2, frameIndex, frameIndexY);
 }
 void Item::debugRender(HDC hdc)
 {

@@ -35,19 +35,37 @@ enum class BoomState {
 enum class BlockType {
 	BlockHard,
 	BlockSoft,
-	BlockNone
+	BlockTree,
+	BlockNone,
+	BlockBush
 };
 
 enum class ItemType {
 	ItemRangeUp,
 	ItemSpeedUp,
 	ItemBombLimitUp,
-	//ItemKick,
-	//ItemDart,
 	ItemNone
 };
 
+enum TileIndex {
+	tileGreenBlock, 
+	tileMoreGreenBlock,
+	tileGray,
+	tileCenterLine,
+	tileAcrossWalk
+};
 
+enum SoftBlockIndex {
+	sbRed,
+	sbOrange,
+	sbBox
+};
+
+enum HardBlockIndex {
+	hbYellow,
+	hbBlue,
+	hbOrange
+};
 
 enum CharacterState {
 	

@@ -3,6 +3,7 @@
 #include "CrazyArcadeClass/Obj/Character/Player.h"
 #include "CrazyArcadeClass/Obj/Character/Enemy.h"
 #include "CrazyArcadeClass/Manager/ItemManager.h"
+#include "Manager/SoundManager.h"
 
 DEFINITION_SINGLE(CharacterManager)
 
@@ -59,6 +60,7 @@ void CharacterManager::collisionItem()
 	for (auto character = characters.begin(); character != characters.end(); ++character) {
 		for (auto item = items.begin(); item != items.end(); ) {
 			if (isRectRectCollision((*item)->getCollisionRect(), (*character)->getOtherCollisionRect())) {
+				GET_SINGLE(SoundManager)->playSound("아이템얻기", 4);
 				switch ((*item)->getType())
 				{
 				case ItemType::ItemRangeUp:
@@ -91,7 +93,7 @@ void CharacterManager::collisionCharacter()
 		for (int j = 1; j < characters.size(); ++j) {
 			if (characters[j]->getState() == CharacterState::CharacterInBalloon) {
 				if (isRectRectCollision(characters[i]->getBlockCollisionRect(), characters[j]->getOtherCollisionRect())) {
-					characters[j]->die();
+					characters[j]->fallDown();
 				}
 			}
 		}

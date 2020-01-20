@@ -28,7 +28,23 @@ void SoundManager::addSound(string str, const string & fileName, int mode) {
 	soundMap.insert(make_pair(str, sound));
 }
 
-void SoundManager::playeSound(string str, int channel) {
+void SoundManager::addStream(string str, const string & fileName, int mode)
+{
+	auto findIter = soundMap.find(str);
+	if (findIter != soundMap.end())
+		return;
+	FMOD::Sound* sound;
+
+	if (mode == 0)
+		ret = fmodSystem->createStream(fileName.c_str(), FMOD_LOOP_NORMAL, 0, &sound);
+	else {
+		ret = fmodSystem->createStream(fileName.c_str(), FMOD_LOOP_OFF, 0, &sound);
+	}
+	soundMap.insert(make_pair(str, sound));
+}
+
+
+void SoundManager::playSound(string str, int channel) {
 	auto findIter = soundMap.find(str);
 	if (findIter == soundMap.end()) {
 		return;
@@ -47,4 +63,10 @@ void SoundManager::pauseChannel(int channel) {
 
 void SoundManager::resumeChannel(int channel) {
 	ch[channel]->setPaused(false);
+}
+
+void SoundManager::update()
+{
+	ch[0]->setVolume(0.1f);
+	fmodSystem->update();
 }

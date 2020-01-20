@@ -3,6 +3,7 @@
 
 #include "BlockManager.h"
 #include "CharacterManager.h"
+#include "Manager/SoundManager.h"
 #include "ItemManager.h"
 DEFINITION_SINGLE(BombManager)
 
@@ -28,6 +29,7 @@ void BombManager::update(float deltaTime)
 	for (auto it = bombs.begin(); it != bombs.end(); ) {
 		if ((*it)->isTimeEnd()) {
 			generateBoom((*it)->getPos(), (*it)->getExplosionRange());
+			GET_SINGLE(SoundManager)->playSound("폭발음", 2);
 			it = bombs.erase(it);
 		}
 		else ++it;
@@ -100,6 +102,9 @@ void BombManager::rangeCheckAndGenBoom(const BlockPosition& startPoint, int dx, 
 				case BlockType::BlockHard:
 					reachEnd = true;
 					break;
+				case BlockType::BlockTree:
+					reachEnd = true;
+					break;
 				case BlockType::BlockSoft:
 					if(!blocks[nextY][nextX].isWillDis())
 						blocks[nextY][nextX].triggerDis(addedTime + BLOCK_DIS_DELAY);
@@ -124,6 +129,9 @@ void BombManager::rangeCheckAndGenBoom(const BlockPosition& startPoint, int dx, 
 				case BlockType::BlockHard:
 					reachEnd = true;
 					break;
+				case BlockType::BlockTree:
+					reachEnd = true;
+					break;
 				case BlockType::BlockSoft:
 					if (!blocks[nextY][nextX].isWillDis())
 						blocks[nextY][nextX].triggerDis(addedTime + BLOCK_DIS_DELAY);
@@ -146,6 +154,8 @@ void BombManager::generateBoom(const BlockPosition& startPoint, int explosionRan
 	rangeCheckAndGenBoom(startPoint, 1, 0, explosionRange);	//우
 	rangeCheckAndGenBoom(startPoint, 0, -1, explosionRange);//상
 	rangeCheckAndGenBoom(startPoint, 0, 1, explosionRange);	//하
+
+
 }
 
 void BombManager::collisionBoom()

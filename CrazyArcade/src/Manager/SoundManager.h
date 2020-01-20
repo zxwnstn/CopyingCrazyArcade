@@ -7,12 +7,13 @@ class SoundManager
 public:
 	void init();
 	void addSound(string str, const string& fileName, int mode = 1);
-	void playeSound(string str, int channel);
+	void addStream(string str, const string& fileName, int mode = 1);
+	void playSound(string str, int channel);
 
 	void release();
 	void pauseChannel(int channel);
 	void resumeChannel(int channel);
-
+	void update();
 
 private:
 	FMOD::System* fmodSystem;
