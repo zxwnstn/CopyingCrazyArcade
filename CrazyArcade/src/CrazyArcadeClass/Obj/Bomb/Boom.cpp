@@ -2,8 +2,8 @@
 #include "Boom.h"
 
 
-Boom::Boom(BoomState _boomstate, float addedTime, BlockPosition _bPos, bool _inBush)
-	:state(_boomstate), bPos(_bPos), inBush(_inBush)
+Boom::Boom(BoomState _boomstate, float addedTime, BlockPosition _bPos)
+	:state(_boomstate), bPos(_bPos)
 {
 	explosionDuring += addedTime;
 	collisionRect.left = _bPos.x * BLOCK_WIDTH + MAPOFFSET_X;
@@ -61,8 +61,7 @@ void Boom::render(HDC hdc)
 		frameIndex++;
 		frameCounter = 0.f;
 	}
-	if(!inBush)
-		curImage->frameRender(hdc, collisionRect.left, collisionRect.top, frameIndex, 0);
+	curImage->frameRender(hdc, collisionRect.left, collisionRect.top, frameIndex, 0);
 }
 void Boom::debugRender(HDC hdc)
 {

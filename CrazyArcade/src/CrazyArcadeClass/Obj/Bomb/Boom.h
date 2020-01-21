@@ -2,7 +2,7 @@
 
 class Boom{
 public:
-	Boom(BoomState _boomstate, float addedTime, BlockPosition _pos, bool _inBush = false);
+	Boom(BoomState _boomstate, float addedTime, BlockPosition _pos);
 	~Boom();
 
 public:
@@ -32,7 +32,6 @@ private:
 	float			explosionDuring = 0.45f;
 
 	//for frame render var
-	bool inBush;
 	int frameIndex = 0;
 	float frameCounter = 0.0f;
 	float frameChageTimer = 0.05f;

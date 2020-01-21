@@ -226,6 +226,10 @@ void Block::triggerDis(float time)
 {
 	willDis = true;
 	willDisTime = time;
+	if (type == BlockType::BlockBush) {
+		willDisTime = 0.f;
+		onDisTime = 0.f;
+	}
 }
 void Block::softToNoneBlock()
 {
