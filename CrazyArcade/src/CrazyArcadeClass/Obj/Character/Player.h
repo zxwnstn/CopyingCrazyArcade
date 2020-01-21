@@ -4,7 +4,6 @@
 class Player : public character
 {
 public:
-	Player();
 	Player(int x, int y);
 	~Player();
 

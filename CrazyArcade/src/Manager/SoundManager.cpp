@@ -65,8 +65,13 @@ void SoundManager::resumeChannel(int channel) {
 	ch[channel]->setPaused(false);
 }
 
+void SoundManager::stopChannel(int channel)
+{
+	ch[channel]->stop();
+}
+
 void SoundManager::update()
 {
-	ch[0]->setVolume(0.1f);
+	ch[0]->setVolume(0.2f);
 	fmodSystem->update();
 }

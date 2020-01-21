@@ -21,6 +21,7 @@ public:
 	//render
 	void render(HDC hdc);
 	void debugRender(HDC hdc);
+	void afterRender(HDC hdc);
 
 	//move
 	Direction isCanMove(Direction dir, Direction origindir);
@@ -33,6 +34,9 @@ public:
 	void dropBomb();
 	void fallDown();
 	void die();
+	bool isInBush();
+	void setDropArea(IRECT oppentsBombRect);
+	bool isPlayerDead() { return playerDead; }
 
 public:
 	//getter
@@ -57,11 +61,10 @@ protected:
 	Image*			moveImage;
 	Image*			inBalloonImage;
 	Image*			deadImage;
+	Image*			characterPointer;
 	CharacterType	type;
-	
 	bool			adjustSpeedHorizen = true;
 	bool			adjustSpeedVertical = true;
-
 
 	IRECT			blockCollisionRect;		
 	IRECT			otherCollisionRect;
@@ -72,8 +75,8 @@ protected:
 
 	//this Margin var is Set warter BombCollision judge loosen
 	//this can't be more than half of player width and height (right now is setted 60) 
-	const int		xMargin = 20;
-	const int		yMargin = 20;
+	const int		xMargin = 21;
+	const int		yMargin = 21;
 
 	//this info is not to collision last bomb drop area
 	IRECT			lastDrop_rect;
@@ -81,19 +84,23 @@ protected:
 	bool			isDropBombArea = false;
 	bool			isSequenceDrop = false;
 
+
 	//collsion with bomb
 	float			deadTime = 6.5f;
 	float			deadPastTime = 0.f;
+	bool			playerDead = false;
 
 	//item
 	bool usableItemList[20]{ 0, };
 	vector<shared_ptr<Bomb>> curBombList;
 
 	//for frame render var
+	bool			inBush = false;
 	int				frameIndex = 0;
 	float			frameCounter = 0.f;
 	float			frameChageTimer = 0.1f;
 	float			frameInballoonTimer = 0.4f;
+	float			frameDyingTimer = 0.1f;
 	float			deltaTime;
 
 private:

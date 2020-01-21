@@ -139,10 +139,10 @@ void Block::render(HDC hdc)
 	if (curBlockImage) {
 		IMAGEMANAGER->render("타일", hdc, collisionRect.left, collisionRect.top, tileIdx * BLOCK_WIDTH, 0, 60, 60);
 		
-		if (type != BlockType::BlockNone && type != BlockType::BlockTree)
+		if (type != BlockType::BlockNone && type != BlockType::BlockTree && type != BlockType::BlockBush)
 			shawdowImage->alphaRender(hdc, collisionRect.left - 5, collisionRect.top + 4, 75);
 		else if (type == BlockType::BlockBush)
-			shawdowImage->alphaRender(hdc, collisionRect.left - 5, collisionRect.top + 4, 75);
+			shawdowImage->alphaRender(hdc, collisionRect.left - 5, collisionRect.top - 19, 75);
 
 		if (type == BlockType::BlockHard)
 			curBlockImage->render(hdc, collisionRect.left, collisionRect.top + 20, curBlockIdx * BLOCK_WIDTH, 50, BLOCK_WIDTH, BLOCK_HEIGHT - 20);
@@ -166,6 +166,9 @@ void Block::debugRender(HDC hdc)
 		break;
 	case BlockType::BlockNone:
 		DrawColorRect(hdc, collisionRect, RGB(255, 255, 255));
+		break;
+	case BlockType::BlockBush:
+		DrawColorRect(hdc, collisionRect, RGB(0, 64, 0));
 		break;
 	case BlockType::BlockTree:
 		DrawColorRect(hdc, collisionRect, RGB(133, 125, 200));
@@ -227,13 +230,17 @@ void Block::triggerDis(float time)
 void Block::softToNoneBlock()
 {
 	onDis = false;
+
+	if (type == BlockType::BlockSoft) {
+		if (innerItem->getType() != ItemType::ItemNone) {
+			GET_SINGLE(ItemManager)->GetItems().push_back(innerItem);
+			GET_SINGLE(SoundManager)->playSound("아이템생성", 3);
+		}
+	}
+
 	type = BlockType::BlockNone;
 	curBlockImage = IMAGEMANAGER->findImage("타일");
 
 	//TODO : set innerItem push
-	if (innerItem->getType() != ItemType::ItemNone) {
-		GET_SINGLE(ItemManager)->GetItems().push_back(innerItem);
-		GET_SINGLE(SoundManager)->playSound("아이템생성", 3);
-	}
 	innerItem = nullptr;
 }

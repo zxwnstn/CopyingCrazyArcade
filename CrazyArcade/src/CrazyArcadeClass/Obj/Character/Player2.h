@@ -1,16 +1,13 @@
 #pragma once
 #include "character.h"
 
-class Enemy :
+class Player2 :
 	public character
 {
-private:
-	void moveAI(float deltaTime);
 
 public:
-	Enemy();
-	Enemy(int x, int y);
-	~Enemy();
+	Player2(int x, int y);
+	~Player2();
 
 	void update (float deltaTime) override;
 	bool init(CharacterType _type) override;

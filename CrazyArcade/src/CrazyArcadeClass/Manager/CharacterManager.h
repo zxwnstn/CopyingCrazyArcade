@@ -9,6 +9,7 @@ public:
 	void update(float deltaTime);
 	void render(HDC hdc);
 	void debugRender(HDC hdc);
+	void afterRender(HDC hdc);
 	void release();
 	void collision();
 
@@ -20,6 +21,9 @@ public:
 	//getter
 	auto& getCharacters() { return characters; }
 
+public:
+	bool charactersAllDead = false;
+	bool draw = false;
 private:
 	vector<shared_ptr<character>> characters;
 

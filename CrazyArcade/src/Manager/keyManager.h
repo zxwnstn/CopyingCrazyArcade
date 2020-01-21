@@ -11,6 +11,8 @@ private:
 	bitset<KEYMAX> _keyUp;
 	bitset<KEYMAX> _keyDown;
 	
+	BYTE playerKey[225];
+
 public:
 	keyManager();
 	~keyManager();
@@ -23,5 +25,7 @@ public:
 	bool isOnceKeyUp(int key);
 	bool isStayKeyDown(int key);
 	bool isToggleKey(int key);
+
+	void setCustomKey(int dest, int userKey);
 };
 

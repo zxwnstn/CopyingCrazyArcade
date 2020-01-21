@@ -57,19 +57,19 @@ bool BlockManager::init()
 		blocks[1][14].init(BlockType::BlockNone, 14, 1, tileGreenBlock);
 	}
 
-	if (2) {
+	if (3) {
 		blocks[2][0].init(BlockType::BlockNone, 0, 2, tileGreenBlock);
 		blocks[2][1].init(BlockType::BlockNone, 1, 2, tileGreenBlock);
 		blocks[2][2].init(BlockType::BlockSoft, 2, 2, tileGreenBlock, sbOrange);
 		blocks[2][3].init(BlockType::BlockSoft, 3, 2, tileGreenBlock, sbRed);
 		blocks[2][4].init(BlockType::BlockSoft, 4, 2, tileGreenBlock, sbOrange);
-		blocks[2][5].init(BlockType::BlockNone, 5, 2, tileGreenBlock);
+		blocks[2][5].init(BlockType::BlockBush, 5, 2, tileGreenBlock);
 
 		blocks[2][6].init(BlockType::BlockNone, 6, 2, tileAcrossWalk);
 		blocks[2][7].init(BlockType::BlockNone, 7, 2, tileAcrossWalk);
 		blocks[2][8].init(BlockType::BlockNone, 8, 2, tileAcrossWalk);
 
-		blocks[2][9].init(BlockType::BlockNone, 9, 2, tileGreenBlock);
+		blocks[2][9].init(BlockType::BlockBush, 9, 2, tileGreenBlock);
 		blocks[2][10].init(BlockType::BlockHard, 10, 2, tileGreenBlock);
 		blocks[2][11].init(BlockType::BlockSoft, 11, 2, tileGreenBlock, sbBox);
 		blocks[2][12].init(BlockType::BlockHard, 12, 2, tileGreenBlock);
@@ -77,7 +77,7 @@ bool BlockManager::init()
 		blocks[2][14].init(BlockType::BlockHard, 14, 2, tileGreenBlock);
 	}
 
-	if (3) {
+	if (4) {
 		blocks[3][0].init(BlockType::BlockSoft, 0, 3, tileGreenBlock, sbBox);
 		blocks[3][1].init(BlockType::BlockHard, 1, 3, tileGreenBlock, hbOrange);
 		blocks[3][2].init(BlockType::BlockSoft, 2, 3, tileGreenBlock, sbBox);
@@ -103,13 +103,13 @@ bool BlockManager::init()
 		blocks[4][2].init(BlockType::BlockSoft, 2, 4, tileGreenBlock, sbRed);
 		blocks[4][3].init(BlockType::BlockSoft, 3, 4, tileGreenBlock, sbOrange);
 		blocks[4][4].init(BlockType::BlockNone, 4, 4, tileGreenBlock);
-		blocks[4][5].init(BlockType::BlockNone, 5, 4, tileGreenBlock);
+		blocks[4][5].init(BlockType::BlockBush, 5, 4, tileGreenBlock);
 
 		blocks[4][6].init(BlockType::BlockNone, 6, 4, tileGray);
 		blocks[4][7].init(BlockType::BlockNone, 7, 4, tileCenterLine);
 		blocks[4][8].init(BlockType::BlockNone, 8, 4, tileGray);
 
-		blocks[4][9].init(BlockType::BlockNone, 9, 4, tileGreenBlock);
+		blocks[4][9].init(BlockType::BlockBush, 9, 4, tileGreenBlock);
 		blocks[4][10].init(BlockType::BlockHard, 10, 4, tileGreenBlock, hbYellow);
 		blocks[4][11].init(BlockType::BlockSoft, 11, 4, tileGreenBlock, sbBox);
 		blocks[4][12].init(BlockType::BlockHard, 12, 4, tileGreenBlock, hbYellow);
@@ -139,21 +139,21 @@ bool BlockManager::init()
 
 	if (7) {
 		blocks[6][0].init(BlockType::BlockTree, 0, 6, tileGreenBlock);
-		blocks[6][1].init(BlockType::BlockNone, 1, 6, tileGreenBlock);
+		blocks[6][1].init(BlockType::BlockBush, 1, 6, tileGreenBlock);
 		blocks[6][2].init(BlockType::BlockTree, 2, 6, tileGreenBlock);
-		blocks[6][3].init(BlockType::BlockNone, 3, 6, tileGreenBlock);
+		blocks[6][3].init(BlockType::BlockBush, 3, 6, tileGreenBlock);
 		blocks[6][4].init(BlockType::BlockTree, 4, 6, tileGreenBlock);
-		blocks[6][5].init(BlockType::BlockNone, 5, 6, tileGreenBlock);
+		blocks[6][5].init(BlockType::BlockBush, 5, 6, tileGreenBlock);
 
 		blocks[6][6].init(BlockType::BlockNone, 6, 6, tileGray);
 		blocks[6][7].init(BlockType::BlockNone, 7, 6, tileCenterLine);
 		blocks[6][8].init(BlockType::BlockNone, 8, 6, tileGray, sbBox);
 
-		blocks[6][9].init(BlockType::BlockNone, 9, 6, tileGreenBlock);
+		blocks[6][9].init(BlockType::BlockBush, 9, 6, tileGreenBlock);
 		blocks[6][10].init(BlockType::BlockTree, 10, 6, tileGreenBlock);
-		blocks[6][11].init(BlockType::BlockNone, 11, 6, tileGreenBlock);
+		blocks[6][11].init(BlockType::BlockBush, 11, 6, tileGreenBlock);
 		blocks[6][12].init(BlockType::BlockTree, 12, 6, tileGreenBlock);
-		blocks[6][13].init(BlockType::BlockNone, 13, 6, tileGreenBlock);
+		blocks[6][13].init(BlockType::BlockBush, 13, 6, tileGreenBlock);
 		blocks[6][14].init(BlockType::BlockTree, 14, 6, tileGreenBlock);
 	}
 
@@ -183,13 +183,13 @@ bool BlockManager::init()
 		blocks[8][2].init(BlockType::BlockHard, 2, 8, tileGreenBlock, hbBlue);
 		blocks[8][3].init(BlockType::BlockSoft, 3, 8, tileGreenBlock, sbBox);
 		blocks[8][4].init(BlockType::BlockHard, 4, 8, tileGreenBlock, hbBlue);
-		blocks[8][5].init(BlockType::BlockNone, 5, 8, tileGreenBlock);
+		blocks[8][5].init(BlockType::BlockBush, 5, 8, tileGreenBlock);
 
 		blocks[8][6].init(BlockType::BlockNone, 6, 8, tileGray);
 		blocks[8][7].init(BlockType::BlockNone, 7, 8, tileCenterLine);
 		blocks[8][8].init(BlockType::BlockNone, 8, 8, tileGray);
 
-		blocks[8][9].init(BlockType::BlockNone, 9, 8, tileGreenBlock);
+		blocks[8][9].init(BlockType::BlockBush, 9, 8, tileGreenBlock);
 		blocks[8][10].init(BlockType::BlockNone, 10, 8, tileGreenBlock);
 		blocks[8][11].init(BlockType::BlockSoft, 11, 8, tileGreenBlock, sbRed);
 		blocks[8][12].init(BlockType::BlockSoft, 12, 8, tileGreenBlock, sbOrange);
@@ -223,13 +223,13 @@ bool BlockManager::init()
 		blocks[10][2].init(BlockType::BlockHard, 2, 10, tileGreenBlock, hbBlue);
 		blocks[10][3].init(BlockType::BlockSoft, 3, 10, tileGreenBlock, sbBox);
 		blocks[10][4].init(BlockType::BlockHard, 4, 10, tileGreenBlock, hbBlue);
-		blocks[10][5].init(BlockType::BlockNone, 5, 10, tileGreenBlock);
+		blocks[10][5].init(BlockType::BlockBush, 5, 10, tileGreenBlock);
 
 		blocks[10][6].init(BlockType::BlockNone, 6, 10, tileAcrossWalk);
 		blocks[10][7].init(BlockType::BlockNone, 7, 10, tileAcrossWalk);
 		blocks[10][8].init(BlockType::BlockNone, 8, 10, tileAcrossWalk);
 
-		blocks[10][9].init(BlockType::BlockNone, 9, 10, tileGreenBlock);
+		blocks[10][9].init(BlockType::BlockBush, 9, 10, tileGreenBlock);
 		blocks[10][10].init(BlockType::BlockNone, 10, 10, tileGreenBlock);
 		blocks[10][11].init(BlockType::BlockNone, 11, 10, tileGreenBlock);
 		blocks[10][12].init(BlockType::BlockSoft, 12, 10, tileGreenBlock, sbRed);
@@ -263,13 +263,13 @@ bool BlockManager::init()
 		blocks[12][2].init(BlockType::BlockHard, 2, 12, tileGreenBlock, hbBlue);
 		blocks[12][3].init(BlockType::BlockSoft, 3, 12, tileGreenBlock, sbRed);
 		blocks[12][4].init(BlockType::BlockHard, 4, 12, tileGreenBlock, hbBlue);
-		blocks[12][5].init(BlockType::BlockNone, 5, 12, tileGreenBlock);
+		blocks[12][5].init(BlockType::BlockBush, 5, 12, tileGreenBlock);
 
 		blocks[12][6].init(BlockType::BlockNone, 6, 12, tileGray);
 		blocks[12][7].init(BlockType::BlockNone, 7, 12, tileCenterLine);
 		blocks[12][8].init(BlockType::BlockNone, 8, 12, tileGray);
 
-		blocks[12][9].init(BlockType::BlockNone, 9, 12, tileGreenBlock);
+		blocks[12][9].init(BlockType::BlockBush, 9, 12, tileGreenBlock);
 		blocks[12][10].init(BlockType::BlockSoft, 10, 12, tileGreenBlock, sbOrange);
 		blocks[12][11].init(BlockType::BlockSoft, 11, 12, tileGreenBlock, sbRed);
 		blocks[12][12].init(BlockType::BlockSoft, 12, 12, tileGreenBlock, sbOrange);

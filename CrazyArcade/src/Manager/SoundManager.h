@@ -13,6 +13,7 @@ public:
 	void release();
 	void pauseChannel(int channel);
 	void resumeChannel(int channel);
+	void stopChannel(int channel);
 	void update();
 
 private:

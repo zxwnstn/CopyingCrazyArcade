@@ -36,6 +36,6 @@ private:
 	const int yMargin = 5;
 	
 	//100 is max;
-	int ItemCreationPer = 50;
+	int ItemCreationPer = 40;
 };
 

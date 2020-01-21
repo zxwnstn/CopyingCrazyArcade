@@ -1,6 +1,7 @@
 #include "Etc/stdafx.h"
 #include "mainGame.h"
 #include "CrazyArcadeClass/Scene/InGameScene.h"
+#include "CrazyArcadeClass/Scene/MainMenu.h"
 #include "Manager/SoundManager.h"
 
 mainGame::mainGame()
@@ -16,7 +17,8 @@ HRESULT mainGame::init()
 	//image init
 	
 	SCENEMANAGER->addScene("인게임", new InGameScene);
-	SCENEMANAGER->changeScene("인게임");
+	SCENEMANAGER->addScene("메인메뉴", new MainMenu);
+	SCENEMANAGER->changeScene("메인메뉴");
 
 	return S_OK;
 }
@@ -38,9 +40,7 @@ void mainGame::update()
 		m_showRect = !m_showRect;
 	if (KEYMANAGER->isOnceKeyDown(VK_F2))
 		m_showFPS = !m_showFPS;
-	if (KEYMANAGER->isOnceKeyDown(VK_F3))
-		SCENEMANAGER->resetCurScenen();
-	
+
 	GET_SINGLE(SoundManager)->update();
 	TIMEMANAGER->update(60.f);
 	SCENEMANAGER->update(TIMEMANAGER->getElapsedTime());

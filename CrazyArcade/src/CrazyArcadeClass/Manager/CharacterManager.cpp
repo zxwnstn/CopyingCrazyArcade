@@ -1,8 +1,9 @@
 #include "Etc/stdafx.h"
 #include "CharacterManager.h"
 #include "CrazyArcadeClass/Obj/Character/Player.h"
-#include "CrazyArcadeClass/Obj/Character/Enemy.h"
+#include "CrazyArcadeClass/Obj/Character/Player2.h"
 #include "CrazyArcadeClass/Manager/ItemManager.h"
+#include "CrazyArcadeClass/Manager/BlockManager.h"
 #include "Manager/SoundManager.h"
 
 DEFINITION_SINGLE(CharacterManager)
@@ -18,21 +19,58 @@ CharacterManager::~CharacterManager()
 bool CharacterManager::init()
 {
 	//TODO : add other
-	auto player = make_shared<Player>(0, 0);
-	player->init(CharacterType::Bazzi);
+	auto& blocks = GET_SINGLE(BlockManager)->GetBlocks();
 
-	//auto enemy1 = make_shared<Enemy>(14, 10);
-	//enemy1->init(CharacterType::Bazzi);
-
-	characters.push_back(player);
-	//characters.push_back(enemy1);
+	int p1x;
+	int p1y;
+	while (1) {
+		p1x = RND->getInt(NUM_BLOCK_X);
+		p1y = RND->getInt(NUM_BLOCK_Y);
+		if (blocks[p1y][p1x].getType() == BlockType::BlockNone) {
+			auto player = make_shared<Player>(p1x, p1y);
+			player->init(CharacterType::Bazzi);
+			characters.push_back(player);
+			break;
+		}
+	}
+	int p2x;
+	int p2y;
+	while (1) {
+		p2x = RND->getInt(NUM_BLOCK_X);
+		p2y = RND->getInt(NUM_BLOCK_Y);
+		if (blocks[p2y][p2x].getType() == BlockType::BlockNone &&
+			(p1x != p2x || p1y != p2y)) {
+			int dist = abs(p1x - p2x) + abs(p1y - p2y);
+			if (dist > 12) {
+				auto player = make_shared<Player2>(p2x, p2y);
+				player->init(CharacterType::Dao);
+				characters.push_back(player);
+				break;
+			}			
+		}
+	}
 	return true;
 }
 void CharacterManager::update(float deltaTime)
 {
-	for (auto&e : characters)
-		e->update(deltaTime);
-	collision();
+	if (!charactersAllDead) {
+		for (auto&e : characters)
+			e->update(deltaTime);
+		collision();
+		int deadCount = 0;
+		for (auto&e : characters) {
+			if (e->isPlayerDead())
+				deadCount++;
+		}
+		if (deadCount + 1 == characters.size()) {
+			charactersAllDead = true;
+		}
+		if (deadCount == characters.size()) {
+			charactersAllDead = true;
+			draw = true;
+		}
+	}
+
 }
 void CharacterManager::render(HDC hdc)
 {
@@ -44,6 +82,12 @@ void CharacterManager::debugRender(HDC hdc)
 	for (auto&e : characters)
 		e->debugRender(hdc);
 }
+void CharacterManager::afterRender(HDC hdc)
+{
+	for (auto&e : characters)
+		e->afterRender(hdc);
+}
+
 void CharacterManager::release()
 {
 	characters.clear();
@@ -89,11 +133,13 @@ void CharacterManager::collisionItem()
 }
 void CharacterManager::collisionCharacter()
 {
-	for (int i = 0; i < characters.size() - 1; ++i) {
-		for (int j = 1; j < characters.size(); ++j) {
-			if (characters[j]->getState() == CharacterState::CharacterInBalloon) {
+	for (int i = 0; i < characters.size(); ++i) {
+		for (int j = 0; j < characters.size(); ++j) {
+			if (characters[j]->getState() == CharacterState::CharacterInBalloon && 
+				characters[i]->getState() != CharacterState::CharacterInBalloon) {
+				if (characters[i] == characters[j]) continue;
 				if (isRectRectCollision(characters[i]->getBlockCollisionRect(), characters[j]->getOtherCollisionRect())) {
-					characters[j]->fallDown();
+					characters[j]->die();
 				}
 			}
 		}

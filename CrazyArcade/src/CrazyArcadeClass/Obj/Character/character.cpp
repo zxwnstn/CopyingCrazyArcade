@@ -2,6 +2,7 @@
 #include "CrazyArcadeClass/Manager/BlockManager.h"
 #include "CrazyArcadeClass/Manager/ItemManager.h"
 #include "CrazyArcadeClass/Manager/BombManager.h"
+#include "CrazyArcadeClass/Manager/CharacterManager.h"
 #include "Manager/SoundManager.h"
 #include <iostream>
 
@@ -43,98 +44,115 @@ void character::rectSetFromPos()
 //render
 void character::render(HDC hdc) 
 {
-	if (state & CharacterState::CharacterOnMove) {
-		if (state == prevState) {
-			if (state & CharacterState::CharacterOnDownMove) {
-				frameCounter += deltaTime;
-				if (frameCounter > frameChageTimer) {
-					frameIndex++;
-					frameCounter = 0.f;
-					if (frameIndex > moveImage->getMaxFrameX()) 
-						frameIndex = 0;
+	if (!inBush) {
+		if (state & CharacterState::CharacterOnMove) {
+			if (state == prevState) {
+				if (state & CharacterState::CharacterOnDownMove) {
+					frameCounter += deltaTime;
+					if (frameCounter > frameChageTimer) {
+						frameIndex++;
+						frameCounter = 0.f;
+						if (frameIndex > moveImage->getMaxFrameX())
+							frameIndex = 0;
+					}
+					moveImage->frameRender(hdc, blockCollisionRect.left - 10, blockCollisionRect.top - 10, frameIndex, 0);
 				}
+				if (state & CharacterState::CharacterOnUpMove) {
+					frameCounter += deltaTime;
+					if (frameCounter > frameChageTimer) {
+						frameIndex++;
+						frameCounter = 0.f;
+						if (frameIndex > moveImage->getMaxFrameX())
+							frameIndex = 0;
+					}
+					moveImage->frameRender(hdc, blockCollisionRect.left - 10, blockCollisionRect.top - 10, frameIndex, 1);
+				}
+				if (state & CharacterState::CharacterOnLeftMove) {
+					frameCounter += deltaTime;
+					if (frameCounter > frameChageTimer) {
+						frameIndex++;
+						frameCounter = 0.f;
+						if (frameIndex > moveImage->getMaxFrameX())
+							frameIndex = 0;
+					}
+					moveImage->frameRender(hdc, blockCollisionRect.left - 10, blockCollisionRect.top - 10, frameIndex, 2);
+				}
+				if (state & CharacterState::CharacterOnRightMove) {
+					frameCounter += deltaTime;
+					if (frameCounter > frameChageTimer) {
+						frameIndex++;
+						frameCounter = 0.f;
+						if (frameIndex > moveImage->getMaxFrameX())
+							frameIndex = 0;
+					}
+					moveImage->frameRender(hdc, blockCollisionRect.left - 10, blockCollisionRect.top - 10, frameIndex, 3);
+				}
+			}
+			else {
+				if (state & CharacterState::CharacterOnDownMove) {
+					frameIndex = 0;
+					frameCounter = 0.f;
+					moveImage->frameRender(hdc, blockCollisionRect.left - 10, blockCollisionRect.top - 10, frameIndex, 0);
+				}
+				if (state & CharacterState::CharacterOnUpMove) {
+					frameIndex = 0;
+					frameCounter = 0.f;
+					moveImage->frameRender(hdc, blockCollisionRect.left - 10, blockCollisionRect.top - 10, frameIndex, 1);
+				}
+				if (state & CharacterState::CharacterOnLeftMove) {
+					frameIndex = 0;
+					frameCounter = 0.f;
+					moveImage->frameRender(hdc, blockCollisionRect.left - 10, blockCollisionRect.top - 10, frameIndex, 2);
+				}
+				if (state & CharacterState::CharacterOnRightMove) {
+					frameIndex = 0;
+					frameCounter = 0.f;
+					moveImage->frameRender(hdc, blockCollisionRect.left - 10, blockCollisionRect.top - 10, frameIndex, 3);
+				}
+			}
+		}
+		if (state & CharacterState::CharacterNoMove) {
+			if (state & CharacterState::CharacterOnDownMove) {
 				moveImage->frameRender(hdc, blockCollisionRect.left - 10, blockCollisionRect.top - 10, frameIndex, 0);
 			}
 			if (state & CharacterState::CharacterOnUpMove) {
-				frameCounter += deltaTime;
-				if (frameCounter > frameChageTimer) {
-					frameIndex++;
-					frameCounter = 0.f;
-					if (frameIndex > moveImage->getMaxFrameX()) 
-						frameIndex = 0;
-				}
-				moveImage->frameRender(hdc, blockCollisionRect.left - 10, blockCollisionRect.top - 10, frameIndex, 1);
-			}			
-			if (state & CharacterState::CharacterOnLeftMove) {
-				frameCounter += deltaTime;
-				if (frameCounter > frameChageTimer) {
-					frameIndex++;
-					frameCounter = 0.f;
-					if (frameIndex > moveImage->getMaxFrameX()) 
-						frameIndex = 0;
-				}
-				moveImage->frameRender(hdc, blockCollisionRect.left - 10, blockCollisionRect.top - 10, frameIndex, 2);
-			}
-			if (state & CharacterState::CharacterOnRightMove) {
-				frameCounter += deltaTime;
-				if (frameCounter > frameChageTimer){
-					frameIndex++;
-					frameCounter = 0.f;
-					if (frameIndex > moveImage->getMaxFrameX()) 
-						frameIndex = 0;
-				}
-				moveImage->frameRender(hdc, blockCollisionRect.left - 10, blockCollisionRect.top - 10, frameIndex, 3);
-			}		
-		}
-		else {
-			if (state & CharacterState::CharacterOnDownMove) {
-				frameIndex = 0;
-				frameCounter = 0.f;
-				moveImage->frameRender(hdc, blockCollisionRect.left - 10, blockCollisionRect.top - 10, frameIndex, 0);
-			}
-			if (state & CharacterState::CharacterOnUpMove) {
-				frameIndex = 0;
-				frameCounter = 0.f;
 				moveImage->frameRender(hdc, blockCollisionRect.left - 10, blockCollisionRect.top - 10, frameIndex, 1);
 			}
 			if (state & CharacterState::CharacterOnLeftMove) {
-				frameIndex = 0;
-				frameCounter = 0.f;
 				moveImage->frameRender(hdc, blockCollisionRect.left - 10, blockCollisionRect.top - 10, frameIndex, 2);
 			}
 			if (state & CharacterState::CharacterOnRightMove) {
-				frameIndex = 0;
-				frameCounter = 0.f;
 				moveImage->frameRender(hdc, blockCollisionRect.left - 10, blockCollisionRect.top - 10, frameIndex, 3);
 			}
 		}
-	}
-	if (state & CharacterState::CharacterNoMove) {
-		if (state & CharacterState::CharacterOnDownMove) {
-			moveImage->frameRender(hdc, blockCollisionRect.left - 10, blockCollisionRect.top - 10, frameIndex, 0);
-		}
-		if (state & CharacterState::CharacterOnUpMove) {
-			moveImage->frameRender(hdc, blockCollisionRect.left - 10, blockCollisionRect.top - 10, frameIndex, 1);
-		}
-		if (state & CharacterState::CharacterOnLeftMove) {
-			moveImage->frameRender(hdc, blockCollisionRect.left - 10, blockCollisionRect.top - 10, frameIndex, 2);
-		}
-		if (state & CharacterState::CharacterOnRightMove) {
-			moveImage->frameRender(hdc, blockCollisionRect.left - 10, blockCollisionRect.top - 10, frameIndex, 3);
-		}
-	}
 
-	if (state & CharacterInBalloon) {
-		frameCounter += deltaTime;
-		if (frameCounter > frameInballoonTimer) {
-			frameCounter = 0;
-			frameIndex++;
-			if (frameIndex > inBalloonImage->getMaxFrameX())
-				frameIndex = inBalloonImage->getMaxFrameX();
+		if (state & CharacterInBalloon) {
+			frameCounter += deltaTime;
+			if (frameCounter > frameInballoonTimer) {
+				frameCounter = 0;
+				frameIndex++;
+				if (frameIndex > inBalloonImage->getMaxFrameX())
+					frameIndex = inBalloonImage->getMaxFrameX();
+			}
+			inBalloonImage->frameRender(hdc, blockCollisionRect.left, blockCollisionRect.top, frameIndex, 0);
 		}
-		inBalloonImage->frameRender(hdc, blockCollisionRect.left, blockCollisionRect.top, frameIndex, 0);
-	}
 
+		if (state & CharacterDead && !playerDead) {
+			frameCounter += deltaTime;
+			if (frameCounter > frameDyingTimer) {
+				frameCounter = 0;
+				frameIndex++;
+				if (frameIndex > deadImage->getMaxFrameX()) {
+					playerDead = true;
+					frameIndex = deadImage->getMaxFrameX();
+				}
+			}
+			deadImage->frameRender(hdc, blockCollisionRect.left - 3, blockCollisionRect.top - BLOCK_HEIGHT, frameIndex, 0);
+		}
+		else if (playerDead) {
+			deadImage->frameRender(hdc, blockCollisionRect.left - 3, blockCollisionRect.top - BLOCK_HEIGHT, frameIndex, 0);
+		}
+	}
 
 }
 void character::debugRender(HDC hdc)
@@ -149,6 +167,12 @@ void character::debugRender(HDC hdc)
 	}
 	else if (state == CharacterState::CharacterInBalloon)
 		DrawColorRect(hdc, blockCollisionRect, RGB(18, 67, 197));
+}
+
+void character::afterRender(HDC hdc)
+{
+	if (!inBush)
+		characterPointer->render(hdc, blockCollisionRect.left + 20, blockCollisionRect.top - 55);
 }
 
 //move
@@ -348,7 +372,7 @@ Direction character::isCanMove(Direction dir, Direction originDir)
 	for (int i = 0; i < NUM_BLOCK_Y; ++i) {
 		for (int j = 0; j < NUM_BLOCK_X; ++j) {
 			IRECT temp = blocks[i][j].getCollisionRect();
-			if (blocks[i][j].getType() != BlockType::BlockNone &&
+			if ((blocks[i][j].getType() != BlockType::BlockNone && blocks[i][j].getType() != BlockType::BlockBush) &&
 				isRectRectCollision(temp, blockCollisionRect)) {
 				if (dir == eUp || dir == eDown) {
 					if (temp.left < blockCollisionRect.left)
@@ -428,6 +452,19 @@ void character::dropBomb()
 				}
 			}
 			if (isInBomb) return;
+
+			auto& blocks = GET_SINGLE(BlockManager)->GetBlocks();
+			if (blocks[lastDrop_rect.bPos_y][lastDrop_rect.bPos_x].getType() == BlockType::BlockBush)
+				newBomb->setInBush();
+
+			auto& characters = GET_SINGLE(CharacterManager)->getCharacters();
+			for (auto character = characters.begin(); character != characters.end(); ++ character) {
+				if ((*character).get() == this)
+					continue;
+				if (isRectRectCollision(lastDrop_rect, (*character)->getBlockCollisionRect()))
+					(*character)->setDropArea(lastDrop_rect);
+			}
+
 			GET_SINGLE(SoundManager)->playSound("ÆøÅº³õ±â", 4);
 			curBombList.push_back(newBomb);
 			GET_SINGLE(BombManager)->GetBombs().push_back(newBomb);
@@ -463,7 +500,30 @@ void character::die()
 	GET_SINGLE(SoundManager)->playSound("Ç³¼±Æø¹ß", 1);
 	state = CharacterState::CharacterDead;
 	frameIndex = 0;
+	frameCounter = 0;
 }
+
+bool character::isInBush()
+{
+	auto& blocks = GET_SINGLE(BlockManager)->GetBlocks();
+	for (int i = 0; i < NUM_BLOCK_Y; ++i)
+		for (int j = 0; j < NUM_BLOCK_X; ++j)
+			if (blocks[i][j].getType() == BlockType::BlockBush &&
+				isRectRectCollision(blocks[i][j].getCollisionRect(), otherCollisionRect)) {
+				if (inBush == false)
+					GET_SINGLE(SoundManager)->playSound("ºÎ½¬µé¾î°¡±â", 6);
+				return true;
+			}
+	return false;
+}
+
+void character::setDropArea(IRECT oppentsBombRect)
+{
+	prevDorp_rect = lastDrop_rect;
+	lastDrop_rect = oppentsBombRect;
+	isDropBombArea = true;
+}
+
 
 //item get
 

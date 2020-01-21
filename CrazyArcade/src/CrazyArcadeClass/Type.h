@@ -78,7 +78,7 @@ enum CharacterState {
 	CharacterOnIdle			= BIT(6),
 	CharacterOnRide			= BIT(7),
 	CharacterInBalloon		= BIT(8),
-	CharacterDead			= BIT(9)
+	CharacterDead			= BIT(9),
 };
 
 inline void operator ^=(CharacterState& state, const CharacterState& state2) {

@@ -23,6 +23,9 @@ public:
 	int getExplosionRange() { return explosionRange; }
 	BlockPosition getPos() { return bPos; }
 
+public:
+	void setInBush() { inBush = true; }
+
 private:
 	//for explosion time
 	const float		explosionTime = 2.f;
@@ -36,6 +39,7 @@ private:
 	BlockPosition	bPos;
 
 	//for frame render var
+	bool inBush = false;
 	int frameIndex = 0;
 	float frameCounter = 0.f;
 	float frameChageTimer = 0.3f;

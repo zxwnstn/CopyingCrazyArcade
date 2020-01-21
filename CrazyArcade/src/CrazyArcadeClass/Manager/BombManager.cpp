@@ -89,6 +89,7 @@ void BombManager::rangeCheckAndGenBoom(const BlockPosition& startPoint, int dx, 
 	float addedTime = 0.f;
 
 	for (int i = 1; i <= Range; ++i) {
+		bool inBush = false;
 		int nextX = startPoint.x + dx * i;
 		int nextY = startPoint.y + dy * i;
 
@@ -110,6 +111,12 @@ void BombManager::rangeCheckAndGenBoom(const BlockPosition& startPoint, int dx, 
 						blocks[nextY][nextX].triggerDis(addedTime + BLOCK_DIS_DELAY);
 					reachEnd = true;
 					break;
+				case BlockType::BlockBush:
+					if (!blocks[nextY][nextX].isWillDis())
+						blocks[nextY][nextX].triggerDis(addedTime + BLOCK_DIS_DELAY);
+					inBush = true;
+					reachEnd = true;
+					break;
 				case BlockType::BlockNone:
 					if (state == BoomState::BoomHorizenRight)
 						state = BoomState::BoomHorizenRightEnd;
@@ -119,7 +126,7 @@ void BombManager::rangeCheckAndGenBoom(const BlockPosition& startPoint, int dx, 
 						state = BoomState::BoomVerticalUpEnd;
 					if (state == BoomState::BoomVerticalDown)
 						state = BoomState::BoomVerticalDownEnd;
-					booms.push_back(make_shared<Boom>(state, addedTime, BlockPosition(nextX, nextY)));
+					booms.push_back(make_shared<Boom>(state, addedTime, BlockPosition(nextX, nextY), inBush));
 					break;
 				}
 			}
@@ -137,8 +144,13 @@ void BombManager::rangeCheckAndGenBoom(const BlockPosition& startPoint, int dx, 
 						blocks[nextY][nextX].triggerDis(addedTime + BLOCK_DIS_DELAY);
 					reachEnd = true;
 					break;
+				case BlockType::BlockBush:
+					if (!blocks[nextY][nextX].isWillDis())
+						blocks[nextY][nextX].triggerDis(addedTime + BLOCK_DIS_DELAY);
+					inBush = true;
+					break;
 				case BlockType::BlockNone:
-					booms.push_back(make_shared<Boom>(state, addedTime, BlockPosition(nextX, nextY)));
+					booms.push_back(make_shared<Boom>(state, addedTime, BlockPosition(nextX, nextY), inBush));
 					break;
 				}
 			}
@@ -149,7 +161,12 @@ void BombManager::rangeCheckAndGenBoom(const BlockPosition& startPoint, int dx, 
 }
 void BombManager::generateBoom(const BlockPosition& startPoint, int explosionRange)
 {
-	booms.push_back(make_shared<Boom>(BoomState::BoomCenter, 0.f, startPoint));//센터
+	auto& blocks = GET_SINGLE(BlockManager)->GetBlocks();
+	if (blocks[startPoint.y][startPoint.x].getType() == BlockType::BlockBush) {
+		booms.push_back(make_shared<Boom>(BoomState::BoomCenter, 0.f, startPoint, true));//센터
+		blocks[startPoint.y][startPoint.x].triggerDis(BLOCK_DIS_DELAY);
+	}
+	else booms.push_back(make_shared<Boom>(BoomState::BoomCenter, 0.f, startPoint));
 	rangeCheckAndGenBoom(startPoint, -1, 0, explosionRange);//좌
 	rangeCheckAndGenBoom(startPoint, 1, 0, explosionRange);	//우
 	rangeCheckAndGenBoom(startPoint, 0, -1, explosionRange);//상
