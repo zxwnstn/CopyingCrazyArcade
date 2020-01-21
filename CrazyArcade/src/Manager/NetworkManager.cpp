@@ -1,5 +1,5 @@
 #include "NetworkManager.h"
-#include "Network/HeaderShared.h"
+
 DEFINITION_SINGLE(NetworkManager)
 
 NetworkManager::NetworkManager()
