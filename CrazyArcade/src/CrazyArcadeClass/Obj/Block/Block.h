@@ -41,6 +41,7 @@ private:
 	Image*				shawdowImage = nullptr;
 	int					curBlockIdx = 0;
 	int					tileIdx = 0;
+	const int			innerItemCreatePer = 40;
 
 	//inneritem
 	shared_ptr<Item>	innerItem;
@@ -59,5 +60,6 @@ private:
 	float				onDisPastTime = 0.f;
 	float				onDisTime = 0.3f;
 	int					alpha = 255;
+
 };
 

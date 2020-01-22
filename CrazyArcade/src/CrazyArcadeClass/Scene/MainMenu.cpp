@@ -6,11 +6,11 @@
 
 HRESULT MainMenu::init()
 {
-	IMAGEMANAGER->addImage("마우스", "images/mouse.bmp", 33, 36, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("메인화면배경", "images/MainImg.bmp", WINSIZEX, WINSIZEY);
-	IMAGEMANAGER->addImage("스타트버튼", "images/play2p.bmp", 225, 75);
-	IMAGEMANAGER->addImage("나가기버튼", "images/exit.bmp", 225, 75);
-	IMAGEMANAGER->addImage("서버버튼", "images/tcp_ip.bmp", 225, 75);
+	IMAGEMANAGER->addImage("마우스",			L"images/mouse.bmp", 33, 36, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("메인화면배경",		L"images/MainImg.bmp", WINSIZEX, WINSIZEY);
+	IMAGEMANAGER->addImage("스타트버튼",		L"images/play2p.bmp", 225, 75);
+	IMAGEMANAGER->addImage("나가기버튼",		L"images/exit.bmp", 225, 75);
+	IMAGEMANAGER->addImage("서버버튼",			L"images/tcp_ip.bmp", 225, 75);
 
 	startButtonRect = RectMake(900, 625, 225, 75);
 	tcpButtonRect = RectMake(900, 700, 225, 75);

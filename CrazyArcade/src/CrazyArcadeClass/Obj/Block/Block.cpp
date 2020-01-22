@@ -8,7 +8,10 @@ void Block::init()
 {
 	if (type == BlockType::BlockSoft) {
 		innerItem = nullptr;
-		innerItem = make_shared<Item>(collisionRect, bPos);
+		if (RND->getInt(100) < innerItemCreatePer) {
+			ItemType type = (ItemType)RND->getInt(3);
+			innerItem = make_shared<Item>(collisionRect, bPos, type);
+		}
 	}
 
 	shawdowImage = IMAGEMANAGER->findImage("그림자");
@@ -198,6 +201,7 @@ void Block::resetType(BlockType _type, int _tileIdex, int _blockIndex)
 	tileIdx = _tileIdex;
 	curBlockIdx = _blockIndex;
 
+	ItemType innerItemType = (ItemType)RND->getInt(3);
 	switch (type)
 	{
 	case BlockType::BlockHard:
@@ -205,7 +209,7 @@ void Block::resetType(BlockType _type, int _tileIdex, int _blockIndex)
 		curBlockImage = IMAGEMANAGER->findImage("하드블록");
 		break;
 	case BlockType::BlockSoft:
-		innerItem = make_shared<Item>(collisionRect, bPos);
+		innerItem = make_shared<Item>(collisionRect, bPos, innerItemType);
 		curBlockImage = IMAGEMANAGER->findImage("소프트블록");
 		break;
 	case BlockType::BlockTree:
@@ -236,7 +240,7 @@ void Block::softToNoneBlock()
 	onDis = false;
 
 	if (type == BlockType::BlockSoft) {
-		if (innerItem->getType() != ItemType::ItemNone) {
+		if (innerItem != nullptr) {
 			GET_SINGLE(ItemManager)->GetItems().push_back(innerItem);
 			GET_SINGLE(SoundManager)->playSound("아이템생성", 3);
 		}

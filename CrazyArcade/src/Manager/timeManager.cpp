@@ -32,7 +32,7 @@ void timeManager::update(float lock)
 
 void timeManager::render(HDC hdc)
 {
-	char str[256];
+	TCHAR str[256];
 
 	string strFrame;
 	//배경모드
@@ -43,21 +43,21 @@ void timeManager::render(HDC hdc)
 	if (_timer != nullptr)
 	{
 		//FPS
-		sprintf_s(str, "FPS :  %d", _timer->getFrameRate());
-		TextOut(hdc, 0, 0, str, strlen(str));
+		_tprintf_s(str, L"FPS :  %d", _timer->getFrameRate());
+		TextOut(hdc, 0, 0, str, _tcslen(str));
 
 		//전체 경과 시간
-		sprintf_s(str, "worldTime :  %.2f", _timer->getWorldTime());
-		TextOut(hdc, 0, 20, str, strlen(str));
+		_stprintf_s(str, L"worldTime :  %.2f", _timer->getWorldTime());
+		TextOut(hdc, 0, 20, str, _tcslen(str));
 		//한프레임당 경과시간
-		sprintf_s(str, "ElapsedTime :  %.4f", _timer->getElapsedTime());
-		TextOut(hdc, 0, 40, str, strlen(str));
+		_stprintf_s(str, L"ElapsedTime :  %.4f", _timer->getElapsedTime());
+		TextOut(hdc, 0, 40, str, _tcslen(str));
 	}
 
 	if (_timer != nullptr)
 	{
 		//FPS
-		sprintf_s(str, "FPS :  %d", _timer->getFrameRate());
-		TextOut(hdc, 0, 0, str, strlen(str));
+		_stprintf_s(str, L"FPS :  %d", _timer->getFrameRate());
+		TextOut(hdc, 0, 0, str, _tcslen(str));
 	}
 }

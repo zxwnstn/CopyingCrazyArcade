@@ -53,7 +53,7 @@ public:
 
 private:
 	LPIMAGE_INFO	_imageInfo;		//이미지 정보
-	char			_fileName[255];	//이미지 이름
+	TCHAR			_fileName[255];	//이미지 이름
 	bool			_isTrans;		//배경색 날리기
 	COLORREF		_transColor;	//배경색 날릴 RGB
 
@@ -63,11 +63,11 @@ private:
 public:
 
 	HRESULT init(int width, int height);
-	HRESULT init(const char* fileName, int width, int height, bool isTrans = false, COLORREF transColor = RGB(255, 0, 255));
+	HRESULT init(const TCHAR* fileName, int width, int height, bool isTrans = false, COLORREF transColor = RGB(255, 0, 255));
 
 	//프레임 이미지 파일로 초기화
-	HRESULT init(const char* fileName, int width, int height, int frameX, int frameY, bool isTrans = false, COLORREF transColor = RGB(255, 0, 255));
-	HRESULT init(const char* fileName, int x, int y, int width, int height, int frameX, int frameY, bool isTrans = false, COLORREF transColor = RGB(255, 0, 255));
+	HRESULT init(const TCHAR* fileName, int width, int height, int frameX, int frameY, bool isTrans = false, COLORREF transColor = RGB(255, 0, 255));
+	HRESULT init(const TCHAR* fileName, int x, int y, int width, int height, int frameX, int frameY, bool isTrans = false, COLORREF transColor = RGB(255, 0, 255));
 	void setTransColor(bool isTrans, COLORREF transColor);
 	inline HDC getMemDC() { return _imageInfo->hMemDC; }
 	void release();

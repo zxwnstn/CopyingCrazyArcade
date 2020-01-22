@@ -24,7 +24,7 @@ private:
 
 private:
 	//for debug 
-	char str[100];
+	TCHAR str[100];
 	int len;
 	int bgmSelector;
 

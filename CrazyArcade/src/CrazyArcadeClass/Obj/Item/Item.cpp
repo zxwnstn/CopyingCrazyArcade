@@ -2,17 +2,10 @@
 #include "Item.h"
 
 
-Item::Item(const IRECT & _rect, const BlockPosition _pos)
+Item::Item(const IRECT & _rect, const BlockPosition _pos, ItemType _type)
 	: collisionRect(_rect), pos(_pos)
 {
-	int temp = RND->getInt(100);
-	if (temp < ItemCreationPer) {
-		temp = RND->getInt((int)ItemType::ItemNone);
-		type = (ItemType)temp;
-	}
-	else {
-		type = ItemType::ItemNone;
-	}
+	type = _type;
 
 	collisionRect.left	 += xMargin;
 	collisionRect.right	 -= xMargin;
@@ -34,10 +27,7 @@ Item::Item(const IRECT & _rect, const BlockPosition _pos)
 	case ItemType::ItemBombLimitUp:
 		frameIndexY = 0;
 		break;
-	/*case ItemType::ItemKick:
-		break;
-	case ItemType::ItemDart:*/
-		break;
+	//TODO : add another
 	}
 }
 Item::~Item()

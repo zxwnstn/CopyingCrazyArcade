@@ -25,7 +25,7 @@ public:
 	//현재시간 계산
 	void tick(float lockFPS = 0.0f);
 	//현재FPS가져오기
-	unsigned long getFrameRate(char* str = nullptr)const;
+	unsigned long getFrameRate(TCHAR* str = nullptr)const;
 	//한프레임당 경과시간
 	float getElapsedTime()const { return _timeElapsed; }
 	//전체 경과시간 가져오기

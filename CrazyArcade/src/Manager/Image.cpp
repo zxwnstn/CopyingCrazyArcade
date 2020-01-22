@@ -59,7 +59,7 @@ HRESULT Image::init(int width, int height)
 	return S_OK;
 }
 
-HRESULT Image::init(const char * fileName, int width, int height, bool isTrans, COLORREF transColor)
+HRESULT Image::init(const TCHAR * fileName, int width, int height, bool isTrans, COLORREF transColor)
 {
 	if (fileName == NULL)
 		return E_FAIL;
@@ -95,8 +95,8 @@ HRESULT Image::init(const char * fileName, int width, int height, bool isTrans, 
 	_blendImage->width = WINSIZEX;
 	_blendImage->height = WINSIZEY;
 
-	int len = strlen(fileName);
-	strcpy_s(_fileName, len + 1, fileName);
+	int len = _tcslen(fileName);
+	_tcscpy_s(_fileName, len + 1, fileName);
 	_isTrans = isTrans;
 	_transColor = transColor;
 
@@ -109,7 +109,7 @@ HRESULT Image::init(const char * fileName, int width, int height, bool isTrans, 
 	return S_OK;
 }
 
-HRESULT Image::init(const char * fileName, int width, int height, int frameX, int frameY, bool isTrans, COLORREF transColor)
+HRESULT Image::init(const TCHAR * fileName, int width, int height, int frameX, int frameY, bool isTrans, COLORREF transColor)
 {
 	if (fileName == NULL)
 		return E_FAIL;
@@ -154,8 +154,8 @@ HRESULT Image::init(const char * fileName, int width, int height, int frameX, in
 	_blendImage->width = WINSIZEX;
 	_blendImage->height = WINSIZEY;
 
-	int len = strlen(fileName);
-	strcpy_s(_fileName, len + 1, fileName);
+	int len = _tcslen(fileName);
+	_tcscpy_s(_fileName, len + 1, fileName);
 	_isTrans = isTrans;
 	_transColor = transColor;
 
@@ -168,7 +168,7 @@ HRESULT Image::init(const char * fileName, int width, int height, int frameX, in
 	return S_OK;
 }
 
-HRESULT Image::init(const char * fileName, int x, int y, int width, int height, int frameX, int frameY, bool isTrans, COLORREF transColor)
+HRESULT Image::init(const TCHAR * fileName, int x, int y, int width, int height, int frameX, int frameY, bool isTrans, COLORREF transColor)
 {
 	if (fileName == NULL)
 		return E_FAIL;
@@ -215,8 +215,8 @@ HRESULT Image::init(const char * fileName, int x, int y, int width, int height, 
 	_blendImage->width = WINSIZEX;
 	_blendImage->height = WINSIZEY;
 
-	int len = strlen(fileName);
-	strcpy_s(_fileName, len + 1, fileName);
+	int len = _tcslen(fileName);
+	_tcscpy_s(_fileName, len + 1, fileName);
 	_isTrans = isTrans;
 	_transColor = transColor;
 

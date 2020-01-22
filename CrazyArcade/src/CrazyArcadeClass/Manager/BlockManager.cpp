@@ -22,7 +22,7 @@ bool BlockManager::init()
 		blocks[0][1].init(BlockType::BlockSoft, 1, 0, tileGreenBlock, sbOrange);
 		blocks[0][2].init(BlockType::BlockSoft, 2, 0, tileGreenBlock, sbRed);
 		blocks[0][3].init(BlockType::BlockSoft, 3, 0, tileGreenBlock, sbOrange);
-		blocks[0][4].init(BlockType::BlockSoft, 4, 0, tileGreenBlock);
+		blocks[0][4].init(BlockType::BlockSoft, 4, 0, tileGreenBlock, sbRed);
 		blocks[0][5].init(BlockType::BlockBush, 5, 0, tileGreenBlock);
 
 		blocks[0][6].init(BlockType::BlockNone, 6, 0, tileGray);

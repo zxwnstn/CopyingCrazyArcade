@@ -1,0 +1,58 @@
+﻿  SocketAddress.cpp
+c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\lib\socketaddress.h(7): warning C4244: '인수': 'uint64_t'에서 'u_long'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\lib\socketaddress.h(33): warning C4244: 'return': 'uint64_t'에서 'size_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\lib\socketaddress.cpp(9): error C2664: 'PCWSTR InetNtopW(INT,const void *,PWSTR,size_t)': 인수 3을(를) 'PSTR'에서 'PWSTR'(으)로 변환할 수 없습니다.
+  c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\lib\socketaddress.cpp(9): note: 가리킨 형식이 관련이 없습니다. 변환하려면 reinterpret_cast, C 스타일 캐스트 또는 함수 스타일 캐스트가 필요합니다.
+  StringUtils.cpp
+c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\lib\socketaddress.h(7): warning C4244: '인수': 'uint64_t'에서 'u_long'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\lib\socketaddress.h(33): warning C4244: 'return': 'uint64_t'에서 'size_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\lib\stringutils.cpp(58): error C2664: 'void OutputDebugStringW(LPCWSTR)': 인수 1을(를) 'LPCSTR'에서 'LPCWSTR'(으)로 변환할 수 없습니다.
+  c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\lib\stringutils.cpp(58): note: 가리킨 형식이 관련이 없습니다. 변환하려면 reinterpret_cast, C 스타일 캐스트 또는 함수 스타일 캐스트가 필요합니다.
+c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\lib\stringutils.cpp(59): error C2664: 'void OutputDebugStringW(LPCWSTR)': 인수 1을(를) 'const char [2]'에서 'LPCWSTR'(으)로 변환할 수 없습니다.
+  c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\lib\stringutils.cpp(59): note: 가리킨 형식이 관련이 없습니다. 변환하려면 reinterpret_cast, C 스타일 캐스트 또는 함수 스타일 캐스트가 필요합니다.
+  NetworkManager.cpp
+c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\lib\socketaddress.h(7): warning C4244: '인수': 'uint64_t'에서 'u_long'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\lib\socketaddress.h(33): warning C4244: 'return': 'uint64_t'에서 'size_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\lib\byteswap.h(113): warning C4477: 'printf' : 서식 문자열 '%x'에 'unsigned int' 형식의 인수가 필요하지만 variadic 인수 1의 형식이 'tTo'입니다.
+          with
+          [
+              tTo=uint64_t
+          ]
+  c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\lib\byteswap.h(113): note: 서식 문자열에서 '%llx'을(를) 사용하는 것이 좋습니다.
+  c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\lib\byteswap.h(113): note: 서식 문자열에서 '%I64x'을(를) 사용하는 것이 좋습니다.
+c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\lib\byteswap.h(113): warning C4477: 'printf' : 서식 문자열 '%x'에 'unsigned int' 형식의 인수가 필요하지만 variadic 인수 2의 형식이 'tTo'입니다.
+          with
+          [
+              tTo=uint64_t
+          ]
+  c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\lib\byteswap.h(113): note: 서식 문자열에서 '%llx'을(를) 사용하는 것이 좋습니다.
+  c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\lib\byteswap.h(113): note: 서식 문자열에서 '%I64x'을(를) 사용하는 것이 좋습니다.
+c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\server\networkmanager.h(119): error C2143: 구문 오류: ';'이(가) '}' 앞에 없습니다.
+c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\server\networkmanager.h(119): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다.
+c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\server\networkmanager.h(119): warning C4183: 'DECLARE_SINGLE': 반환 형식이 없습니다. 'int'를 반환하는 멤버 함수로 간주됩니다.
+c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\server\networkmanager.cpp(5): error C2143: 구문 오류: ';'이(가) 'NetworkManager::{ctor}' 앞에 없습니다.
+c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\server\networkmanager.cpp(5): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다.
+c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\server\networkmanager.cpp(6): error C2600: 'NetworkManager::NetworkManager': 컴파일러 생성 특수 멤버 함수를 정의할 수 없습니다. 먼저 클래스에 선언해야 합니다.
+c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\server\networkmanager.cpp(11): error C2600: 'NetworkManager::~NetworkManager': 컴파일러 생성 특수 멤버 함수를 정의할 수 없습니다. 먼저 클래스에 선언해야 합니다.
+c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\server\networkmanager.cpp(42): warning C4244: '인수': 'uint64_t'에서 'size_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\server\networkmanager.cpp(44): warning C4244: '인수': 'uint64_t'에서 'size_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  serverMain.cpp
+c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\lib\socketaddress.h(7): warning C4244: '인수': 'uint64_t'에서 'u_long'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\lib\socketaddress.h(33): warning C4244: 'return': 'uint64_t'에서 'size_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\lib\byteswap.h(113): warning C4477: 'printf' : 서식 문자열 '%x'에 'unsigned int' 형식의 인수가 필요하지만 variadic 인수 1의 형식이 'tTo'입니다.
+          with
+          [
+              tTo=uint64_t
+          ]
+  c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\lib\byteswap.h(113): note: 서식 문자열에서 '%llx'을(를) 사용하는 것이 좋습니다.
+  c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\lib\byteswap.h(113): note: 서식 문자열에서 '%I64x'을(를) 사용하는 것이 좋습니다.
+c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\lib\byteswap.h(113): warning C4477: 'printf' : 서식 문자열 '%x'에 'unsigned int' 형식의 인수가 필요하지만 variadic 인수 2의 형식이 'tTo'입니다.
+          with
+          [
+              tTo=uint64_t
+          ]
+  c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\lib\byteswap.h(113): note: 서식 문자열에서 '%llx'을(를) 사용하는 것이 좋습니다.
+  c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\lib\byteswap.h(113): note: 서식 문자열에서 '%I64x'을(를) 사용하는 것이 좋습니다.
+c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\server\servermain.cpp(136): error C3861: 'print': 식별자를 찾을 수 없습니다.
+c:\dev\copyingcrazyarcadenet\crazyarcadeserver\src\server\servermain.cpp(520): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  코드를 생성하고 있습니다...

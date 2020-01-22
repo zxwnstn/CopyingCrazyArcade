@@ -38,7 +38,7 @@ Image * imageManager::addImage(string strKey, int width, int height)
 	return img;
 }
 
-Image * imageManager::addImage(string strKey, const char * fileName, int width, int height, bool isTrans, COLORREF transCollor)
+Image * imageManager::addImage(string strKey, const TCHAR * fileName, int width, int height, bool isTrans, COLORREF transCollor)
 {
 	Image* img = findImage(strKey);
 	if (img)
@@ -57,7 +57,7 @@ Image * imageManager::addImage(string strKey, const char * fileName, int width, 
 	return img;
 }
 
-Image * imageManager::addImage(string strKey, const char * fileName, int x, int y, int width, int height, bool isTrans, COLORREF transCollor)
+Image * imageManager::addImage(string strKey, const TCHAR * fileName, int x, int y, int width, int height, bool isTrans, COLORREF transCollor)
 {
 	Image* img = findImage(strKey);
 	if (img)
@@ -76,7 +76,7 @@ Image * imageManager::addImage(string strKey, const char * fileName, int x, int 
 	return img;
 }
 
-Image * imageManager::addFrameImage(string strKey, const char * fileName, int width, int height, int frameX, int frameY, bool isTrans, COLORREF transCollor)
+Image * imageManager::addFrameImage(string strKey, const TCHAR * fileName, int width, int height, int frameX, int frameY, bool isTrans, COLORREF transCollor)
 {
 	Image* img = findImage(strKey);
 	if (img)
@@ -95,7 +95,7 @@ Image * imageManager::addFrameImage(string strKey, const char * fileName, int wi
 	return img;
 }
 
-Image * imageManager::addFrameImage(string strKey, const char * fileName, float x, float y, int width, int height, int frameX, int frameY, bool isTrans, COLORREF transCollor)
+Image * imageManager::addFrameImage(string strKey, const TCHAR * fileName, float x, float y, int width, int height, int frameX, int frameY, bool isTrans, COLORREF transCollor)
 {
 	Image* img = findImage(strKey);
 	if (img)

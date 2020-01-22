@@ -19,12 +19,12 @@ public:
 
 	//키값으로 빈 비트맵 추가
 	Image* addImage(string strKey, int width, int height);
-	Image* addImage(string strKey, const char* fileName, int width, int height, bool isTrans = false, COLORREF transCollor = RGB(0, 0, 0));
-	Image* addImage(string strKey, const char* fileName, int x, int y, int width, int height, bool isTrans = false, COLORREF transCollor = RGB(0, 0, 0));
+	Image* addImage(string strKey, const TCHAR* fileName, int width, int height, bool isTrans = false, COLORREF transCollor = RGB(0, 0, 0));
+	Image* addImage(string strKey, const TCHAR* fileName, int x, int y, int width, int height, bool isTrans = false, COLORREF transCollor = RGB(0, 0, 0));
 
 	//프레임 비트맵 추가
-	Image* addFrameImage(string strKey, const char* fileName, int width, int height, int frameX, int frameY, bool isTrans, COLORREF transCollor);
-	Image* addFrameImage(string strKey, const char* fileName, float x, float y, int width, int height, int frameX, int frameY, bool isTrans, COLORREF transCollor);
+	Image* addFrameImage(string strKey, const TCHAR* fileName, int width, int height, int frameX, int frameY, bool isTrans, COLORREF transCollor);
+	Image* addFrameImage(string strKey, const TCHAR* fileName, float x, float y, int width, int height, int frameX, int frameY, bool isTrans, COLORREF transCollor);
 	
 	//이미지 찾기, 삭제
 	Image* findImage(string strkey);

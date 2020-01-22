@@ -91,12 +91,12 @@ void timer::tick(float lockFPS)
 
 }
 
-unsigned long timer::getFrameRate(char * str) const
+unsigned long timer::getFrameRate(TCHAR * str) const
 {
 
 	if (str != NULL)
 	{
-		wsprintf(str, "FPS : %d", _frameRate);
+		_stprintf(str, L"FPS : %d", _frameRate);
 	}
 	return _frameRate;
 }
