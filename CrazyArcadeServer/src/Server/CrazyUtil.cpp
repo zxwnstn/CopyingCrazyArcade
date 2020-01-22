@@ -1,31 +1,31 @@
-#pragma once
+#include "CrazyUtil.h"
 #include "packet.h"
 #include "CrazyArcadeData.h"
 
-blockData protoHardYellow((char)BlockHard, (char)tileGreenBlock, (char)hbYellow);
-blockData protoHardBlue((char)BlockHard, (char)tileGreenBlock, (char)hbBlue);
-blockData protoHardOrange((char)BlockHard, (char)tileGreenBlock, (char)hbOrange);
 
-blockData protoSoftRed((char)BlockSoft, (char)tileGreenBlock, (char)sbRed);
-blockData protoSoftOrange((char)BlockSoft, (char)tileGreenBlock, (char)sbOrange);
-blockData protoSoftBox((char)BlockSoft, (char)tileGreenBlock, (char)sbBox);
 
-blockData protoTileGreen((char)BlockNone, (char)tileGreenBlock, 0);
-blockData protoTileMoreGreen((char)BlockNone, (char)tileMoreGreenBlock, 0);
-blockData protoTileRoad((char)BlockNone, (char)tileGray, 0);
-blockData protoTileRoadCenterLine((char)BlockNone, (char)tileCenterLine, 0);
-blockData protoTileRoadAcrossWalk((char)BlockNone, (char)tileAcrossWalk, 0);
+BlockData protoHardYellow((char)BlockHard, (char)tileGreenBlock, (char)hbYellow);
+BlockData protoHardBlue((char)BlockHard, (char)tileGreenBlock, (char)hbBlue);
+BlockData protoHardOrange((char)BlockHard, (char)tileGreenBlock, (char)hbOrange);
 
-blockData protoTree((char)BlockSoft, (char)tileGreenBlock, 0);
-blockData protoBush((char)BlockBush, (char)tileGreenBlock, 0);
+BlockData protoSoftRed((char)BlockSoft, (char)tileGreenBlock, (char)sbRed);
+BlockData protoSoftOrange((char)BlockSoft, (char)tileGreenBlock, (char)sbOrange);
+BlockData protoSoftBox((char)BlockSoft, (char)tileGreenBlock, (char)sbBox);
 
-const int itemGeneratePer = 40;
+BlockData protoTileGreen((char)BlockNone, (char)tileGreenBlock, 0);
+BlockData protoTileMoreGreen((char)BlockNone, (char)tileMoreGreenBlock, 0);
+BlockData protoTileRoad((char)BlockNone, (char)tileGray, 0);
+BlockData protoTileRoadCenterLine((char)BlockNone, (char)tileCenterLine, 0);
+BlockData protoTileRoadAcrossWalk((char)BlockNone, (char)tileAcrossWalk, 0);
 
-vector<blockData> createVillageBlocksData() {
-	
-	vector<blockData> ret;
+BlockData protoTree((char)BlockSoft, (char)tileGreenBlock, 0);
+BlockData protoBush((char)BlockBush, (char)tileGreenBlock, 0);
+
+std::vector<BlockData> createVillageBlocksData() {
+
+	vector<BlockData> ret;
 	ret.resize(195);
-	
+
 	if (1) {
 		ret[0] = protoTileGreen;
 		ret[1] = protoSoftOrange;
@@ -252,7 +252,8 @@ vector<blockData> createVillageBlocksData() {
 		ret[i].posX = i % 15;
 		ret[i].posY = i / 15;
 		int temp = rand() % 100;
-		if(temp < itemGeneratePer)
+		if (temp < itemGeneratePer)
 			ret[i].innerItem = rand() % 3;
 	}
+	return ret;
 }

@@ -1,3 +1,4 @@
+#include "..\..\..\CrazyArcadeServer\src\Server\packet.h"
 #pragma once
 #include "Etc/stdafx.h"
 #include "Network/HeaderShared.h"

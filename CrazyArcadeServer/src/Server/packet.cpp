@@ -1,6 +1,16 @@
 #include "packet.h"
 
-void blockData::Write(OutputMemoryStream & outStream)
+BlockData::BlockData()
+{
+}
+BlockData::BlockData(char _type, char _tileIndex, char _blockIndex)
+	: type(_type), tileIndex(_tileIndex), blockIndex(_blockIndex)
+{
+}
+BlockData::~BlockData()
+{
+}
+void BlockData::Write(OutputMemoryStream & outStream)
 {
 	outStream.Write(posX);
 	outStream.Write(posY);
@@ -9,8 +19,7 @@ void blockData::Write(OutputMemoryStream & outStream)
 	outStream.Write(blockIndex);
 	outStream.Write(innerItem);
 }
-
-void blockData::Read(InputMemoryStream & inStream)
+void BlockData::Read(InputMemoryStream & inStream)
 {
 	inStream.Read(posX);
 	inStream.Read(posY);
@@ -19,21 +28,7 @@ void blockData::Read(InputMemoryStream & inStream)
 	inStream.Read(blockIndex);
 	inStream.Read(innerItem);
 }
-
-blockData::blockData()
-{
-}
-
-inline blockData::blockData(char _type, char _tileIndex, char _blockIndex)
-	: type(_type), tileIndex(_tileIndex), blockIndex(_blockIndex)
-{
-}
-
-blockData::~blockData()
-{
-}
-
-void blockData::show()
+void BlockData::show()
 {
 	std::cout << " block position x : " << posX << " y : " << posY << "\n";
 	
@@ -125,8 +120,9 @@ void blockData::show()
 	}
 }
 
-void InitiationData::Write(OutputMemoryStream & outStream) {
-	for (auto _block : block)
+
+void InitiationPacket::Write(OutputMemoryStream & outStream) {
+	for (auto _block : blocks)
 		_block.Write(outStream);
 
 	for (int i = 0; i < 2; i++)
@@ -138,9 +134,8 @@ void InitiationData::Write(OutputMemoryStream & outStream) {
 	for (int i = 0; i < 2; i++)
 		outStream.Write(clientCharacter[i]);
 }
-
-void InitiationData::Read(InputMemoryStream & inStream) {
-	for (auto _block : block)
+void InitiationPacket::Read(InputMemoryStream & inStream) {
+	for (auto _block : blocks)
 		_block.Read(inStream);
 
 
@@ -153,8 +148,7 @@ void InitiationData::Read(InputMemoryStream & inStream) {
 	for (int i = 0; i < 2; i++)
 		inStream.Read(clientCharacter[i]);
 }
-
-void InitiationData::show()
+void InitiationPacket::show()
 {
 	std::cout << "character info\n";
 	for (int i = 0; i < 2; ++i) {
@@ -173,7 +167,39 @@ void InitiationData::show()
 	}
 
 	std::cout << "block info\n";
-	for (auto _block : block) {
+	for (auto _block : blocks) {
 		_block.show();
 	}
+}
+
+
+void MoveData::show()
+{
+	std::cout << clientID << "\n";
+	switch (playerMoveDir){
+	case 0:
+		std::cout << "player Moved! : up\n";
+		break;
+	case 1:
+		std::cout << "player Moved! : down\n";
+		break;
+	case 2:
+		std::cout << "player Moved! : right\n";
+		break;
+	case 3:
+		std::cout << "player Moved! : left\n";
+		break;
+	case 4:
+		std::cout << "player no moved\n";
+		break;
+	}
+	
+}
+void MoveData::Write(OutputMemoryStream& outStream) {
+	outStream.Write(clientID);
+	outStream.Write(playerMoveDir);
+}
+void MoveData::Read(InputMemoryStream& inStream) {
+	inStream.Read(clientID);
+	inStream.Read(playerMoveDir);
 }

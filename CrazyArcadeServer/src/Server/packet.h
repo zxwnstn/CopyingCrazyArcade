@@ -5,10 +5,12 @@
 #include <time.h>
 #include "lib/HeaderShared.h"
 #include "lib/MemoryStream.h"
+#include "CrazyArcadeData.h"
+#include "CrazyUtil.h"
 #pragma comment(lib, "ws2_32")
 
 //packet interface
-class crazyPacket {
+class CrazyPacket {
 public:
 	virtual void Write(OutputMemoryStream& outStream) = 0;
 	virtual void Read(InputMemoryStream& outStream) = 0;
@@ -17,8 +19,8 @@ public:
 
 
 //contain specific each block data
-class blockData	
-	: public crazyPacket
+class BlockData	
+	: public CrazyPacket
 {
 public:
 	char posX, posY;    //Block Position
@@ -28,9 +30,9 @@ public:
 	char innerItem;		//0, range 1.speed 2, bomb drop limit up 3, no Item
 
 public:
-	blockData();
-	blockData(char _type, char _tileIndex, char _blockIndex);
-	~blockData();
+	BlockData();
+	BlockData(char _type, char _tileIndex, char _blockIndex);
+	~BlockData();
 
 	void Write(OutputMemoryStream& outStream) override;
 	void Read(InputMemoryStream& inStream) override;
@@ -41,8 +43,8 @@ public:
 //player will recieve this data when start the game
 //and initiate GameScene on their pc with this data
 //contain clients basic info and whole blocks data
-class InitiationData 
-	: public crazyPacket
+class InitiationPacket
+	: public CrazyPacket
 {
 public:
 	char clientID[2];
@@ -51,7 +53,7 @@ public:
 	char clientCharacter[2];		// 0 bazzi, 1 dao
 
 public:
-	vector<blockData> block;		// 15 * 13 size
+	vector<BlockData> blocks;		// 15 * 13 size
 
 public:
 	void Write(OutputMemoryStream& outStream) override;
@@ -63,7 +65,7 @@ public:
 
 //
 class MoveData 
-	: public crazyPacket
+	: public CrazyPacket
 {
 public:
 	char clientID;
@@ -72,4 +74,5 @@ public:
 public:
 	void Write(OutputMemoryStream& outStream) override;
 	void Read(InputMemoryStream& inStream) override;
+	void show() override;
 };//data size = 2 BYTE
