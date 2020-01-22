@@ -135,6 +135,7 @@ void InitiationPacket::Write(OutputMemoryStream & outStream) {
 		outStream.Write(clientCharacter[i]);
 }
 void InitiationPacket::Read(InputMemoryStream & inStream) {
+	blocks.resize(195);
 	for (auto _block : blocks)
 		_block.Read(inStream);
 

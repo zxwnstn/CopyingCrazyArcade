@@ -25,14 +25,17 @@ void echo(TCPSocketPtr servsock, TCPSocketPtr clientSocket)
 		initPacket.clientID[i] = i;
 	}
 	initPacket.blocks = createVillageBlocksData();
+	initPacket.show();
+
 
 	OutputMemoryStream out;
 	initPacket.Write(out);
 	char* initBuffer = static_cast<char*>(malloc(1470));
 	memcpy(initBuffer, out.GetBufferPtr(), out.GetLength());
 	clientSocket->Send(initBuffer, out.GetLength());
-
 	//send end
+
+
 
 	std::cout << clientNumber << "번 클라이언트로 이닛패킷을 보냈습니다.\n";
 
@@ -47,7 +50,6 @@ void echo(TCPSocketPtr servsock, TCPSocketPtr clientSocket)
 		if (size < 0) {			// 종료시 조건
 			break;
 		}
-		
 		InputMemoryStream in(buffer, size);
 		moveData.Read(in);
 		moveData.show();

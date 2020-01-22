@@ -3,7 +3,7 @@
 BlockData::BlockData()
 {
 }
-BlockData::BlockData(char _type, char _tileIndex, char _blockIndex)
+BlockData::BlockData(int _type, int _tileIndex, int _blockIndex)
 	: type(_type), tileIndex(_tileIndex), blockIndex(_blockIndex)
 {
 }
@@ -138,6 +138,7 @@ void InitiationPacket::Read(InputMemoryStream & inStream) {
 	blocks.resize(195);
 	for (auto _block : blocks)
 		_block.Read(inStream);
+
 
 	for (int i = 0; i < 2; i++)
 		inStream.Read(clientID[i]);

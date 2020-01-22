@@ -20,8 +20,6 @@ int main() {
 
 
 
-
-
 	char* initBuffer = static_cast<char*>(malloc(1470));
 	int size = clientSock->Receive(initBuffer, 1470);
 	InputMemoryStream in(initBuffer, size);
