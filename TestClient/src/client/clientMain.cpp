@@ -2,7 +2,6 @@
 #include <iostream>
 #include "packet.h"
 
-
 int main() {
 	WSADATA wsaData;
 	auto err = WSAStartup(MAKEWORD(2, 2), &wsaData);
@@ -16,19 +15,27 @@ int main() {
 	TCPSocketPtr clientSock = SocketUtil::CreateTCPSocket(INET);
 
 	clientSock->Connect(clientAddr);
-	std::cout << "클라를 시작합니다!" << std::endl;
+	std::cout << "서버에 연결되었습니다!" << std::endl;
 
 
-
-	char* initBuffer = static_cast<char*>(malloc(1470));
-	int size = clientSock->Receive(initBuffer, 1470);
-	InputMemoryStream in(initBuffer, size);
+	//receive IDPacket
+	char* idBuffer = static_cast<char*>(malloc(PACKET_MAX));
+	int size = clientSock->Receive(idBuffer, PACKET_MAX);
+	InputMemoryStream in(idBuffer, size);
 	
+	IDpacket idPacket;
+	idPacket.Read(in);
+	idPacket.show();
+	
+	//receive InitPacket
+	char* InitBuffer = static_cast<char*>(malloc(PACKET_MAX));
+	size = clientSock->Receive(InitBuffer, PACKET_MAX);
+	InputMemoryStream in2(InitBuffer, size);
+
 	InitiationPacket initPacket;
-	initPacket.Read(in);
-
+	initPacket.Read(in2);
 	initPacket.show();
-	
+
 	while (true)
 	{
 		

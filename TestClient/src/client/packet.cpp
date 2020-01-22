@@ -3,8 +3,8 @@
 BlockData::BlockData()
 {
 }
-BlockData::BlockData(int _type, int _tileIndex, int _blockIndex)
-	: type(_type), tileIndex(_tileIndex), blockIndex(_blockIndex)
+BlockData::BlockData(char _blockType, char _tileIndex, char _blockIndex)
+	: blockType(_blockType), tileIndex(_tileIndex), blockIndex(_blockIndex)
 {
 }
 BlockData::~BlockData()
@@ -14,7 +14,7 @@ void BlockData::Write(OutputMemoryStream & outStream)
 {
 	outStream.Write(posX);
 	outStream.Write(posY);
-	outStream.Write(type);
+	outStream.Write(blockType);
 	outStream.Write(tileIndex);
 	outStream.Write(blockIndex);
 	outStream.Write(innerItem);
@@ -23,7 +23,7 @@ void BlockData::Read(InputMemoryStream & inStream)
 {
 	inStream.Read(posX);
 	inStream.Read(posY);
-	inStream.Read(type);
+	inStream.Read(blockType);
 	inStream.Read(tileIndex);
 	inStream.Read(blockIndex);
 	inStream.Read(innerItem);
@@ -33,7 +33,7 @@ void BlockData::show()
 	std::cout << " block position x : " << posX << " y : " << posY << "\n";
 	
 	std::cout << "block type : ";
-	switch (type){
+	switch ((int)blockType){
 	case 0:
 		std::cout << "soft block\n";
 		break;
@@ -51,9 +51,9 @@ void BlockData::show()
 		break;
 	}
 
-	if (type == 0) {
+	if ((int)blockType == 0) {
 		std::cout << "soft block color : ";
-		switch (tileIndex) {
+		switch ((int)tileIndex) {
 		case 0:
 			std::cout << "yellow\n";
 			break;
@@ -82,9 +82,9 @@ void BlockData::show()
 		}
 	}
 
-	if (type == 1) {
+	if ((int)blockType == 1) {
 		std::cout << "hard block color : ";
-		switch (blockIndex){
+		switch ((int)blockIndex){
 		case 0:
 			std::cout << "red\n";
 			break;
@@ -97,9 +97,9 @@ void BlockData::show()
 		}
 	}
 
-	if (type == 4) {
+	if ((int)blockType == 4) {
 		std::cout << "tileType : ";
-		switch (tileIndex)
+		switch ((int)tileIndex)
 		{
 		case 0:
 			std::cout << "normal green block\n";
@@ -122,6 +122,9 @@ void BlockData::show()
 
 
 void InitiationPacket::Write(OutputMemoryStream & outStream) {
+	
+	outStream.Write(packetType);
+
 	for (auto _block : blocks)
 		_block.Write(outStream);
 
@@ -135,10 +138,12 @@ void InitiationPacket::Write(OutputMemoryStream & outStream) {
 		outStream.Write(clientCharacter[i]);
 }
 void InitiationPacket::Read(InputMemoryStream & inStream) {
+	
+	inStream.Read(packetType);
+
 	blocks.resize(195);
 	for (auto _block : blocks)
 		_block.Read(inStream);
-
 
 	for (int i = 0; i < 2; i++)
 		inStream.Read(clientID[i]);
@@ -153,7 +158,7 @@ void InitiationPacket::show()
 {
 	std::cout << "character info\n";
 	for (int i = 0; i < 2; ++i) {
-		std::cout << "client Id : " << clientID[i] << "\n";
+		std::cout << "client Id : " << (int)clientID[i] << "\n";
 		std::cout << "select charcter : ";
 
 		switch (clientCharacter[i]){
@@ -164,7 +169,7 @@ void InitiationPacket::show()
 			std::cout << "dao\n";
 			break;
 		}
-		std::cout << "character position x : " << clientCharacterPosX << " y " << clientCharacterPosY << "\n";
+		std::cout << "character position x : " << (int)clientCharacterPosX << " y " << (int)clientCharacterPosY << "\n";
 	}
 
 	std::cout << "block info\n";
@@ -174,10 +179,21 @@ void InitiationPacket::show()
 }
 
 
+
+void MoveData::Write(OutputMemoryStream& outStream) {
+	outStream.Write(packetType);
+	outStream.Write(clientID);
+	outStream.Write(playerMoveDir);
+}
+void MoveData::Read(InputMemoryStream& inStream) {
+	inStream.Read(packetType);
+	inStream.Read(clientID);
+	inStream.Read(playerMoveDir);
+}
 void MoveData::show()
 {
 	std::cout << clientID << "\n";
-	switch (playerMoveDir){
+	switch (playerMoveDir) {
 	case 0:
 		std::cout << "player Moved! : up\n";
 		break;
@@ -194,13 +210,24 @@ void MoveData::show()
 		std::cout << "player no moved\n";
 		break;
 	}
-	
+
 }
-void MoveData::Write(OutputMemoryStream& outStream) {
+
+
+
+void IDpacket::Write(OutputMemoryStream & outStream)
+{
+	outStream.Write(packetType);
 	outStream.Write(clientID);
-	outStream.Write(playerMoveDir);
 }
-void MoveData::Read(InputMemoryStream& inStream) {
+
+void IDpacket::Read(InputMemoryStream & inStream)
+{
+	inStream.Read(packetType);
 	inStream.Read(clientID);
-	inStream.Read(playerMoveDir);
+}
+
+void IDpacket::show()
+{
+	std::cout << "Granted Client ID : " << (int)clientID << "\n";
 }
