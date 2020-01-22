@@ -15,8 +15,8 @@ void BlockData::Write(OutputMemoryStream & outStream)
 	outStream.Write(posX);
 	outStream.Write(posY);
 	outStream.Write(blockType);
-	outStream.Write(tileIndex);
 	outStream.Write(blockIndex);
+	outStream.Write(tileIndex);
 	outStream.Write(innerItem);
 }
 void BlockData::Read(InputMemoryStream & inStream)
@@ -24,13 +24,13 @@ void BlockData::Read(InputMemoryStream & inStream)
 	inStream.Read(posX);
 	inStream.Read(posY);
 	inStream.Read(blockType);
-	inStream.Read(tileIndex);
 	inStream.Read(blockIndex);
+	inStream.Read(tileIndex);
 	inStream.Read(innerItem);
 }
 void BlockData::show()
 {
-	std::cout << " block position x : " << posX << " y : " << posY << "\n";
+	std::cout << "block position x : " << (int)posX << " y : " << (int)posY << "\n";
 	
 	std::cout << "block type : ";
 	switch ((int)blockType){
@@ -66,7 +66,7 @@ void BlockData::show()
 		}
 
 		std::cout << "inner item : ";
-		switch (innerItem)
+		switch ((int)innerItem)
 		{
 		case 0:
 			std::cout << "range up\n";
@@ -125,9 +125,6 @@ void InitiationPacket::Write(OutputMemoryStream & outStream) {
 	
 	outStream.Write(packetType);
 
-	for (auto _block : blocks)
-		_block.Write(outStream);
-
 	for (int i = 0; i < 2; i++)
 		outStream.Write(clientID[i]);
 	for (int i = 0; i < 2; i++)
@@ -136,14 +133,13 @@ void InitiationPacket::Write(OutputMemoryStream & outStream) {
 		outStream.Write(clientCharacterPosY[i]);
 	for (int i = 0; i < 2; i++)
 		outStream.Write(clientCharacter[i]);
+
+	for (auto block : blocks)
+		block.Write(outStream);
 }
 void InitiationPacket::Read(InputMemoryStream & inStream) {
 	
 	inStream.Read(packetType);
-
-	blocks.resize(195);
-	for (auto _block : blocks)
-		_block.Read(inStream);
 
 	for (int i = 0; i < 2; i++)
 		inStream.Read(clientID[i]);
@@ -153,6 +149,9 @@ void InitiationPacket::Read(InputMemoryStream & inStream) {
 		inStream.Read(clientCharacterPosY[i]);
 	for (int i = 0; i < 2; i++)
 		inStream.Read(clientCharacter[i]);
+
+	for (auto block : blocks)
+		block.Read(inStream);
 }
 void InitiationPacket::show()
 {

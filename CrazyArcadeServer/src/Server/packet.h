@@ -45,7 +45,8 @@ class BlockData
 	: public CrazyPacket
 {
 public:
-	char posX, posY;    //Block Position
+	char posX;
+	char posY;			//Block Position
 	char blockType;		//0, softbloc, 1. hardblock, 2. tree, 3, none 4, bush	
 	char blockIndex;	//for block image render
 	char tileIndex;		//for tile image render
@@ -56,13 +57,14 @@ public:
 	BlockData(char _blockType, char _tileIndex, char _blockIndex);
 	~BlockData();
 
+public:
 	void Write(OutputMemoryStream& outStream) override;
 	void Read(InputMemoryStream& inStream) override;
 	void show() override;
 };//data size =  6 BYTE
 
 
-//player will recieve this data when start the game
+//player will recieve this packet when start the game
 //and initiate GameScene on their pc with this data
 //contain clients basic info and whole blocks data
 class InitiationPacket
@@ -85,7 +87,7 @@ public:
 };//data size = 1178 BYTE
 
 
-class MoveData 
+class MovePacket
 	: public CrazyPacket
 {
 public:
@@ -98,4 +100,3 @@ public:
 	void Read(InputMemoryStream& inStream) override;
 	void show() override;
 };//data size = 2 BYTE
-

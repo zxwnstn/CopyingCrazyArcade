@@ -12,6 +12,7 @@ void echo(TCPSocketPtr servsock, TCPSocketPtr clientSocket)
 	mtx.lock();
 	++clientNumber;
 	mtx.unlock();
+
 	int thisclientnumber = clientNumber;
 	std::cout << thisclientnumber << "번 클라이언트가 접속하였습니다!!" << std::endl;
 
@@ -36,24 +37,24 @@ void echo(TCPSocketPtr servsock, TCPSocketPtr clientSocket)
 		initPacket.clientID[i] = i;
 	}
 	initPacket.blocks = createVillageBlocksData();
+	initPacket.show();
 
 	OutputMemoryStream out2;
 	initPacket.Write(out2);
 	char* initBuffer = static_cast<char*>(malloc(PACKET_MAX));
 	memcpy(initBuffer, out2.GetBufferPtr(), out2.GetLength());
 	clientSocket->Send(initBuffer, out2.GetLength());
-
 	std::cout << thisclientnumber << "번 클라이언트로 이닛패킷을 보냈습니다.\n";
 
-
+	//Receive client Move data
 	while (true) {
-		MoveData moveData;
+		MovePacket moveData;
 
 		char* buffer = static_cast<char*>(malloc(1470));
 		int size = clientSocket->Receive(buffer, 1470);
 		if (moveData.clientID == -1) // 처음 접속할 때 아이디넘버 부여
 			moveData.clientID = thisclientnumber;
-		if (size < 0) {			// 종료시 조건
+		if (size < 0) {	// 종료시 조건
 			break;
 		}
 		//InputMemoryStream in(buffer, size);

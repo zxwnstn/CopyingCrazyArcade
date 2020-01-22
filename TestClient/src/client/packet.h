@@ -43,7 +43,8 @@ class BlockData
 	: public CrazyPacket
 {
 public:
-	char posX, posY;    //Block Position
+	char posX;
+	char posY;    //Block Position
 	char blockType;		//0, softbloc, 1. hardblock, 2. tree, 3, none 4, bush	
 	char blockIndex;	//for block image render
 	char tileIndex;		//for tile image render
