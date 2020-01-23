@@ -37,7 +37,7 @@ void echo(TCPSocketPtr servsock, TCPSocketPtr clientSocket)
 		initPacket.clientID[i] = i;
 	}
 	initPacket.blocks = createVillageBlocksData();
-	initPacket.show();
+	//initPacket.show();
 
 	OutputMemoryStream out2;
 	initPacket.Write(out2);

@@ -1,3 +1,4 @@
+#include "Etc/stdafx.h"
 #include "NetworkManager.h"
 
 DEFINITION_SINGLE(NetworkManager)
@@ -18,35 +19,33 @@ void NetworkManager::init(string _ip)
 	auto err = WSAStartup(MAKEWORD(2, 2), &wsaData);
 
 	SocketAddressFactory fac;
-	server_ip = _ip;
 	SocketAddress clientAddr;
+	server_ip = _ip;
 	clientAddr = *fac.CreateIPv4FromString(server_ip);
 
 	clientSock = SocketUtil::CreateTCPSocket(INET);
-
 	clientSock->Connect(clientAddr);
 
 	//temp
-	std::cout << "클라를 시작합니다!" << std::endl;	
+	std::cout << "서버에 접속 했습니다." << std::endl;	
 }
 
 void NetworkManager::sendMoveData(char _clientID, char _playerMoveDir)
 {
 	//write
 	OutputMemoryStream out;
-	MoveData md;
+	MovePacket md;
 
 	md.Write(out);
 	char* Buffer = static_cast<char*>(malloc(1470));
-
 	memcpy(Buffer, out.GetBufferPtr(), out.GetLength());
 
 	clientSock->Send(Buffer, out.GetLength());
 }
 
-MoveData NetworkManager::recvMoveData()
+MovePacket NetworkManager::recvMoveData()
 {
-	MoveData moveData;
+	MovePacket moveData;
 
 	char* Buffer = static_cast<char*>(malloc(1470));
 	int size = clientSock->Receive(Buffer, 1470);
@@ -56,9 +55,14 @@ MoveData NetworkManager::recvMoveData()
 	return moveData;
 }
 
-InitiationData NetworkManager::recvInitData()
+IDpacket NetworkManager::recvID()
 {
-	InitiationData initData;
+	return IDpacket();
+}
+
+InitiationPacket NetworkManager::recvInitData()
+{
+	InitiationPacket initData;
 
 	char* Buffer = static_cast<char*>(malloc(1470));
 	int size = clientSock->Receive(Buffer, 1470);

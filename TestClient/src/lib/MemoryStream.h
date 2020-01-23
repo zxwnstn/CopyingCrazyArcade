@@ -55,13 +55,11 @@ public:
 	}
 
 	template< typename T >
-	void Write(const std::vector< T >& inVector)
+	void WriteVector(const std::vector< T >& inVector)
 	{
-		uint64_t elementCount = inVector.size();
-		Write(elementCount);
-		for (const T& element : inVector)
+		for (auto element : inVector)
 		{
-			Write(element);
+			element.Write(*this);
 		}
 	}
 
@@ -115,14 +113,12 @@ public:
 	}
 
 	template< typename T >
-	void Read(std::vector< T >& outVector)
+	void ReadVector(std::vector< T >& outVector, size_t elementCount)
 	{
-		size_t elementCount;
-		Read(elementCount);
 		outVector.resize(elementCount);
-		for (const T& element : outVector)
+		for (auto element : outVector)
 		{
-			Read(element);
+			element.Read(*this);
 		}
 	}
 

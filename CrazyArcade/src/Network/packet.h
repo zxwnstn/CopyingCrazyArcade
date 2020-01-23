@@ -3,8 +3,8 @@
 #include <thread>
 #include <mutex>
 #include <time.h>
-#include "lib/HeaderShared.h"
-#include "lib/MemoryStream.h"
+#include "HeaderShared.h"
+#include "MemoryStream.h"
 #pragma comment(lib, "ws2_32")
 #define PACKET_MAX 1470
 

@@ -12,21 +12,21 @@ BlockData::~BlockData()
 }
 void BlockData::Write(OutputMemoryStream & outStream)
 {
-	outStream.Write(posX);
-	outStream.Write(posY);
-	outStream.Write(blockType);
-	outStream.Write(blockIndex);
-	outStream.Write(tileIndex);
-	outStream.Write(innerItem);
+	outStream.Write(&posX, sizeof(posX));
+	outStream.Write(&posY, sizeof(posY));
+	outStream.Write(&blockType, sizeof(blockType));
+	outStream.Write(&blockIndex, sizeof(blockIndex));
+	outStream.Write(&tileIndex, sizeof(tileIndex));
+	outStream.Write(&innerItem, sizeof(innerItem));
 }
 void BlockData::Read(InputMemoryStream & inStream)
 {
-	inStream.Read(posX);
-	inStream.Read(posY);
-	inStream.Read(blockType);
-	inStream.Read(blockIndex);
-	inStream.Read(tileIndex);
-	inStream.Read(innerItem);
+	inStream.Read(&posX, sizeof(posX));
+	inStream.Read(&posY, sizeof(posY));
+	inStream.Read(&blockType, sizeof(blockType));
+	inStream.Read(&blockIndex, sizeof(blockIndex));
+	inStream.Read(&tileIndex, sizeof(tileIndex));
+	inStream.Read(&innerItem, sizeof(innerItem));
 }
 void BlockData::show()
 {
@@ -134,8 +134,7 @@ void InitiationPacket::Write(OutputMemoryStream & outStream) {
 	for (int i = 0; i < 2; i++)
 		outStream.Write(clientCharacter[i]);
 
-	for (auto block : blocks)
-		block.Write(outStream);
+	outStream.WriteVector(blocks);
 }
 void InitiationPacket::Read(InputMemoryStream & inStream) {
 	
@@ -150,8 +149,7 @@ void InitiationPacket::Read(InputMemoryStream & inStream) {
 	for (int i = 0; i < 2; i++)
 		inStream.Read(clientCharacter[i]);
 
-	for (auto block : blocks)
-		block.Read(inStream);
+	inStream.ReadVector(blocks, 195);
 }
 void InitiationPacket::show()
 {
@@ -179,17 +177,17 @@ void InitiationPacket::show()
 
 
 
-void MoveData::Write(OutputMemoryStream& outStream) {
+void MovePacket::Write(OutputMemoryStream& outStream) {
 	outStream.Write(packetType);
 	outStream.Write(clientID);
 	outStream.Write(playerMoveDir);
 }
-void MoveData::Read(InputMemoryStream& inStream) {
+void MovePacket::Read(InputMemoryStream& inStream) {
 	inStream.Read(packetType);
 	inStream.Read(clientID);
 	inStream.Read(playerMoveDir);
 }
-void MoveData::show()
+void MovePacket::show()
 {
 	std::cout << clientID << "\n";
 	switch (playerMoveDir) {

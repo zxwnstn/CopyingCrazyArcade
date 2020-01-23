@@ -134,7 +134,8 @@ void InitiationPacket::Write(OutputMemoryStream & outStream) {
 	for (int i = 0; i < 2; i++)
 		outStream.Write(clientCharacter[i]);
 
-	outStream.WriteVector(blocks);
+	for (auto block : blocks)
+		block.Write(outStream);
 }
 void InitiationPacket::Read(InputMemoryStream & inStream) {
 	
@@ -149,7 +150,12 @@ void InitiationPacket::Read(InputMemoryStream & inStream) {
 	for (int i = 0; i < 2; i++)
 		inStream.Read(clientCharacter[i]);
 
-	inStream.ReadVector(blocks, 195);
+	for (int i = 0; i < 195; ++i) {
+		BlockData block;
+		block.Read(inStream);
+		block.show();
+		blocks.push_back(block);
+	}
 }
 void InitiationPacket::show()
 {
@@ -170,8 +176,8 @@ void InitiationPacket::show()
 	}
 
 	std::cout << "block info\n";
-	for (auto _block : blocks) {
-		_block.show();
+	for (auto block : blocks) {
+		block.show();
 	}
 }
 
