@@ -23,9 +23,9 @@ void echo(TCPSocketPtr servsock, TCPSocketPtr clientSocket)
 
 	OutputMemoryStream out;
 	idPacket.Write(out);
-	char* idBuffer = static_cast<char*>(malloc(PACKET_MAX));
-	memcpy(idBuffer, out.GetBufferPtr(), out.GetLength());
-	clientSocket->Send(idBuffer, out.GetLength());
+	char* Buffer = static_cast<char*>(malloc(PACKET_MAX));
+	memcpy(Buffer, out.GetBufferPtr(), out.GetLength());
+	clientSocket->Send(Buffer, out.GetLength());
 	std::cout << thisclientnumber << "번 클라이언트로 ID패킷을 보냈습니다.\n";
 
 	//Send initPacket
@@ -37,30 +37,30 @@ void echo(TCPSocketPtr servsock, TCPSocketPtr clientSocket)
 		initPacket.clientID[i] = i;
 	}
 	initPacket.blocks = createVillageBlocksData();
-	//initPacket.show();
+	initPacket.show();
 
 	OutputMemoryStream out2;
 	initPacket.Write(out2);
-	char* initBuffer = static_cast<char*>(malloc(PACKET_MAX));
-	memcpy(initBuffer, out2.GetBufferPtr(), out2.GetLength());
-	clientSocket->Send(initBuffer, out2.GetLength());
+	char* Buffer2 = static_cast<char*>(malloc(PACKET_MAX));
+	memcpy(Buffer2, out2.GetBufferPtr(), out2.GetLength());
+	clientSocket->Send(Buffer2, out2.GetLength());
 	std::cout << thisclientnumber << "번 클라이언트로 이닛패킷을 보냈습니다.\n";
 
 	//Receive client Move data
 	while (true) {
 		MovePacket moveData;
-
-		char* buffer = static_cast<char*>(malloc(1470));
-		int size = clientSocket->Receive(buffer, 1470);
-		if (moveData.clientID == -1) // 처음 접속할 때 아이디넘버 부여
-			moveData.clientID = thisclientnumber;
+		char* Buffer3 = static_cast<char*>(malloc(PACKET_MAX));
+		int size = clientSocket->Receive(Buffer3, 1470);
 		if (size < 0) {	// 종료시 조건
 			break;
 		}
-		//InputMemoryStream in(buffer, size);
-		//moveData.Read(in);
-		//moveData.show();
+		InputMemoryStream in(Buffer3, size);
+		moveData.Read(in);
+		moveData.show();
+		//free(Buffer3);
 	}
+	//free(Buffer);
+	//free(Buffer2);
 	std::cout << thisclientnumber << "번 클라이언트 접속 종료" << '\n' << std::endl;
 }
 

@@ -118,6 +118,7 @@ void BlockData::show()
 			break;
 		}
 	}
+	std::cout << "\n";
 }
 
 
@@ -158,7 +159,7 @@ void InitiationPacket::show()
 		std::cout << "client Id : " << (int)clientID[i] << "\n";
 		std::cout << "select charcter : ";
 
-		switch (clientCharacter[i]){
+		switch ((int)clientCharacter[i]){
 		case 0:
 			std::cout << "bazzi\n";
 			break;
@@ -166,7 +167,7 @@ void InitiationPacket::show()
 			std::cout << "dao\n";
 			break;
 		}
-		std::cout << "character position x : " << (int)clientCharacterPosX << " y " << (int)clientCharacterPosY << "\n";
+		std::cout << "character position x : " << (int)clientCharacterPosX[i] << " y " << (int)clientCharacterPosY[i] << "\n";
 	}
 
 	std::cout << "block info\n";

@@ -116,7 +116,7 @@ public:
 	void ReadVector(std::vector< T >& outVector, size_t elementCount)
 	{
 		outVector.resize(elementCount);
-		for (auto element : outVector)
+		for (auto& element : outVector)
 		{
 			element.Read(*this);
 		}

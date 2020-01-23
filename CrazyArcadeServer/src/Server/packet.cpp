@@ -118,6 +118,7 @@ void BlockData::show()
 			break;
 		}
 	}
+	std::cout << "\n";
 }
 
 
@@ -166,7 +167,7 @@ void InitiationPacket::show()
 			std::cout << "dao\n";
 			break;
 		}
-		std::cout << "character position x : " << (int)clientCharacterPosX << " y " << (int)clientCharacterPosY << "\n";
+		std::cout << "character position x : " << (int)clientCharacterPosX[i] << " y " << (int)clientCharacterPosY[i] << "\n";
 	}
 
 	std::cout << "block info\n";

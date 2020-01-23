@@ -57,8 +57,6 @@ public:
 	template< typename T >
 	void WriteVector(const std::vector< T >& inVector)
 	{
-		uint64_t elementCount = inVector.size();
-		Write(elementCount);
 		for (auto element : inVector)
 		{
 			element.Write(*this);
@@ -111,7 +109,7 @@ public:
 	void ReadVector(std::vector< T >& outVector, size_t elementCount)
 	{
 		outVector.resize(elementCount);
-		for (auto element : outVector)
+		for (auto& element : outVector)
 		{
 			element.Read(*this);
 		}
