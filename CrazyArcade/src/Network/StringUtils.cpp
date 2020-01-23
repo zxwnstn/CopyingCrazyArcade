@@ -55,7 +55,7 @@ void StringUtils::Log( const char* inFormat, ... )
 #else
 	vsnprintf(temp, 4096, inFormat, args);
 #endif
-	OutputDebugString( (LPCSTR)temp );
-	OutputDebugString( "\n" );
+	OutputDebugString( (LPCWSTR)temp );
+	OutputDebugString( L"\n" );
 }
 
