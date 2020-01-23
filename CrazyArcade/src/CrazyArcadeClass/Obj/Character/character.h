@@ -75,8 +75,8 @@ protected:
 
 	//this Margin var is Set warter BombCollision judge loosen
 	//this can't be more than half of player width and height (right now is setted 60) 
-	const int		xMargin = 21;
-	const int		yMargin = 21;
+	const int		xMargin = 25;
+	const int		yMargin = 25;
 
 	//this info is not to collision last bomb drop area
 	IRECT			lastDrop_rect;
