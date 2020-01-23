@@ -21,7 +21,7 @@ HRESULT MainMenu::init()
 	tcpButtonImage = IMAGEMANAGER->findImage("서버버튼");
 
 	GET_SINGLE(SoundManager)->addSound("마우스활성", "music/mouse_position_up.mp3");
-	GET_SINGLE(SoundManager)->addStream("메인브금", "music/MainMenu.mp3", 1);
+	GET_SINGLE(SoundManager)->addStream("메인브금", "music/MainMenu.mp3", true);
 
 	GET_SINGLE(SoundManager)->playSound("메인브금", 0);
 

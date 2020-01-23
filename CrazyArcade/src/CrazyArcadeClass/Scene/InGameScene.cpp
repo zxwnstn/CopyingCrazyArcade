@@ -22,15 +22,15 @@ HRESULT InGameScene::init()
 	IMAGEMANAGER->addImage		("플레이어",	L"images/bazziReadyCharacter.bmp",	54, 63, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage		("플1포인터",	L"images/1p.bmp",					24, 35, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage		("플2포인터",	L"images/2p.bmp",					24, 35, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage	("배찌이동",	L"images/BazziMove.bmp",				560, 320, 7, 4, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage	("배찌이동",	L"images/BazziMove.bmp",			560, 320, 7, 4, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage	("배찌풍선안",	L"images/bazziBubble.bmp",			960, 65, 16, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage	("배찌죽음",	L"images/bazziDie.bmp",				770, 110, 11, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage	("다오이동",	L"images/DaoMove.bmp",				560, 320, 7, 4, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage	("다오풍선안",	L"images/DaoBubble.bmp",				960, 65, 16, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage	("다오풍선안",	L"images/DaoBubble.bmp",			960, 65, 16, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage	("다오죽음",	L"images/DaoDie.bmp",				770, 110, 11, 1, true, RGB(255, 0, 255));
 
 	//block
-	IMAGEMANAGER->addImage		("하드블록",	L"images/house.bmp",					180, 90, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage		("하드블록",	L"images/house.bmp",				180, 90, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage		("소프트블록",	L"images/box.bmp",					180, 67, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage		("타일",		L"images/Tile.bmp",					300, 60);
 	IMAGEMANAGER->addImage		("그림자",		L"images/shadow.bmp",				62,  62, true, RGB(255, 0, 255));
@@ -47,8 +47,8 @@ HRESULT InGameScene::init()
 	IMAGEMANAGER->addFrameImage	("폭발아래쪽끝",L"images/bomb_bottom.bmp",			540, 60, 9, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage	("폭발아래쪽",	L"images/bomb_bottom_ex.bmp",		540, 60, 9, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage	("폭발오른쪽끝",L"images/bomb_right.bmp",			540, 60, 9, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage	("폭발오른쪽",	L"images/bomb_right_ex.bmp",			540, 60, 9, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage	("폭발왼쪽끝",	L"images/bomb_left.bmp",				540, 60, 9, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage	("폭발오른쪽",	L"images/bomb_right_ex.bmp",		540, 60, 9, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage	("폭발왼쪽끝",	L"images/bomb_left.bmp",			540, 60, 9, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage	("폭발왼쪽",	L"images/bomb_left_ex.bmp",			540, 60, 9, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage	("폭발센터",	L"images/bomb_center.bmp",			540, 60, 9, 1, true, RGB(255, 0, 255));
 	//item
@@ -57,8 +57,8 @@ HRESULT InGameScene::init()
 	//============================================================//
 	//===================== sound settup =========================//
 
-	GET_SINGLE(SoundManager)->addStream("붐힐",				"music/Boomhill.mp3", 0);
-	GET_SINGLE(SoundManager)->addStream("크리스마스",		"music/Xmas.mp3", 0);
+	GET_SINGLE(SoundManager)->addStream("붐힐",				"music/Boomhill.mp3", true);
+	GET_SINGLE(SoundManager)->addStream("크리스마스",		"music/Xmas.mp3", true);
 															
 	GET_SINGLE(SoundManager)->addSound("폭발음",			"music/boom.mp3");
 	GET_SINGLE(SoundManager)->addSound("폭탄놓기",			"music/dropBomb.mp3");

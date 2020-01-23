@@ -14,32 +14,31 @@ void SoundManager::init() {
 	ret = fmodSystem->init(32, FMOD_INIT_NORMAL, extradireverdate);
 }
 
-void SoundManager::addSound(string str, const string & fileName, int mode) {
+void SoundManager::addSound(string str, const string & fileName, bool loop) {
 	auto findIter = soundMap.find(str);
 	if (findIter != soundMap.end())
 		return;
 
 	FMOD::Sound* sound;
-	if (mode == 0)
+	if (loop)
 		ret = fmodSystem->createSound(fileName.c_str(), FMOD_LOOP_NORMAL, 0, &sound);
-	else {
+	else 
 		ret = fmodSystem->createSound(fileName.c_str(), FMOD_LOOP_OFF, 0, &sound);
-	}
 	soundMap.insert(make_pair(str, sound));
 }
 
-void SoundManager::addStream(string str, const string & fileName, int mode)
+void SoundManager::addStream(string str, const string & fileName, bool loop)
 {
 	auto findIter = soundMap.find(str);
 	if (findIter != soundMap.end())
 		return;
 	FMOD::Sound* sound;
 
-	if (mode == 0)
+	if (loop)
 		ret = fmodSystem->createStream(fileName.c_str(), FMOD_LOOP_NORMAL, 0, &sound);
-	else {
+	else
 		ret = fmodSystem->createStream(fileName.c_str(), FMOD_LOOP_OFF, 0, &sound);
-	}
+
 	soundMap.insert(make_pair(str, sound));
 }
 
@@ -50,6 +49,15 @@ void SoundManager::playSound(string str, int channel) {
 		return;
 	}
 	fmodSystem->playSound(findIter->second, 0, false, &ch[channel]);
+}
+
+void SoundManager::playSound(string str, Channel channel)
+{
+	auto findIter = soundMap.find(str);
+	if (findIter == soundMap.end()) {
+		return;
+	}
+	fmodSystem->playSound(findIter->second, 0, false, &ch[(int)channel]);
 }
 
 void SoundManager::release() {
