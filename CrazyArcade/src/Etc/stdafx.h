@@ -1,4 +1,4 @@
-﻿// stdafx.h : 자주 사용하지만 자주 변경되지는 않는
+// stdafx.h : 자주 사용하지만 자주 변경되지는 않는
 #pragma once
 #pragma warning(disable : 4996)
 
@@ -46,7 +46,7 @@ using namespace UTIL;
 //======================================
 //##			디파인문			  ##
 //======================================
-#define WINNAME		(LPTSTR)(TEXT("경일 프로그래밍 18기"))
+#define WINNAME		(LPTSTR)(TEXT("Crazy Arcade"))
 #define WINSTARTX   100
 #define WINSTARTY   100
 #define WINSIZEX	1200
