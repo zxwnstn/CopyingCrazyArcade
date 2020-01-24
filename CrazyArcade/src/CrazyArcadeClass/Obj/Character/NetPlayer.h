@@ -5,12 +5,14 @@ class NetPlayer
 	:public character
 {
 public:
-	NetPlayer();
+	NetPlayer(int x, int y, int _netID);
 	~NetPlayer();
 
 	void update(float _deltaTime) override;
 	bool init(CharacterType _type) override;
+	int getID() { return netID; }
 
-	int clientId;
+private:
+	int netID;
 };
 

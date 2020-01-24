@@ -182,6 +182,8 @@ Direction character::move(Direction dir, int dist)
 	{
 	//UP move can be change Right or Left
 	case eUp:
+
+
 		if(!adjustSpeedVertical)
 			dist = adjustSpeed(eUp);
 		blockCollisionRect.moveUp(dist);

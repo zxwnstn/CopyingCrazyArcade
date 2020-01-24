@@ -25,7 +25,7 @@ int main() {
 	auto err = WSAStartup(MAKEWORD(2, 2), &wsaData);
 
 	SocketAddressFactory fac;
-	string ip = "127.0.0.1:9190";
+	string ip = "222.235.79.120:9190";
 	SocketAddress clientAddr;
 	clientAddr = *fac.CreateIPv4FromString(ip);
 
@@ -50,6 +50,7 @@ int main() {
 
 	InitiationPacket initPacket;
 	initPacket.Read(in2);
+	initPacket.show();
 
 	while (true){	
 		if (kbhit()) {

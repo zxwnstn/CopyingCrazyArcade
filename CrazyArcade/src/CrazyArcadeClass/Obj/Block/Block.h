@@ -12,9 +12,10 @@ public:
 
 	void init(int x, int y);
 	void init(BlockType _blockType, int x, int y, int _tileIdex = 0, int _blockIndex = 0);
+	void init(BlockType _blockType, int x, int y, int _tileIdex, int _blockIndex, int _innerItem);
 
 private:
-	void init();
+	void init(int _innerItem = -1);
 
 public:
 	//interface

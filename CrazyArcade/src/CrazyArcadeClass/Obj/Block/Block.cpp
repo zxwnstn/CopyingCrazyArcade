@@ -4,14 +4,19 @@
 #include "CrazyArcadeClass/Manager/BlockManager.h"
 #include "Manager/SoundManager.h"
 
-void Block::init()
+void Block::init(int _innerItem)
 {
 	if (type == BlockType::BlockSoft) {
 		innerItem = nullptr;
-		if (RND->getInt(100) < innerItemCreatePer) {
-			ItemType type = (ItemType)RND->getInt(3);
-			innerItem = make_shared<Item>(collisionRect, bPos, type);
+		if (_innerItem != -1) {
+			innerItem = make_shared<Item>(collisionRect, bPos, (ItemType)_innerItem);
 		}
+		else {
+			if (RND->getInt(100) < innerItemCreatePer) {
+				ItemType type = (ItemType)RND->getInt(3);
+				innerItem = make_shared<Item>(collisionRect, bPos, type);
+			}
+		}		
 	}
 
 	shawdowImage = IMAGEMANAGER->findImage("±×¸²ÀÚ");
@@ -58,6 +63,19 @@ void Block::init(BlockType _blockType, int x, int y, int _tileIdex, int _blockIn
 	collisionRect = GET_SINGLE(BlockManager)->getIRectFromIdx(x, y);
 
 	init();
+}
+
+void Block::init(BlockType _blockType, int x, int y, int _tileIdex, int _blockIndex, int _innerItem) {
+
+	type = _blockType;
+	bPos.x = x;
+	bPos.y = y;
+
+	tileIdx = _tileIdex;
+	curBlockIdx = _blockIndex;
+	collisionRect = GET_SINGLE(BlockManager)->getIRectFromIdx(x, y);
+
+	init(_innerItem);
 }
 
 Block::Block()

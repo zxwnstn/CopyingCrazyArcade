@@ -2,8 +2,10 @@
 #include "CharacterManager.h"
 #include "CrazyArcadeClass/Obj/Character/Player.h"
 #include "CrazyArcadeClass/Obj/Character/Player2.h"
+#include "CrazyArcadeClass/Obj/Character/NetPlayer.h"
 #include "CrazyArcadeClass/Manager/ItemManager.h"
 #include "CrazyArcadeClass/Manager/BlockManager.h"
+#include "Manager/NetworkManager.h"
 #include "Manager/SoundManager.h"
 
 DEFINITION_SINGLE(CharacterManager)
@@ -48,6 +50,22 @@ bool CharacterManager::init()
 				break;
 			}			
 		}
+	}
+	return true;
+}
+bool CharacterManager::init(std::vector<netCharacterInitData> _initDatas)
+{
+	for (auto _initData : _initDatas){
+		if (_initData.netID == GET_SINGLE(NetworkManager)->getNetID()) {
+			auto player = make_shared<Player>(_initData.posX, _initData.posY);
+			player->init(_initData.type);
+			characters.push_back(player);
+		}
+		else {
+			auto player = make_shared<NetPlayer>(_initData.posX, _initData.posY, _initData.netID);
+			player->init(_initData.type);
+			characters.push_back(player);
+		}		
 	}
 	return true;
 }

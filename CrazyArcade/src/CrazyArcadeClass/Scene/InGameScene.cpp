@@ -1,7 +1,7 @@
 #include "Etc/stdafx.h"
 #include "InGameScene.h"
 #include "Manager/SoundManager.h"
-
+#include "Manager/NetworkManager.h"
 InGameScene::InGameScene()
 {
 }
@@ -74,10 +74,32 @@ HRESULT InGameScene::init()
 	GET_SINGLE(SoundManager)->addSound("풍선갖히기",		"music/inBalloon.mp3");
 	GET_SINGLE(SoundManager)->addSound("풍선폭발",			"music/ballon_explosion.mp3");
 	
+	//temparary ip
+	std::cout << "서버 주소를 입력해 주세요!" << endl;
+	string serverIP;
+	std::cin >> serverIP;
+	
+	//netWork initiation
+	GET_SINGLE(NetworkManager)->init(serverIP);
+
+	GET_SINGLE(NetworkManager)->recvID();
+	auto initData = GET_SINGLE(NetworkManager)->recvInitData();
+	auto blockInitData = initData.blocks;
+
+	vector< netCharacterInitData> characterInitDatas;
+	for (int i = 0; i < 2; ++i) {
+		netCharacterInitData cInitData;
+		cInitData.netID = initData.netID[i];
+		cInitData.posX = initData.clientCharacterPosX[i];
+		cInitData.posY = initData.clientCharacterPosY[i];
+		cInitData.type = (CharacterType)initData.clientCharacter[i];
+
+		characterInitDatas.push_back(cInitData);
+	}
 
 	//InGameScene manager init
-	GET_SINGLE(BlockManager)->init();
-	GET_SINGLE(CharacterManager)->init();
+	GET_SINGLE(BlockManager)->init(blockInitData);
+	GET_SINGLE(CharacterManager)->init(characterInitDatas);
 	GET_SINGLE(BombManager)->init();
 	GET_SINGLE(ItemManager)->init();
 

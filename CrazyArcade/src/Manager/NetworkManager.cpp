@@ -55,9 +55,21 @@ MovePacket NetworkManager::recvMoveData()
 	return moveData;
 }
 
-IDpacket NetworkManager::recvID()
+int NetworkManager::getNetID()
 {
-	return IDpacket();
+	return netID;
+}
+
+void NetworkManager::recvID()
+{
+	IDpacket idPacket;
+
+	char* Buffer = static_cast<char*>(malloc(1470));
+	int size = clientSock->Receive(Buffer, 1470);
+	InputMemoryStream in(Buffer, size);
+	idPacket.Read(in);
+
+	netID = idPacket.netID;
 }
 
 InitiationPacket NetworkManager::recvInitData()

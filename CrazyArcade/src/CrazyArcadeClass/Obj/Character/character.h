@@ -109,3 +109,9 @@ private:
 
 };
 
+struct netCharacterInitData {
+	int netID;
+	CharacterType	type;
+	int posX;
+	int posY;
+};

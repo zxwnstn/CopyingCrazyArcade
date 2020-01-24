@@ -126,7 +126,7 @@ void InitiationPacket::Write(OutputMemoryStream & outStream) {
 	outStream.Write(packetType);
 
 	for (int i = 0; i < 2; i++)
-		outStream.Write(clientID[i]);
+		outStream.Write(netID[i]);
 	for (int i = 0; i < 2; i++)
 		outStream.Write(clientCharacterPosX[i]);
 	for (int i = 0; i < 2; i++)
@@ -142,7 +142,7 @@ void InitiationPacket::Read(InputMemoryStream & inStream) {
 	inStream.Read(packetType);
 
 	for (int i = 0; i < 2; i++)
-		inStream.Read(clientID[i]);
+		inStream.Read(netID[i]);
 	for (int i = 0; i < 2; i++)
 		inStream.Read(clientCharacterPosX[i]);
 	for (int i = 0; i < 2; i++)
@@ -161,7 +161,7 @@ void InitiationPacket::show()
 {
 	std::cout << "character info\n";
 	for (int i = 0; i < 2; ++i) {
-		std::cout << "client Id : " << (int)clientID[i] << "\n";
+		std::cout << "net ID : " << (int)netID[i] << "\n";
 		std::cout << "select charcter : ";
 
 		switch (clientCharacter[i]){
@@ -185,17 +185,17 @@ void InitiationPacket::show()
 
 void MovePacket::Write(OutputMemoryStream& outStream) {
 	outStream.Write(packetType);
-	outStream.Write(clientID);
+	outStream.Write(netID);
 	outStream.Write(playerMoveDir);
 }
 void MovePacket::Read(InputMemoryStream& inStream) {
 	inStream.Read(packetType);
-	inStream.Read(clientID);
+	inStream.Read(netID);
 	inStream.Read(playerMoveDir);
 }
 void MovePacket::show()
 {
-	std::cout << clientID << "\n";
+	std::cout << netID << "\n";
 	switch (playerMoveDir) {
 	case 0:
 		std::cout << "player Moved! : up\n";
@@ -221,16 +221,16 @@ void MovePacket::show()
 void IDpacket::Write(OutputMemoryStream & outStream)
 {
 	outStream.Write(packetType);
-	outStream.Write(clientID);
+	outStream.Write(netID);
 }
 
 void IDpacket::Read(InputMemoryStream & inStream)
 {
 	inStream.Read(packetType);
-	inStream.Read(clientID);
+	inStream.Read(netID);
 }
 
 void IDpacket::show()
 {
-	std::cout << "Granted Client ID : " << (int)clientID << "\n";
+	std::cout << "granted netID : " << (int)netID << "\n";
 }

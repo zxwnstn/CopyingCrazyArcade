@@ -30,7 +30,7 @@ class IDpacket
 {
 public:
 	char packetType = (char)PacketTpye::PLAYER;
-	char clientID;
+	char netID;
 
 public:
 	void Write(OutputMemoryStream& outStream) override;
@@ -70,7 +70,7 @@ class InitiationPacket
 {
 public:
 	char packetType = (char)PacketTpye::PLAYER;
-	char clientID[2];
+	char netID[2];
 	char clientCharacterPosX[2];
 	char clientCharacterPosY[2];
 	char clientCharacter[2];		// 0 bazzi, 1 dao
@@ -90,7 +90,7 @@ class MovePacket
 {
 public:
 	char packetType = (char)PacketTpye::PLAYER;
-	char clientID;
+	char netID;
 	char playerMoveDir;			//0, up 1, down 2, right 3, left 4, noMove;
 
 public:

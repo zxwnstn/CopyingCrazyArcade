@@ -1,11 +1,11 @@
 #pragma once
 #include "CrazyArcadeClass/Obj/character/character.h"
 
-
 class CharacterManager{
 public:
 	//interface
 	bool init();
+	bool init(std::vector<netCharacterInitData> _initData);
 	void update(float deltaTime);
 	void render(HDC hdc);
 	void debugRender(HDC hdc);

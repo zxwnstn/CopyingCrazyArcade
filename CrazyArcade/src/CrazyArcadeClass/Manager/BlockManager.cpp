@@ -284,6 +284,22 @@ bool BlockManager::init(vector<vector<BlockType>>& _blocks)
 	return true;
 }
 
+bool BlockManager::init(std::vector<BlockData> blockData)
+{
+	blocks.resize(NUM_BLOCK_Y);
+	for (int i = 0; i < NUM_BLOCK_Y; ++i)
+		blocks[i].resize(NUM_BLOCK_X);
+
+	for (int i = 0; i < blockData.size(); ++i) {
+		int x = i / NUM_BLOCK_X;
+		int y = i % NUM_BLOCK_X;
+		auto data = blockData[i];
+		blocks[y][x].init((BlockType)data.blockType, (int)data.posX, (int)data.posY, (int)data.tileIndex, (int)data.blockIndex, (int)data.innerItem);
+	}
+
+	return true;
+}
+
 void BlockManager::update(float deltaTime)
 {
 	for (int i = 0; i < NUM_BLOCK_Y; ++i)

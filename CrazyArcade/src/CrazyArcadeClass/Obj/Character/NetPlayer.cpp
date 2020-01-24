@@ -2,8 +2,10 @@
 
 
 
-NetPlayer::NetPlayer()
+NetPlayer::NetPlayer(int x, int y, int _netID)
+	: character(x, y)
 {
+	netID = _netID;
 }
 
 
