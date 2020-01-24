@@ -90,7 +90,7 @@ class MovePacket
 {
 public:
 	char packetType = (char)PacketTpye::PLAYER;
-	char clientID;
+	char netID;
 	char playerMoveDir;			//0, up 1, down 2, right 3, left 4, noMove;
 
 public:

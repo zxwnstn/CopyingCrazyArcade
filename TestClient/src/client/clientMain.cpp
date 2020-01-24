@@ -8,7 +8,7 @@ int clientID;
 void sendMovePacket(TCPSocketPtr& sock, int direction) {
 	MovePacket movePacket;
 	movePacket.packetType = (char)PacketTpye::PLAYER;
-	movePacket.clientID = clientID;
+	movePacket.netID = clientID;
 	movePacket.playerMoveDir = (char)direction;
 
 	OutputMemoryStream out;

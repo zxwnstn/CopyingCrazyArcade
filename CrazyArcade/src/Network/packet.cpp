@@ -185,17 +185,17 @@ void InitiationPacket::show()
 
 void MovePacket::Write(OutputMemoryStream& outStream) {
 	outStream.Write(packetType);
-	outStream.Write(clientID);
+	outStream.Write(netID);
 	outStream.Write(playerMoveDir);
 }
 void MovePacket::Read(InputMemoryStream& inStream) {
 	inStream.Read(packetType);
-	inStream.Read(clientID);
+	inStream.Read(netID);
 	inStream.Read(playerMoveDir);
 }
 void MovePacket::show()
 {
-	std::cout << clientID << "\n";
+	std::cout << netID << "\n";
 	switch (playerMoveDir) {
 	case 0:
 		std::cout << "player Moved! : up\n";

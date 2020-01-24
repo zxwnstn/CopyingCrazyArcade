@@ -28,6 +28,14 @@ void BlockData::Read(InputMemoryStream & inStream)
 	inStream.Read(&tileIndex, sizeof(tileIndex));
 	inStream.Read(&innerItem, sizeof(innerItem));
 }
+PacketTpye BlockData::GetPacketTpye()
+{
+	return PacketTpye();
+}
+int BlockData::GetNetID()
+{
+	return 0;
+}
 void BlockData::show()
 {
 	std::cout << "block position x : " << (int)posX << " y : " << (int)posY << "\n";
@@ -127,7 +135,7 @@ void InitiationPacket::Write(OutputMemoryStream & outStream) {
 	outStream.Write(packetType);
 
 	for (int i = 0; i < 2; i++)
-		outStream.Write(clientID[i]);
+		outStream.Write(netID[i]);
 	for (int i = 0; i < 2; i++)
 		outStream.Write(clientCharacterPosX[i]);
 	for (int i = 0; i < 2; i++)
@@ -142,7 +150,7 @@ void InitiationPacket::Read(InputMemoryStream & inStream) {
 	inStream.Read(packetType);
 
 	for (int i = 0; i < 2; i++)
-		inStream.Read(clientID[i]);
+		inStream.Read(netID[i]);
 	for (int i = 0; i < 2; i++)
 		inStream.Read(clientCharacterPosX[i]);
 	for (int i = 0; i < 2; i++)
@@ -152,11 +160,19 @@ void InitiationPacket::Read(InputMemoryStream & inStream) {
 
 	inStream.ReadVector(blocks, 195);
 }
+PacketTpye InitiationPacket::GetPacketTpye()
+{
+	return PacketTpye();
+}
+int InitiationPacket::GetNetID()
+{
+	return 0;
+}
 void InitiationPacket::show()
 {
 	std::cout << "character info\n";
 	for (int i = 0; i < 2; ++i) {
-		std::cout << "client Id : " << (int)clientID[i] << "\n";
+		std::cout << "client Id : " << (int)netID[i] << "\n";
 		std::cout << "select charcter : ";
 
 		switch (clientCharacter[i]){
@@ -180,17 +196,25 @@ void InitiationPacket::show()
 
 void MovePacket::Write(OutputMemoryStream& outStream) {
 	outStream.Write(packetType);
-	outStream.Write(clientID);
+	outStream.Write(netID);
 	outStream.Write(playerMoveDir);
 }
 void MovePacket::Read(InputMemoryStream& inStream) {
 	inStream.Read(packetType);
-	inStream.Read(clientID);
+	inStream.Read(netID);
 	inStream.Read(playerMoveDir);
+}
+PacketTpye MovePacket::GetPacketTpye()
+{
+	return PacketTpye::PLAYER;
+}
+int MovePacket::GetNetID()
+{
+	return 0;
 }
 void MovePacket::show()
 {
-	std::cout << clientID << "\n";
+	std::cout << netID << "\n";
 	switch (playerMoveDir) {
 	case 0:
 		std::cout << "player Moved! : up\n";
@@ -216,16 +240,26 @@ void MovePacket::show()
 void IDpacket::Write(OutputMemoryStream & outStream)
 {
 	outStream.Write(packetType);
-	outStream.Write(clientID);
+	outStream.Write(netID);
 }
 
 void IDpacket::Read(InputMemoryStream & inStream)
 {
 	inStream.Read(packetType);
-	inStream.Read(clientID);
+	inStream.Read(netID);
+}
+
+PacketTpye IDpacket::GetPacketTpye()
+{
+	return PacketTpye();
+}
+
+int IDpacket::GetNetID()
+{
+	return 0;
 }
 
 void IDpacket::show()
 {
-	std::cout << "Granted Client ID : " << (int)clientID << "\n";
+	std::cout << "Granted Client ID : " << (int)netID << "\n";
 }
