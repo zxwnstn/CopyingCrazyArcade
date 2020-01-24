@@ -18,7 +18,8 @@ public:
 private:
 	string server_ip;
 	TCPSocketPtr clientSock;
-	int netID;
+	int NetID;
+	IDpacket idpacket;
 
 private:
 	DECLARE_SINGLE(NetworkManager)
