@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "CrazyArcadeClass/Obj/character/character.h"
 
 class CharacterManager{
@@ -24,6 +24,8 @@ public:
 public:
 	bool charactersAllDead = false;
 	bool draw = false;
+	bool isInNetWork = false;
+
 private:
 	vector<shared_ptr<character>> characters;
 

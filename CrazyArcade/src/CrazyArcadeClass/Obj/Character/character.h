@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "Etc/stdafx.h"
 #include "CrazyArcadeClass/Obj/Item/Item.h"
 #include "CrazyArcadeClass/Obj/Bomb/Bomb.h"
@@ -103,10 +103,11 @@ protected:
 	float			frameDyingTimer = 0.1f;
 	float			deltaTime;
 
-private:
+protected:
 	//this for inertia witch is not consider use
 	const int slipperyDist = 3;
-
+	//this is for network play
+	bool isInNetWork = false;
 };
 
 struct netCharacterInitData {
