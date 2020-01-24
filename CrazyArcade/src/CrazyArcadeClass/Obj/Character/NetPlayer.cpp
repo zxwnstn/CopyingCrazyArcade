@@ -1,4 +1,4 @@
-#include "NetPlayer.h"
+﻿#include "NetPlayer.h"
 #define TEMP_VALUE 0
 
 NetPlayer::NetPlayer(int x, int y, int _netID, bool _isInNetWork)

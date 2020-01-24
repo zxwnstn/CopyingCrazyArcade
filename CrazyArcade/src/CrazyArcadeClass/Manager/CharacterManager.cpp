@@ -1,4 +1,4 @@
-#include "Etc/stdafx.h"
+﻿#include "Etc/stdafx.h"
 #include "CharacterManager.h"
 #include "CrazyArcadeClass/Obj/Character/Player.h"
 #include "CrazyArcadeClass/Obj/Character/Player2.h"
