@@ -1,4 +1,4 @@
-#include "Etc/stdafx.h"
+ï»¿#include "Etc/stdafx.h"
 #include "gameNode.h"
 #include "Manager/SoundManager.h"
 
@@ -29,7 +29,7 @@ HRESULT gameNode::init(bool managerInit)
 	_hdc = GetDC(m_hWnd);
 	_managerInit = managerInit;
 
-	//¸Å´ÏÀú ÃÊ±âÈ­
+	//ë§¤ë‹ˆì € ì´ˆê¸°í™”
 	if (_managerInit) {
 		KEYMANAGER->init();
 		IMAGEMANAGER->init();
@@ -42,7 +42,7 @@ HRESULT gameNode::init(bool managerInit)
 
 void gameNode::release()
 {
-	//¸Å´ÏÀú ÇØÁ¦
+	//ë§¤ë‹ˆì € í•´ì œ
 	if (_managerInit) {
 		KEYMANAGER->releaseSingleton();
 		IMAGEMANAGER->release();

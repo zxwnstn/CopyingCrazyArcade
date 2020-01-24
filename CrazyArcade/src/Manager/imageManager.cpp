@@ -1,4 +1,4 @@
-#include "Etc/stdafx.h"
+ï»¿#include "Etc/stdafx.h"
 #include "imageManager.h"
 
 imageManager::imageManager()
@@ -32,7 +32,7 @@ Image * imageManager::addImage(string strKey, int width, int height)
 		return NULL;
 	}
 
-	//ÀÌ¹ÌÁö¸¦ ÀÌ¹ÌÁö ¸ñ·Ï¿¡ Ãß°¡
+	//ì´ë¯¸ì§€ë¥¼ ì´ë¯¸ì§€ ëª©ë¡ì— ì¶”ê°€
 	_mImageList.insert(make_pair(strKey, img));
 
 	return img;
@@ -51,7 +51,7 @@ Image * imageManager::addImage(string strKey, const TCHAR * fileName, int width,
 		return NULL;
 	}
 
-	//ÀÌ¹ÌÁö¸¦ ÀÌ¹ÌÁö ¸ñ·Ï¿¡ Ãß°¡
+	//ì´ë¯¸ì§€ë¥¼ ì´ë¯¸ì§€ ëª©ë¡ì— ì¶”ê°€
 	_mImageList.insert(make_pair(strKey, img));
 
 	return img;
@@ -70,7 +70,7 @@ Image * imageManager::addImage(string strKey, const TCHAR * fileName, int x, int
 		return NULL;
 	}
 
-	//ÀÌ¹ÌÁö¸¦ ÀÌ¹ÌÁö ¸ñ·Ï¿¡ Ãß°¡
+	//ì´ë¯¸ì§€ë¥¼ ì´ë¯¸ì§€ ëª©ë¡ì— ì¶”ê°€
 	_mImageList.insert(make_pair(strKey, img));
 
 	return img;
@@ -89,7 +89,7 @@ Image * imageManager::addFrameImage(string strKey, const TCHAR * fileName, int w
 		return NULL;
 	}
 
-	//ÀÌ¹ÌÁö¸¦ ÀÌ¹ÌÁö ¸ñ·Ï¿¡ Ãß°¡
+	//ì´ë¯¸ì§€ë¥¼ ì´ë¯¸ì§€ ëª©ë¡ì— ì¶”ê°€
 	_mImageList.insert(make_pair(strKey, img));
 
 	return img;
@@ -108,7 +108,7 @@ Image * imageManager::addFrameImage(string strKey, const TCHAR * fileName, float
 		return NULL;
 	}
 
-	//ÀÌ¹ÌÁö¸¦ ÀÌ¹ÌÁö ¸ñ·Ï¿¡ Ãß°¡
+	//ì´ë¯¸ì§€ë¥¼ ì´ë¯¸ì§€ ëª©ë¡ì— ì¶”ê°€
 	_mImageList.insert(make_pair(strKey, img));
 
 	return img;

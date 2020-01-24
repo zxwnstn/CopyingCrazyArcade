@@ -1,4 +1,4 @@
-//#include "PCH.h"
+ï»¿//#include "PCH.h"
 //#include <iostream>
 //#include <thread>
 //#include <mutex>
@@ -30,15 +30,15 @@
 //	inStream.Write(mPosY);
 //}
 //
-//int clientNumber = 0; //critical section Ã³¸®ÇÊ¿äÇÔ.
+//int clientNumber = 0; //critical section ì²˜ë¦¬í•„ìš”í•¨.
 //Player c1{ };
 //
 //
 //void print(const Player& remsg, const int thisclientNumber)
 //{
-//	std::cout << thisclientNumber << "¹ø Å¬¶óÀÌ¾ðÆ® Á¤º¸" << std::endl;
-//	std::cout << "ÀÌ¸§ : " << remsg.mPlayerId << std::endl;
-//	std::cout << "ÇöÀçÀ§Ä¡ : " << remsg.mPosX<< ", " << remsg.mPosY << '\n' << std::endl;
+//	std::cout << thisclientNumber << "ë²ˆ í´ë¼ì´ì–¸íŠ¸ ì •ë³´" << std::endl;
+//	std::cout << "ì´ë¦„ : " << remsg.mPlayerId << std::endl;
+//	std::cout << "í˜„ìž¬ìœ„ì¹˜ : " << remsg.mPosX<< ", " << remsg.mPosY << '\n' << std::endl;
 //}
 //
 //bool wait = true;
@@ -51,14 +51,14 @@
 //	auto err = WSAStartup(MAKEWORD(2, 2), &wsaData);
 //
 //	SocketAddressFactory fac;
-//	SocketAddress servAddr(INADDR_ANY, 9190);//Áß¿ä!
+//	SocketAddress servAddr(INADDR_ANY, 9190);//ì¤‘ìš”!
 //	SocketAddress clientAddr;
 //
 //	TCPSocketPtr ServSock = SocketUtil::CreateTCPSocket(INET);
 //
 //	ServSock->Bind(servAddr);
-//	std::cout << "¼­¹ö¸¦ ½ÃÀÛÇÕ´Ï´Ù!" << std::endl;
-//	std::cout << "Å¬¶óÀÌ¾ðÆ® Á¢¼Ó ´ë±âÁß..." << std::endl;
+//	std::cout << "ì„œë²„ë¥¼ ì‹œìž‘í•©ë‹ˆë‹¤!" << std::endl;
+//	std::cout << "í´ë¼ì´ì–¸íŠ¸ ì ‘ì† ëŒ€ê¸°ì¤‘..." << std::endl;
 //
 //	ServSock->Listen(5);
 //

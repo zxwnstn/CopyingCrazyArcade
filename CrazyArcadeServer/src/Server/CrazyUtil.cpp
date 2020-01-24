@@ -1,4 +1,4 @@
-#include "CrazyUtil.h"
+﻿#include "CrazyUtil.h"
 #include "packet.h"
 #include "CrazyArcadeData.h"
 

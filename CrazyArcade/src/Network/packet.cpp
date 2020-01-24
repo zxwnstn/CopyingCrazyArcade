@@ -1,4 +1,4 @@
-#include "packet.h"
+﻿#include "packet.h"
 
 BlockData::BlockData()
 {
@@ -185,17 +185,17 @@ void InitiationPacket::show()
 
 void MovePacket::Write(OutputMemoryStream& outStream) {
 	outStream.Write(packetType);
-	outStream.Write(netID);
+	outStream.Write(NetID);
 	outStream.Write(playerMoveDir);
 }
 void MovePacket::Read(InputMemoryStream& inStream) {
 	inStream.Read(packetType);
-	inStream.Read(netID);
+	inStream.Read(NetID);
 	inStream.Read(playerMoveDir);
 }
 void MovePacket::show()
 {
-	std::cout << netID << "\n";
+	std::cout << NetID << "\n";
 	switch (playerMoveDir) {
 	case 0:
 		std::cout << "player Moved! : up\n";
@@ -221,16 +221,16 @@ void MovePacket::show()
 void IDpacket::Write(OutputMemoryStream & outStream)
 {
 	outStream.Write(packetType);
-	outStream.Write(netID);
+	outStream.Write(NetID);
 }
 
 void IDpacket::Read(InputMemoryStream & inStream)
 {
 	inStream.Read(packetType);
-	inStream.Read(netID);
+	inStream.Read(NetID);
 }
 
 void IDpacket::show()
 {
-	std::cout << "granted netID : " << (int)netID << "\n";
+	std::cout << "granted netID : " << (int)NetID << "\n";
 }

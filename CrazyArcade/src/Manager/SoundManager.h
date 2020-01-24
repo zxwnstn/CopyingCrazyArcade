@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "fmod.hpp"
 #include "Etc/stdafx.h"
 

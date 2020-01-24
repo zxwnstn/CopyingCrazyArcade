@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "character.h"
 
 class Player2 :

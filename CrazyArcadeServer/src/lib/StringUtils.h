@@ -1,4 +1,4 @@
-namespace StringUtils
+﻿namespace StringUtils
 {
 	string GetCommandLineArg( int inIndex );
 

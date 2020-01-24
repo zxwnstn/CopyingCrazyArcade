@@ -1,11 +1,11 @@
-#include "Network/packet.h"
+ï»¿#include "Network/packet.h"
 
 
 
 class NetworkManager
 {
 public:
-	//Scene´Ü¿¡¼­ ¿¬°áÇÒ ip¸¦ ³Ñ°Ü¹Ş¾Æ initÇÑ´Ù. 
+	//Sceneë‹¨ì—ì„œ ì—°ê²°í•  ipë¥¼ ë„˜ê²¨ë°›ì•„ inití•œë‹¤. 
 	void init(string _ip);
 	void recvID();
 	InitiationPacket recvInitData();

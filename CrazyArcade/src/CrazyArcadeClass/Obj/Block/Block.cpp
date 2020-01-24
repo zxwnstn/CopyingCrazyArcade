@@ -1,4 +1,4 @@
-#include "Etc/stdafx.h"
+ï»¿#include "Etc/stdafx.h"
 #include "Block.h"
 #include "CrazyArcadeClass/Manager/ItemManager.h"
 #include "CrazyArcadeClass/Manager/BlockManager.h"
@@ -19,25 +19,25 @@ void Block::init(int _innerItem)
 		}		
 	}
 
-	shawdowImage = IMAGEMANAGER->findImage("±×¸²ÀÚ");
+	shawdowImage = IMAGEMANAGER->findImage("ê·¸ë¦¼ì");
 
 	switch (type)
 	{
 	case BlockType::BlockHard:
-		curBlockImage = IMAGEMANAGER->findImage("ÇÏµåºí·Ï");
+		curBlockImage = IMAGEMANAGER->findImage("í•˜ë“œë¸”ë¡");
 		break;
 	case BlockType::BlockSoft:
-		curBlockImage = IMAGEMANAGER->findImage("¼ÒÇÁÆ®ºí·Ï");
+		curBlockImage = IMAGEMANAGER->findImage("ì†Œí”„íŠ¸ë¸”ë¡");
 		break;
 	case BlockType::BlockTree:
-		curBlockImage = IMAGEMANAGER->findImage("³ª¹«");
+		curBlockImage = IMAGEMANAGER->findImage("ë‚˜ë¬´");
 		break;
 	case BlockType::BlockNone:
-		curBlockImage = IMAGEMANAGER->findImage("Å¸ÀÏ");
+		curBlockImage = IMAGEMANAGER->findImage("íƒ€ì¼");
 		break;
 	case BlockType::BlockBush:
-		curBlockImage =	IMAGEMANAGER->findImage("ºÎ½¬");
-		shawdowImage = IMAGEMANAGER->findImage("ºÎ½¬±×¸²ÀÚ");
+		curBlockImage =	IMAGEMANAGER->findImage("ë¶€ì‰¬");
+		shawdowImage = IMAGEMANAGER->findImage("ë¶€ì‰¬ê·¸ë¦¼ì");
 		break;
 	}
 }
@@ -158,7 +158,7 @@ void Block::update(float deltaTime)
 void Block::render(HDC hdc)
 {
 	if (curBlockImage) {
-		IMAGEMANAGER->render("Å¸ÀÏ", hdc, collisionRect.left, collisionRect.top, tileIdx * BLOCK_WIDTH, 0, 60, 60);
+		IMAGEMANAGER->render("íƒ€ì¼", hdc, collisionRect.left, collisionRect.top, tileIdx * BLOCK_WIDTH, 0, 60, 60);
 		
 		if (type != BlockType::BlockNone && type != BlockType::BlockTree && type != BlockType::BlockBush)
 			shawdowImage->alphaRender(hdc, collisionRect.left - 5, collisionRect.top + 4, 75);
@@ -224,23 +224,23 @@ void Block::resetType(BlockType _type, int _tileIdex, int _blockIndex)
 	{
 	case BlockType::BlockHard:
 		innerItem = nullptr;
-		curBlockImage = IMAGEMANAGER->findImage("ÇÏµåºí·Ï");
+		curBlockImage = IMAGEMANAGER->findImage("í•˜ë“œë¸”ë¡");
 		break;
 	case BlockType::BlockSoft:
 		innerItem = make_shared<Item>(collisionRect, bPos, innerItemType);
-		curBlockImage = IMAGEMANAGER->findImage("¼ÒÇÁÆ®ºí·Ï");
+		curBlockImage = IMAGEMANAGER->findImage("ì†Œí”„íŠ¸ë¸”ë¡");
 		break;
 	case BlockType::BlockTree:
 		innerItem = nullptr;
-		curBlockImage = IMAGEMANAGER->findImage("³ª¹«");
+		curBlockImage = IMAGEMANAGER->findImage("ë‚˜ë¬´");
 		break;
 	case BlockType::BlockNone:
 		innerItem = nullptr;
-		curBlockImage = IMAGEMANAGER->findImage("Å¸ÀÏ");
+		curBlockImage = IMAGEMANAGER->findImage("íƒ€ì¼");
 		break;
 	case BlockType::BlockBush:
 		innerItem = nullptr;
-		curBlockImage = IMAGEMANAGER->findImage("ºÎ½¬");
+		curBlockImage = IMAGEMANAGER->findImage("ë¶€ì‰¬");
 	}
 }
 
@@ -260,12 +260,12 @@ void Block::softToNoneBlock()
 	if (type == BlockType::BlockSoft) {
 		if (innerItem != nullptr) {
 			GET_SINGLE(ItemManager)->GetItems().push_back(innerItem);
-			GET_SINGLE(SoundManager)->playSound("¾ÆÀÌÅÛ»ı¼º", 3);
+			GET_SINGLE(SoundManager)->playSound("ì•„ì´í…œìƒì„±", 3);
 		}
 	}
 
 	type = BlockType::BlockNone;
-	curBlockImage = IMAGEMANAGER->findImage("Å¸ÀÏ");
+	curBlockImage = IMAGEMANAGER->findImage("íƒ€ì¼");
 
 	//TODO : set innerItem push
 	innerItem = nullptr;

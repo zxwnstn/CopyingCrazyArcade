@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "packet.h"
 #include <map>
 #include <vector>
@@ -29,18 +29,18 @@ class WorldState
 
 
 public:
-	// Å¬¶óÀÌ¾ğÆ®´Â WorldPacketÀ» º¸³»´Â°ÍÀÌ¾Æ´Ï¶ó Packet¸¸ º¸³½´Ù. 
-	void Write(OutputMemoryStream& out); //WorlData RWÀÓ.
+	// í´ë¼ì´ì–¸íŠ¸ëŠ” WorldPacketì„ ë³´ë‚´ëŠ”ê²ƒì´ì•„ë‹ˆë¼ Packetë§Œ ë³´ë‚¸ë‹¤. 
+	void Write(OutputMemoryStream& out); //WorlData RWì„.
 	void Read(InputMemoryStream& in);
 	void PacketClassify(CrazyPacket* packet);
 
 private:
 	size_t Header;
 	std::map<int, std::vector<float>> WorldData; 
-	// ¿©±â¿¡ ÇÃ·¹ÀÌ¾îµéÀÇ Á¤º¸¿Í ¹°Ç³¼±Á¤º¸¸¦ ³ÖÀ½
-	// ÇÃ·¹ÀÌ¾îÀÇ Å°°ªÀº 1ºÎÅÍ(NetID)·Î ÇÒ´ç
-	// ¹°Ç³¼±Àº 1000¹ø´ëºÎÅÍ »ı¼º(ÃÖ´ë 21¾ï°³ »ı¼º°¡´É)
-	// value´Â °¢ Å°°ªÀÇ x yÁÂÇ¥°¡ µé¾î°¨. 
-	// ÀÌ°Å¸¸ WriteÇØ¼­ ÆĞÅ¶À¸·Îº¸³»¸éµÊ.
-	// ÇÃ·¹ÀÌ¾îÀÇ °æ¿ì value´Â NetID, x, y °¡ µé¾î°¨. (¼öÁ¤ÇØ¾ßÇÒµí)
+	// ì—¬ê¸°ì— í”Œë ˆì´ì–´ë“¤ì˜ ì •ë³´ì™€ ë¬¼í’ì„ ì •ë³´ë¥¼ ë„£ìŒ
+	// í”Œë ˆì´ì–´ì˜ í‚¤ê°’ì€ 1ë¶€í„°(NetID)ë¡œ í• ë‹¹
+	// ë¬¼í’ì„ ì€ 1000ë²ˆëŒ€ë¶€í„° ìƒì„±(ìµœëŒ€ 21ì–µê°œ ìƒì„±ê°€ëŠ¥)
+	// valueëŠ” ê° í‚¤ê°’ì˜ x yì¢Œí‘œê°€ ë“¤ì–´ê°. 
+	// ì´ê±°ë§Œ Writeí•´ì„œ íŒ¨í‚·ìœ¼ë¡œë³´ë‚´ë©´ë¨.
+	// í”Œë ˆì´ì–´ì˜ ê²½ìš° valueëŠ” NetID, x, y ê°€ ë“¤ì–´ê°. (ìˆ˜ì •í•´ì•¼í• ë“¯)
 };

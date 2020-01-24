@@ -1,15 +1,15 @@
-#include "WorldState.h"
+ï»¿#include "WorldState.h"
 
 void WorldState::Write(OutputMemoryStream & out)
 {
 	//out.Write(PacketTpye::WorldState);
-	// WorldDate¸¦ ¼øÂ÷´ë·Î WriteÇÏÀÚ(iterator·Î µ¹¸éµÉµí)
+	// WorldDateë¥¼ ìˆœì°¨ëŒ€ë¡œ Writeí•˜ì(iteratorë¡œ ëŒë©´ë ë“¯)
 }
 
 void WorldState::Read(InputMemoryStream & in)
 {
 	//in.Read(PacketTpye::WorldState);
-	//Write¿Í ¸¶Âù°¡Áö..
+	//Writeì™€ ë§ˆì°¬ê°€ì§€..
 }
 
 void WorldState::PacketClassify(CrazyPacket * packet) 
@@ -23,11 +23,11 @@ void WorldState::PacketClassify(CrazyPacket * packet)
 	{
 
 	}
-	//HeaderºÎÅÍ È®ÀÎÇÑ´Ù.
+	//Headerë¶€í„° í™•ì¸í•œë‹¤.
 	//if (Header == PacketTpye::PLAYER)
 	//{
-	//	//Player¶ó¸é NetID¸¦ Ã¼Å©
-	//	WorldData[NetID].x = 1.0f; //°ª°»½Å;
+	//	//Playerë¼ë©´ NetIDë¥¼ ì²´í¬
+	//	WorldData[NetID].x = 1.0f; //ê°’ê°±ì‹ ;
 	//	WorldData[NetId].y = 2.0f;
 	//}
 }

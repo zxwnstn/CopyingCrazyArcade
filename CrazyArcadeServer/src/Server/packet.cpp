@@ -1,4 +1,4 @@
-#include "packet.h"
+﻿#include "packet.h"
 
 BlockData::BlockData()
 {
@@ -135,7 +135,7 @@ void InitiationPacket::Write(OutputMemoryStream & outStream) {
 	outStream.Write(packetType);
 
 	for (int i = 0; i < 2; i++)
-		outStream.Write(netID[i]);
+		outStream.Write(NetID[i]);
 	for (int i = 0; i < 2; i++)
 		outStream.Write(clientCharacterPosX[i]);
 	for (int i = 0; i < 2; i++)
@@ -150,7 +150,7 @@ void InitiationPacket::Read(InputMemoryStream & inStream) {
 	inStream.Read(packetType);
 
 	for (int i = 0; i < 2; i++)
-		inStream.Read(netID[i]);
+		inStream.Read(NetID[i]);
 	for (int i = 0; i < 2; i++)
 		inStream.Read(clientCharacterPosX[i]);
 	for (int i = 0; i < 2; i++)
@@ -172,7 +172,7 @@ void InitiationPacket::show()
 {
 	std::cout << "character info\n";
 	for (int i = 0; i < 2; ++i) {
-		std::cout << "client Id : " << (int)netID[i] << "\n";
+		std::cout << "client Id : " << (int)NetID[i] << "\n";
 		std::cout << "select charcter : ";
 
 		switch (clientCharacter[i]){
@@ -196,12 +196,12 @@ void InitiationPacket::show()
 
 void MovePacket::Write(OutputMemoryStream& outStream) {
 	outStream.Write(packetType);
-	outStream.Write(netID);
+	outStream.Write(NetID);
 	outStream.Write(playerMoveDir);
 }
 void MovePacket::Read(InputMemoryStream& inStream) {
 	inStream.Read(packetType);
-	inStream.Read(netID);
+	inStream.Read(NetID);
 	inStream.Read(playerMoveDir);
 }
 PacketTpye MovePacket::GetPacketTpye()
@@ -214,7 +214,7 @@ int MovePacket::GetNetID()
 }
 void MovePacket::show()
 {
-	std::cout << netID << "\n";
+	std::cout << NetID << "\n";
 	switch (playerMoveDir) {
 	case 0:
 		std::cout << "player Moved! : up\n";
@@ -240,13 +240,13 @@ void MovePacket::show()
 void IDpacket::Write(OutputMemoryStream & outStream)
 {
 	outStream.Write(packetType);
-	outStream.Write(netID);
+	outStream.Write(NetID);
 }
 
 void IDpacket::Read(InputMemoryStream & inStream)
 {
 	inStream.Read(packetType);
-	inStream.Read(netID);
+	inStream.Read(NetID);
 }
 
 PacketTpye IDpacket::GetPacketTpye()
@@ -261,5 +261,5 @@ int IDpacket::GetNetID()
 
 void IDpacket::show()
 {
-	std::cout << "Granted Client ID : " << (int)netID << "\n";
+	std::cout << "Granted Client ID : " << (int)NetID << "\n";
 }

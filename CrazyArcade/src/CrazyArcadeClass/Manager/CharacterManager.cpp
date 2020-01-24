@@ -1,4 +1,4 @@
-#include "Etc/stdafx.h"
+ï»¿#include "Etc/stdafx.h"
 #include "CharacterManager.h"
 #include "CrazyArcadeClass/Obj/Character/Player.h"
 #include "CrazyArcadeClass/Obj/Character/Player2.h"
@@ -122,7 +122,7 @@ void CharacterManager::collisionItem()
 	for (auto character = characters.begin(); character != characters.end(); ++character) {
 		for (auto item = items.begin(); item != items.end(); ) {
 			if (isRectRectCollision((*item)->getCollisionRect(), (*character)->getOtherCollisionRect())) {
-				GET_SINGLE(SoundManager)->playSound("¾ÆÀÌÅÛ¾ò±â", 4);
+				GET_SINGLE(SoundManager)->playSound("ì•„ì´í…œì–»ê¸°", 4);
 				switch ((*item)->getType())
 				{
 				case ItemType::ItemRangeUp:

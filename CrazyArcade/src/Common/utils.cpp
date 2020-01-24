@@ -1,4 +1,4 @@
-#include "Etc/stdafx.h"
+﻿#include "Etc/stdafx.h"
 #include "utils.h"
 
 namespace UTIL

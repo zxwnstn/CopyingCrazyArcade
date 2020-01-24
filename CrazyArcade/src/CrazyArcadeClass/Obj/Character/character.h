@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Etc/stdafx.h"
 #include "CrazyArcadeClass/Obj/Item/Item.h"
 #include "CrazyArcadeClass/Obj/Bomb/Bomb.h"

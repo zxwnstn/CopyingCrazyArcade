@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <memory>
 
 #define MAX_CHAT_LEN	1024
@@ -37,7 +37,7 @@ struct PlayerPacket : public PacketHeader
 	int	mPlayerId;
 	int	mPosX;
 	int	mPosY;
-	//char	mName[MAX_NAME_LEN]; ÇöÀç·Î½ã µüÈ÷ ÇÊ¿ä¾øÀ½.
+	//char	mName[MAX_NAME_LEN]; í˜„ì¬ë¡œì¬ ë”±íˆ í•„ìš”ì—†ìŒ.
 
 };
 

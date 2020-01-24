@@ -1,4 +1,4 @@
-#include "packet.h"
+﻿#include "packet.h"
 
 BlockData::BlockData()
 {
@@ -127,7 +127,7 @@ void InitiationPacket::Write(OutputMemoryStream & outStream) {
 	outStream.Write(packetType);
 
 	for (int i = 0; i < 2; i++)
-		outStream.Write(clientID[i]);
+		outStream.Write(NetID[i]);
 	for (int i = 0; i < 2; i++)
 		outStream.Write(clientCharacterPosX[i]);
 	for (int i = 0; i < 2; i++)
@@ -142,7 +142,7 @@ void InitiationPacket::Read(InputMemoryStream & inStream) {
 	inStream.Read(packetType);
 
 	for (int i = 0; i < 2; i++)
-		inStream.Read(clientID[i]);
+		inStream.Read(NetID[i]);
 	for (int i = 0; i < 2; i++)
 		inStream.Read(clientCharacterPosX[i]);
 	for (int i = 0; i < 2; i++)
@@ -156,7 +156,7 @@ void InitiationPacket::show()
 {
 	std::cout << "character info\n";
 	for (int i = 0; i < 2; ++i) {
-		std::cout << "client Id : " << (int)clientID[i] << "\n";
+		std::cout << "client Id : " << (int)NetID[i] << "\n";
 		std::cout << "select charcter : ";
 
 		switch ((int)clientCharacter[i]){
@@ -180,17 +180,17 @@ void InitiationPacket::show()
 
 void MovePacket::Write(OutputMemoryStream& outStream) {
 	outStream.Write(packetType);
-	outStream.Write(clientID);
+	outStream.Write(NetID);
 	outStream.Write(playerMoveDir);
 }
 void MovePacket::Read(InputMemoryStream& inStream) {
 	inStream.Read(packetType);
-	inStream.Read(clientID);
+	inStream.Read(NetID);
 	inStream.Read(playerMoveDir);
 }
 void MovePacket::show()
 {
-	std::cout << clientID << "\n";
+	std::cout << NetID << "\n";
 	switch (playerMoveDir) {
 	case 0:
 		std::cout << "player Moved! : up\n";
@@ -216,16 +216,16 @@ void MovePacket::show()
 void IDpacket::Write(OutputMemoryStream & outStream)
 {
 	outStream.Write(packetType);
-	outStream.Write(clientID);
+	outStream.Write(NetID);
 }
 
 void IDpacket::Read(InputMemoryStream & inStream)
 {
 	inStream.Read(packetType);
-	inStream.Read(clientID);
+	inStream.Read(NetID);
 }
 
 void IDpacket::show()
 {
-	std::cout << "Granted Client ID : " << (int)clientID << "\n";
+	std::cout << "Granted Client ID : " << (int)NetID << "\n";
 }

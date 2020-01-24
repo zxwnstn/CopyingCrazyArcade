@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <iostream>
 #include <thread>
 #include <mutex>
@@ -30,7 +30,7 @@ class IDpacket
 {
 public:
 	char packetType = (char)PacketTpye::PLAYER;
-	char netID;
+	char NetID;
 
 public:
 	void Write(OutputMemoryStream& outStream) override;
@@ -90,7 +90,7 @@ class MovePacket
 {
 public:
 	char packetType = (char)PacketTpye::PLAYER;
-	char netID;
+	char NetID;
 	char playerMoveDir;			//0, up 1, down 2, right 3, left 4, noMove;
 
 public:

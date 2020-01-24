@@ -1,4 +1,4 @@
-#include "Etc/stdafx.h"
+﻿#include "Etc/stdafx.h"
 #include "BlockManager.h"
 #include "CrazyArcadeClass/Obj/Bomb/Bomb.h"
 DEFINITION_SINGLE(BlockManager)

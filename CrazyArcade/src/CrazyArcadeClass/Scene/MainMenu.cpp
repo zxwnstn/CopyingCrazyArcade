@@ -1,4 +1,4 @@
-#include "MainMenu.h"
+ï»¿#include "MainMenu.h"
 #include "Etc/stdafx.h"
 #include "Manager/SoundManager.h"
 
@@ -6,24 +6,24 @@
 
 HRESULT MainMenu::init()
 {
-	IMAGEMANAGER->addImage("¸¶¿ì½º",			L"images/mouse.bmp", 33, 36, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("¸ŞÀÎÈ­¸é¹è°æ",		L"images/MainImg.bmp", WINSIZEX, WINSIZEY);
-	IMAGEMANAGER->addImage("½ºÅ¸Æ®¹öÆ°",		L"images/play2p.bmp", 225, 75);
-	IMAGEMANAGER->addImage("³ª°¡±â¹öÆ°",		L"images/exit.bmp", 225, 75);
-	IMAGEMANAGER->addImage("¼­¹ö¹öÆ°",			L"images/tcp_ip.bmp", 225, 75);
+	IMAGEMANAGER->addImage("ë§ˆìš°ìŠ¤",			L"images/mouse.bmp", 33, 36, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("ë©”ì¸í™”ë©´ë°°ê²½",		L"images/MainImg.bmp", WINSIZEX, WINSIZEY);
+	IMAGEMANAGER->addImage("ìŠ¤íƒ€íŠ¸ë²„íŠ¼",		L"images/play2p.bmp", 225, 75);
+	IMAGEMANAGER->addImage("ë‚˜ê°€ê¸°ë²„íŠ¼",		L"images/exit.bmp", 225, 75);
+	IMAGEMANAGER->addImage("ì„œë²„ë²„íŠ¼",			L"images/tcp_ip.bmp", 225, 75);
 
 	startButtonRect = RectMake(900, 625, 225, 75);
 	tcpButtonRect = RectMake(900, 700, 225, 75);
 	exitButtonRect = RectMake(900, 775, 225, 75);
 
-	startButtonImage = IMAGEMANAGER->findImage("½ºÅ¸Æ®¹öÆ°");
-	exitButtonImage = IMAGEMANAGER->findImage("³ª°¡±â¹öÆ°");
-	tcpButtonImage = IMAGEMANAGER->findImage("¼­¹ö¹öÆ°");
+	startButtonImage = IMAGEMANAGER->findImage("ìŠ¤íƒ€íŠ¸ë²„íŠ¼");
+	exitButtonImage = IMAGEMANAGER->findImage("ë‚˜ê°€ê¸°ë²„íŠ¼");
+	tcpButtonImage = IMAGEMANAGER->findImage("ì„œë²„ë²„íŠ¼");
 
-	GET_SINGLE(SoundManager)->addSound("¸¶¿ì½ºÈ°¼º", "music/mouse_position_up.mp3");
-	GET_SINGLE(SoundManager)->addStream("¸ŞÀÎºê±İ", "music/MainMenu.mp3", true);
+	GET_SINGLE(SoundManager)->addSound("ë§ˆìš°ìŠ¤í™œì„±", "music/mouse_position_up.mp3");
+	GET_SINGLE(SoundManager)->addStream("ë©”ì¸ë¸Œê¸ˆ", "music/MainMenu.mp3", true);
 
-	GET_SINGLE(SoundManager)->playSound("¸ŞÀÎºê±İ", 0);
+	GET_SINGLE(SoundManager)->playSound("ë©”ì¸ë¸Œê¸ˆ", 0);
 
 	return S_OK;
 }
@@ -37,7 +37,7 @@ void MainMenu::update(float deltaTime)
 	if (isPointRectCollision(m_ptMouse, startButtonRect)) {
 		if (!mouseSettedStart) {
 			mouseSettedStart = true;
-			GET_SINGLE(SoundManager)->playSound("¸¶¿ì½ºÈ°¼º", 1);
+			GET_SINGLE(SoundManager)->playSound("ë§ˆìš°ìŠ¤í™œì„±", 1);
 		}	
 	}
 	else {
@@ -47,7 +47,7 @@ void MainMenu::update(float deltaTime)
 	if (isPointRectCollision(m_ptMouse, exitButtonRect)) {
 		if (!mouseSettedExit) {
 			mouseSettedExit = true;
-			GET_SINGLE(SoundManager)->playSound("¸¶¿ì½ºÈ°¼º", 1);
+			GET_SINGLE(SoundManager)->playSound("ë§ˆìš°ìŠ¤í™œì„±", 1);
 		}
 	}
 	else {
@@ -57,7 +57,7 @@ void MainMenu::update(float deltaTime)
 	if (isPointRectCollision(m_ptMouse, tcpButtonRect)) {
 		if (!mouseSettedTcp) {
 			mouseSettedTcp = true;
-			GET_SINGLE(SoundManager)->playSound("¸¶¿ì½ºÈ°¼º", 1);
+			GET_SINGLE(SoundManager)->playSound("ë§ˆìš°ìŠ¤í™œì„±", 1);
 		}
 	}
 	else {
@@ -67,7 +67,7 @@ void MainMenu::update(float deltaTime)
 	if (mouseSettedStart) {
 		if (KEYMANAGER->isOnceKeyDown(GAME_LMOUSE)) {
 			GET_SINGLE(SoundManager)->stopChannel(0);
-			SCENEMANAGER->changeScene("ÀÎ°ÔÀÓ");
+			SCENEMANAGER->changeScene("ì¸ê²Œì„");
 		}
 	}
 	if (mouseSettedExit) {
@@ -79,10 +79,10 @@ void MainMenu::update(float deltaTime)
 
 void MainMenu::render()
 {
-	IMAGEMANAGER->render("¸ŞÀÎÈ­¸é¹è°æ", getMemDC());
+	IMAGEMANAGER->render("ë©”ì¸í™”ë©´ë°°ê²½", getMemDC());
 	startButtonImage->render(getMemDC(), startButtonRect.left, startButtonRect.top);
 	tcpButtonImage->render(getMemDC(), tcpButtonRect.left, tcpButtonRect.top);
 	exitButtonImage->render(getMemDC(), exitButtonRect.left, exitButtonRect.top);
-	IMAGEMANAGER->render("¸¶¿ì½º", getMemDC(), m_ptMouse.x, m_ptMouse.y);
+	IMAGEMANAGER->render("ë§ˆìš°ìŠ¤", getMemDC(), m_ptMouse.x, m_ptMouse.y);
 
 }

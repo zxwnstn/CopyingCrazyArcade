@@ -1,34 +1,34 @@
-#pragma once
+ï»¿#pragma once
 class timer
 {
 private :
 
-	bool		_isHardware;			//°í¼º´É Å¸ÀÌ¸Ó¸¦ Áö¿øÇÏ³Ä
-	float		_timeScale;				//½Ã°£°æ°ú·®
-	float		_timeElapsed;			//ÇÑÇÁ·¹ÀÓ´ç °æ°ú·®
-	__int64		_curTime;				//ÇöÀç½Ã°£
-	__int64		_lastTime;				//¸¶Áö¸·½Ã°£
-	__int64		_periodFrequency;	    //½Ã°£ÁÖ±â
+	bool		_isHardware;			//ê³ ì„±ëŠ¥ íƒ€ì´ë¨¸ë¥¼ ì§€ì›í•˜ëƒ
+	float		_timeScale;				//ì‹œê°„ê²½ê³¼ëŸ‰
+	float		_timeElapsed;			//í•œí”„ë ˆì„ë‹¹ ê²½ê³¼ëŸ‰
+	__int64		_curTime;				//í˜„ì¬ì‹œê°„
+	__int64		_lastTime;				//ë§ˆì§€ë§‰ì‹œê°„
+	__int64		_periodFrequency;	    //ì‹œê°„ì£¼ê¸°
 
 	unsigned long _frameRate;			//FPS
-	unsigned long _FPSFrameCount;		//FPSÄ«¿îÆ®
+	unsigned long _FPSFrameCount;		//FPSì¹´ìš´íŠ¸
 
 
-	float _FPStimeElapsed;					//FPS¸¶Áö¸· ½Ã°£°ú ÇöÀç½Ã°£ÀÇ °æ°ú·®
-	float _worldTime;					//ÀüÃ¼½Ã°£ °æ°ú·®
+	float _FPStimeElapsed;					//FPSë§ˆì§€ë§‰ ì‹œê°„ê³¼ í˜„ì¬ì‹œê°„ì˜ ê²½ê³¼ëŸ‰
+	float _worldTime;					//ì „ì²´ì‹œê°„ ê²½ê³¼ëŸ‰
 
 public:
 	timer();
 	~timer();
 
 	HRESULT init();
-	//ÇöÀç½Ã°£ °è»ê
+	//í˜„ì¬ì‹œê°„ ê³„ì‚°
 	void tick(float lockFPS = 0.0f);
-	//ÇöÀçFPS°¡Á®¿À±â
+	//í˜„ì¬FPSê°€ì ¸ì˜¤ê¸°
 	unsigned long getFrameRate(TCHAR* str = nullptr)const;
-	//ÇÑÇÁ·¹ÀÓ´ç °æ°ú½Ã°£
+	//í•œí”„ë ˆì„ë‹¹ ê²½ê³¼ì‹œê°„
 	float getElapsedTime()const { return _timeElapsed; }
-	//ÀüÃ¼ °æ°ú½Ã°£ °¡Á®¿À±â
+	//ì „ì²´ ê²½ê³¼ì‹œê°„ ê°€ì ¸ì˜¤ê¸°
 	float getWorldTime()const { return _worldTime; }
 
 

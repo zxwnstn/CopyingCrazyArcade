@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Common/singletonBase.h"
 
 class randomFunction : public singletonBase<randomFunction>
@@ -10,7 +10,7 @@ public:
 	}
 	~randomFunction(){}
 
-	//ÁöÁ¤ÇÑ ¼ıÀÚ¹üÀ§³»¿¡¼­ ³­¼ö¸¦ ¹Ş¾Æ¿Â´Ù.0~ÁöÁ¤ÇÑ ¼ıÀÚ
+	//ì§€ì •í•œ ìˆ«ìë²”ìœ„ë‚´ì—ì„œ ë‚œìˆ˜ë¥¼ ë°›ì•„ì˜¨ë‹¤.0~ì§€ì •í•œ ìˆ«ì
 	inline int getInt(int num)
 	{
 		return rand() % num;

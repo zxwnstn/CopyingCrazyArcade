@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Common/gameNode.h"
 #include "CrazyArcadeClass/Manager/BlockManager.h"
 #include "CrazyArcadeClass/Manager/BombManager.h"

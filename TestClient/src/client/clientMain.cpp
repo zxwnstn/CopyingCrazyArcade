@@ -1,4 +1,4 @@
-#include <time.h>
+ï»¿#include <time.h>
 #include <iostream>
 #include <conio.h>
 #include "packet.h"
@@ -8,7 +8,7 @@ int clientID;
 void sendMovePacket(TCPSocketPtr& sock, int direction) {
 	MovePacket movePacket;
 	movePacket.packetType = (char)PacketTpye::PLAYER;
-	movePacket.netID = clientID;
+	movePacket.NetID = clientID;
 	movePacket.playerMoveDir = (char)direction;
 
 	OutputMemoryStream out;
@@ -17,7 +17,7 @@ void sendMovePacket(TCPSocketPtr& sock, int direction) {
 
 	memcpy(Buffer, out.GetBufferPtr(), out.GetLength());
 	sock->Send(Buffer, out.GetLength());
-	std::cout << "ÀÌµ¿ ÆÐÅ¶À» ¼­¹ö·Î Àü¼Û Çß½À´Ï´Ù.\n";
+	std::cout << "ì´ë™ íŒ¨í‚·ì„ ì„œë²„ë¡œ ì „ì†¡ í–ˆìŠµë‹ˆë‹¤.\n";
 } 
 
 int main() {
@@ -33,7 +33,7 @@ int main() {
 	TCPSocketPtr clientSock = SocketUtil::CreateTCPSocket(INET);
 
 	clientSock->Connect(clientAddr);
-	std::cout << "¼­¹ö¿¡ ¿¬°áµÇ¾ú½À´Ï´Ù!" << std::endl;
+	std::cout << "ì„œë²„ì— ì—°ê²°ë˜ì—ˆìŠµë‹ˆë‹¤!" << std::endl;
 
 	//Receive ID
 	char* Buffer = static_cast<char*>(malloc(PACKET_MAX));
@@ -42,7 +42,7 @@ int main() {
 
 	IDpacket idPacket;
 	idPacket.Read(in);
-	clientID = idPacket.clientID;
+	clientID = idPacket.NetID;
 	
 	//Receive Initiation data
 	size = clientSock->Receive(Buffer, PACKET_MAX);
