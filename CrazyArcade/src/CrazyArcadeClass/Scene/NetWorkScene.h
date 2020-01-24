@@ -1,16 +1,15 @@
-#pragma once
-#include "Common/gameNode.h"
+﻿#include "Common/gameNode.h"
 #include "CrazyArcadeClass/Manager/BlockManager.h"
 #include "CrazyArcadeClass/Manager/BombManager.h"
 #include "CrazyArcadeClass/Manager/CharacterManager.h"
 #include "CrazyArcadeClass/Manager/ItemManager.h"
 
-class InGameScene :
-	public gameNode
+class NetWorkScene
+	: public gameNode
 {
 public:
-	InGameScene();
-	~InGameScene();
+	NetWorkScene();
+	~NetWorkScene();
 
 	HRESULT init();
 	void release();
@@ -45,5 +44,6 @@ private:
 	bool exitMouseSetted;
 
 	bool SceneFinal = false;
-};
 
+
+};
