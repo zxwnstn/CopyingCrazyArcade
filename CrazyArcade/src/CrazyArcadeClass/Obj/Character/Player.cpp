@@ -1,4 +1,4 @@
-﻿#include "Player.h"
+#include "Player.h"
 #include "CrazyArcadeClass/Manager/BombManager.h"
 #include "CrazyArcadeClass/Manager/CharacterManager.h"
 #include "CrazyArcadeClass/Manager/BlockManager.h"
@@ -7,10 +7,11 @@
 #include "CrazyArcadeClass/Type.h"
 
 
-Player::Player(int x, int y)
+Player::Player(int x, int y, bool _isInNetWork)
 	: character(x, y)
 {
 	characterPointer = IMAGEMANAGER->findImage("플1포인터");
+	isInNetWork = _isInNetWork;
 }
 Player::~Player()
 {
@@ -100,4 +101,9 @@ void Player::update(float _deltaTime)
 			it = curBombList.erase(it);
 		else ++it;
 	}
+
+	if (isInNetWork) {
+		//sendPacket
+	}
+
 }

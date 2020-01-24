@@ -1,4 +1,4 @@
-﻿#include "Etc/stdafx.h"
+#include "Etc/stdafx.h"
 #include "CharacterManager.h"
 #include "CrazyArcadeClass/Obj/Character/Player.h"
 #include "CrazyArcadeClass/Obj/Character/Player2.h"
@@ -55,14 +55,15 @@ bool CharacterManager::init()
 }
 bool CharacterManager::init(std::vector<netCharacterInitData> _initDatas)
 {
+	isInNetWork = true;
 	for (auto _initData : _initDatas){
 		if (_initData.netID == GET_SINGLE(NetworkManager)->getNetID()) {
-			auto player = make_shared<Player>(_initData.posX, _initData.posY);
+			auto player = make_shared<Player>(_initData.posX, _initData.posY, isInNetWork);
 			player->init(_initData.type);
 			characters.push_back(player);
 		}
 		else {
-			auto player = make_shared<NetPlayer>(_initData.posX, _initData.posY, _initData.netID);
+			auto player = make_shared<NetPlayer>(_initData.posX, _initData.posY, _initData.netID, isInNetWork);
 			player->init(_initData.type);
 			characters.push_back(player);
 		}		
@@ -71,24 +72,33 @@ bool CharacterManager::init(std::vector<netCharacterInitData> _initDatas)
 }
 void CharacterManager::update(float deltaTime)
 {
-	if (!charactersAllDead) {
-		for (auto&e : characters)
-			e->update(deltaTime);
-		collision();
-		int deadCount = 0;
-		for (auto&e : characters) {
-			if (e->isPlayerDead())
-				deadCount++;
-		}
-		if (deadCount + 1 == characters.size()) {
-			charactersAllDead = true;
-		}
-		if (deadCount == characters.size()) {
-			charactersAllDead = true;
-			draw = true;
+	if (isInNetWork) 
+	{
+		//TEMPORARY
+		auto worldPacket = GET_SINGLE(NetworkManager)->recvMoveData();
+		
+
+	}
+	else 
+	{
+		if (!charactersAllDead) {
+			for (auto&e : characters)
+				e->update(deltaTime);
+			collision();
+			int deadCount = 0;
+			for (auto&e : characters) {
+				if (e->isPlayerDead())
+					deadCount++;
+			}
+			if (deadCount + 1 == characters.size()) {
+				charactersAllDead = true;
+			}
+			if (deadCount == characters.size()) {
+				charactersAllDead = true;
+				draw = true;
+			}
 		}
 	}
-
 }
 void CharacterManager::render(HDC hdc)
 {
