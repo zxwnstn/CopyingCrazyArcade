@@ -1,4 +1,4 @@
-#include "Etc/stdafx.h"
+﻿#include "Etc/stdafx.h"
 #include "InGameScene.h"
 #include "Manager/SoundManager.h"
 #include "Manager/NetworkManager.h"
