@@ -3,16 +3,35 @@
 #include <map>
 #include <vector>
 
+class CrazyPacket;
+//class Position2D 
+//{
+//	PacketTpye m_type;
+//	int m_x;
+//	int m_y;
+//
+//	void Write(OutputMemoryStream& out)
+//	{
+//		out.Write(&m_type,sizeof(m_type));
+//		out.Write(&m_x, sizeof(m_x));
+//		out.Write(&m_y, sizeof(m_y));
+//	}
+//	void Read(InputMemoryStream& in)
+//	{
+//		in.Read(&m_type, sizeof(m_type));
+//		in.Read(&m_x, sizeof(m_x));
+//		in.Read(&m_y, sizeof(m_y));
+//	}
+//};
+
 class WorldState
 {
 
 
 public:
 	// 클라이언트는 WorldPacket을 보내는것이아니라 Packet만 보낸다. 
-	void Write(OutputMemoryStream& out);
+	void Write(OutputMemoryStream& out); //WorlData RW임.
 	void Read(InputMemoryStream& in);
-
-private:
 	void PacketClassify(CrazyPacket* packet);
 
 private:

@@ -7,6 +7,7 @@
 #include "lib/MemoryStream.h"
 #include "CrazyArcadeData.h"
 #include "CrazyUtil.h"
+#include "WorldState.h"
 #pragma comment(lib, "ws2_32")
 #define PACKET_MAX 1470
 
@@ -22,6 +23,7 @@ class CrazyPacket {
 public:
 	virtual void Write(OutputMemoryStream& outStream) = 0;
 	virtual void Read(InputMemoryStream& inStream) = 0;
+	virtual PacketTpye GetPacketTpye() = 0;
 	virtual void show() = 0;
 };
 
@@ -37,6 +39,7 @@ public:
 public:
 	void Write(OutputMemoryStream& outStream) override;
 	void Read(InputMemoryStream& inStream) override;
+	PacketTpye GetPacketTpye() override;
 	void show() override;
 };
 
@@ -60,6 +63,7 @@ public:
 public:
 	void Write(OutputMemoryStream& outStream) override;
 	void Read(InputMemoryStream& inStream) override;
+	PacketTpye GetPacketTpye() override;
 	void show() override;
 };//data size =  6 BYTE
 
@@ -83,6 +87,7 @@ public:
 public:
 	void Write(OutputMemoryStream& outStream) override;
 	void Read(InputMemoryStream& inStream) override;
+	PacketTpye GetPacketTpye() override;
 	void show() override;
 };//data size = 1178 BYTE
 
@@ -92,11 +97,12 @@ class MovePacket
 {
 public:
 	char packetType = (char)PacketTpye::PLAYER;
-	char clientID;
+	char netID;
 	char playerMoveDir;			//0, up 1, down 2, right 3, left 4, noMove;
 
 public:
 	void Write(OutputMemoryStream& outStream) override;
 	void Read(InputMemoryStream& inStream) override;
+	PacketTpye GetPacketTpye() override;
 	void show() override;
 };//data size = 2 BYTE

@@ -26,8 +26,12 @@ void NetworkManager::init(string _ip)
 	clientSock = SocketUtil::CreateTCPSocket(INET);
 	clientSock->Connect(clientAddr);
 
+	char* Buffer = static_cast<char*>(malloc(PACKET_MAX));
+	int size = clientSock->Receive(Buffer, PACKET_MAX);
 	//temp
-	std::cout << "서버에 접속 했습니다." << std::endl;	
+	InputMemoryStream in(Buffer,size);
+	idpacket.Read(in);
+	std::cout << "서버에 접속 했습니다. ID : "<< idpacket.clientID << std::endl;
 }
 
 void NetworkManager::sendMoveData(char _clientID, char _playerMoveDir)

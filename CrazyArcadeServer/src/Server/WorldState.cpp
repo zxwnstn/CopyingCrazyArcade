@@ -14,6 +14,15 @@ void WorldState::Read(InputMemoryStream & in)
 
 void WorldState::PacketClassify(CrazyPacket * packet) 
 {
+	if (packet->GetPacketTpye() == PacketTpye::PLAYER)
+	{
+
+	}
+
+	if (packet->GetPacketTpye() == PacketTpye::BOMB)
+	{
+
+	}
 	//Header부터 확인한다.
 	//if (Header == PacketTpye::PLAYER)
 	//{
