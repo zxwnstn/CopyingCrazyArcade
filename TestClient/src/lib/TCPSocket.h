@@ -1,4 +1,4 @@
-class TCPSocket
+﻿class TCPSocket
 {
 public:
 	~TCPSocket();

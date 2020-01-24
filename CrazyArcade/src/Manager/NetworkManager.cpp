@@ -1,4 +1,4 @@
-#include "Etc/stdafx.h"
+ï»¿#include "Etc/stdafx.h"
 #include "NetworkManager.h"
 
 DEFINITION_SINGLE(NetworkManager)
@@ -31,7 +31,7 @@ void NetworkManager::init(string _ip)
 	//temp
 	InputMemoryStream in(Buffer,size);
 	idpacket.Read(in);
-	std::cout << "¼­¹ö¿¡ Á¢¼Ó Çß½À´Ï´Ù. ID : "<< idpacket.clientID << std::endl;
+	std::cout << "ì„œë²„ì— ì ‘ì† í–ˆìŠµë‹ˆë‹¤. ID : "<< idpacket.NetID << std::endl;
 }
 
 void NetworkManager::sendMoveData(char _clientID, char _playerMoveDir)
@@ -61,7 +61,7 @@ MovePacket NetworkManager::recvMoveData()
 
 int NetworkManager::getNetID()
 {
-	return netID;
+	return NetID;
 }
 
 void NetworkManager::recvID()
@@ -73,7 +73,7 @@ void NetworkManager::recvID()
 	InputMemoryStream in(Buffer, size);
 	idPacket.Read(in);
 
-	netID = idPacket.netID;
+	NetID = idPacket.NetID;
 }
 
 InitiationPacket NetworkManager::recvInitData()

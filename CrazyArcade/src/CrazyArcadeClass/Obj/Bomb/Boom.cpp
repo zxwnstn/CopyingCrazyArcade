@@ -1,4 +1,4 @@
-#include "Etc/stdafx.h"
+ï»¿#include "Etc/stdafx.h"
 #include "Boom.h"
 
 
@@ -14,31 +14,31 @@ Boom::Boom(BoomState _boomstate, float addedTime, BlockPosition _bPos)
 	switch (state)
 	{
 	case BoomState::BoomCenter:
-		curImage = IMAGEMANAGER->findImage("Æø¹ß¼¾ÅÍ");
+		curImage = IMAGEMANAGER->findImage("í­ë°œì„¼í„°");
 		break;
 	case BoomState::BoomHorizenRight:
-		curImage = IMAGEMANAGER->findImage("Æø¹ß¿À¸¥ÂÊ");
+		curImage = IMAGEMANAGER->findImage("í­ë°œì˜¤ë¥¸ìª½");
 		break;
 	case BoomState::BoomHorizenRightEnd:
-		curImage = IMAGEMANAGER->findImage("Æø¹ß¿À¸¥ÂÊ³¡");
+		curImage = IMAGEMANAGER->findImage("í­ë°œì˜¤ë¥¸ìª½ë");
 		break;
 	case BoomState::BoomHorizenLeft:
-		curImage = IMAGEMANAGER->findImage("Æø¹ß¿ŞÂÊ");
+		curImage = IMAGEMANAGER->findImage("í­ë°œì™¼ìª½");
 		break;
 	case BoomState::BoomHorizenLeftEnd:
-		curImage = IMAGEMANAGER->findImage("Æø¹ß¿ŞÂÊ³¡");
+		curImage = IMAGEMANAGER->findImage("í­ë°œì™¼ìª½ë");
 		break;
 	case BoomState::BoomVerticalUp:
-		curImage = IMAGEMANAGER->findImage("Æø¹ßÀ§ÂÊ");
+		curImage = IMAGEMANAGER->findImage("í­ë°œìœ„ìª½");
 		break;
 	case BoomState::BoomVerticalUpEnd:
-		curImage = IMAGEMANAGER->findImage("Æø¹ßÀ§ÂÊ³¡");
+		curImage = IMAGEMANAGER->findImage("í­ë°œìœ„ìª½ë");
 		break;
 	case BoomState::BoomVerticalDown:
-		curImage = IMAGEMANAGER->findImage("Æø¹ß¾Æ·¡ÂÊ");
+		curImage = IMAGEMANAGER->findImage("í­ë°œì•„ë˜ìª½");
 		break;
 	case BoomState::BoomVerticalDownEnd:
-		curImage = IMAGEMANAGER->findImage("Æø¹ß¾Æ·¡ÂÊ³¡");
+		curImage = IMAGEMANAGER->findImage("í­ë°œì•„ë˜ìª½ë");
 		break;
 	}
 }

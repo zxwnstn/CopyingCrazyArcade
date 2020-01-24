@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "CrazyArcadeClass/Obj/Bomb/Bomb.h"
 #include "CrazyArcadeClass/Obj/Bomb/Boom.h"
 

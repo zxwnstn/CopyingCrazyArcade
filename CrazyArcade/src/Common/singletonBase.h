@@ -1,27 +1,27 @@
-#pragma once
+ï»¿#pragma once
 //=======================================
-//singletonBase(ÀÌ³à¼®À¸·Î ½Ì±ÛÅæÀ» ¸¸µç´Ù.)
+//singletonBase(ì´ë…€ì„ìœ¼ë¡œ ì‹±ê¸€í†¤ì„ ë§Œë“ ë‹¤.)
 //=======================================
 /*
-	½Ì±ÛÅæ ÆÐÅÏÀº static member·Î ÇÏ³ªÀÇ ÀÎ½ºÅÏ½º¸¸
-	»ý¼ºµÈ´Ù. ÇÁ·Î±×·¥ ¾È¿¡¼­ Àü¿ªÀûÀ¸·Î Á¢±ÙÀÌ °¡´ÉÇÏ´Ù.
+	ì‹±ê¸€í†¤ íŒ¨í„´ì€ static memberë¡œ í•˜ë‚˜ì˜ ì¸ìŠ¤í„´ìŠ¤ë§Œ
+	ìƒì„±ëœë‹¤. í”„ë¡œê·¸ëž¨ ì•ˆì—ì„œ ì „ì—­ì ìœ¼ë¡œ ì ‘ê·¼ì´ ê°€ëŠ¥í•˜ë‹¤.
 
-	Àü¿ªº¯¼ö¸¦ ¼±¾ðÇØµµ ÇÏ³ªÀÇ ÀÎ½ºÅÏ½º¸¦ À¯ÁöÇÒ¼ö ÀÖ±ä ÇÏÁö¸¸
-	½Ì±ÛÅæÆÐÅÏÀ» »ç¿ëÇÏ¸é Å¬·¡½º ÀÚ½ÅÀÌ ÀÚ±âÀÇ À¯ÀÏÇÑ ÀÎ½ºÅÏ½º·Î
-	Á¢±ÙÇÏ´Â ¹æ¹ýÀ» Ä¸½¶È­ ÇÏ¿© °ü¸® ÇÒ¼ö ÀÖ´Ù.
-	¶ÇÇÑ »ó¼Ó, °´Ã¼»ý¼º ¹× ¼Ò¸ê, ÀÎ½ºÅÏ½º °³¼ö Á¦¾î µîµîµî..
-	È°¿ë¿¡ À¯¸®ÇÏ´Ù.
+	ì „ì—­ë³€ìˆ˜ë¥¼ ì„ ì–¸í•´ë„ í•˜ë‚˜ì˜ ì¸ìŠ¤í„´ìŠ¤ë¥¼ ìœ ì§€í• ìˆ˜ ìžˆê¸´ í•˜ì§€ë§Œ
+	ì‹±ê¸€í†¤íŒ¨í„´ì„ ì‚¬ìš©í•˜ë©´ í´ëž˜ìŠ¤ ìžì‹ ì´ ìžê¸°ì˜ ìœ ì¼í•œ ì¸ìŠ¤í„´ìŠ¤ë¡œ
+	ì ‘ê·¼í•˜ëŠ” ë°©ë²•ì„ ìº¡ìŠí™” í•˜ì—¬ ê´€ë¦¬ í• ìˆ˜ ìžˆë‹¤.
+	ë˜í•œ ìƒì†, ê°ì²´ìƒì„± ë° ì†Œë©¸, ì¸ìŠ¤í„´ìŠ¤ ê°œìˆ˜ ì œì–´ ë“±ë“±ë“±..
+	í™œìš©ì— ìœ ë¦¬í•˜ë‹¤.
 
-	ÀÚ±â ½º½º·Î°¡ ÀÚ±âÀÇ À¯ÀÏÇÑ ÀÎ½ºÅÏ½º·Î Á¢±ÙÇÏ´Â
-	¹æ¹ýÀ» ÀÚÃ¼ÀûÀ¸·Î °ü¸®ÇÏ´Â °ÍÀÌ ÁÁ´Ù.
-	ÀÌ³à¼®Àº ´Ù¸¥ ÀÎ½ºÅÏ½º°¡ »ý¼ºµÇÁö ¾Êµµ·Ï Ã³¸®ÇÒ¼ö ÀÖ°í
-	Á¢±Ù ¹æ¹ý ¶ÇÇÑ Á¦ÇÑÀ» µÑ¼ö ÀÖ´Ù.
+	ìžê¸° ìŠ¤ìŠ¤ë¡œê°€ ìžê¸°ì˜ ìœ ì¼í•œ ì¸ìŠ¤í„´ìŠ¤ë¡œ ì ‘ê·¼í•˜ëŠ”
+	ë°©ë²•ì„ ìžì²´ì ìœ¼ë¡œ ê´€ë¦¬í•˜ëŠ” ê²ƒì´ ì¢‹ë‹¤.
+	ì´ë…€ì„ì€ ë‹¤ë¥¸ ì¸ìŠ¤í„´ìŠ¤ê°€ ìƒì„±ë˜ì§€ ì•Šë„ë¡ ì²˜ë¦¬í• ìˆ˜ ìžˆê³ 
+	ì ‘ê·¼ ë°©ë²• ë˜í•œ ì œí•œì„ ë‘˜ìˆ˜ ìžˆë‹¤.
 */
 template <typename T>
 class singletonBase
 {
 protected:
-	//½Ì±ÛÅæ ÀÎ½ºÅÏ½º ¼±¾ðÇÏ±â
+	//ì‹±ê¸€í†¤ ì¸ìŠ¤í„´ìŠ¤ ì„ ì–¸í•˜ê¸°
 	static T* singleton;
 
 	singletonBase() {};
@@ -33,15 +33,15 @@ public:
 
 };
 
-//½Ì±ÛÅæ ÀÎ½ºÅÏ½º ¼±¾ð
+//ì‹±ê¸€í†¤ ì¸ìŠ¤í„´ìŠ¤ ì„ ì–¸
 template <typename T>
 T* singletonBase<T>::singleton = nullptr;
 
-//½Ì±ÛÅæ °´Ã¼¸¦ °¡Á®¿ÀÀÚ
+//ì‹±ê¸€í†¤ ê°ì²´ë¥¼ ê°€ì ¸ì˜¤ìž
 template<typename T>
 T* singletonBase<T>::getSingleton()
 {
-	//½Ì±ÛÅæ °´Ã¼°¡ ¾øÀ¸¸é »õ·Î ¸¸µéÀÚ¤¿.
+	//ì‹±ê¸€í†¤ ê°ì²´ê°€ ì—†ìœ¼ë©´ ìƒˆë¡œ ë§Œë“¤ìžã….
 	if (!singleton)singleton = new T;
 
 	return singleton;
@@ -49,7 +49,7 @@ T* singletonBase<T>::getSingleton()
 template<typename T>
 void singletonBase<T>::releaseSingleton()
 {
-	//½Ì±ÛÅæ ÀÖÀ¸¸é ÇØÁ¦
+	//ì‹±ê¸€í†¤ ìžˆìœ¼ë©´ í•´ì œ
 	if (singleton)
 	{
 		delete singleton;

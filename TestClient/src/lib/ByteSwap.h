@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "MemoryStream.h"
 
 #ifndef RoboCat_ByteSwap_h

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "CrazyArcadeClass/Obj/Item/Item.h"
 
 class ItemManager{

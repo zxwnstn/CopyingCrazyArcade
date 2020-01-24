@@ -1,4 +1,4 @@
-#include "Etc/stdafx.h"
+ï»¿#include "Etc/stdafx.h"
 #include "mainGame.h"
 #include "CrazyArcadeClass/Scene/InGameScene.h"
 #include "CrazyArcadeClass/Scene/MainMenu.h"
@@ -16,9 +16,9 @@ HRESULT mainGame::init()
 	gameNode::init(true);
 	//image init
 	
-	SCENEMANAGER->addScene("ÀÎ°ÔÀÓ", new InGameScene);
-	SCENEMANAGER->addScene("¸ŞÀÎ¸Ş´º", new MainMenu);
-	SCENEMANAGER->changeScene("¸ŞÀÎ¸Ş´º");
+	SCENEMANAGER->addScene("ì¸ê²Œì„", new InGameScene);
+	SCENEMANAGER->addScene("ë©”ì¸ë©”ë‰´", new MainMenu);
+	SCENEMANAGER->changeScene("ë©”ì¸ë©”ë‰´");
 
 	return S_OK;
 }

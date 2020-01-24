@@ -1,26 +1,26 @@
-#include "PCH.h"
+ï»¿#include "PCH.h"
 #include "MemoryStream.h"
 void OutputMemoryStream::ReallocBuffer(uint64_t inNewLength)
 {
 	mBuffer = static_cast<char*>(std::realloc(mBuffer, inNewLength));
-	//realloc ½ÇÆĞ¿¡´ëÇÑ Ã³¸®ÇÊ¿ä
+	//realloc ì‹¤íŒ¨ì—ëŒ€í•œ ì²˜ë¦¬í•„ìš”
 	mCapacity = inNewLength;
 }
 
 void OutputMemoryStream::Write(const void* inData,
 	size_t inByteCount)
 {
-	//°ø°£È®º¸, ºÎÁ·½Ã 2¹è¾¿ Áõ°¡
+	//ê³µê°„í™•ë³´, ë¶€ì¡±ì‹œ 2ë°°ì”© ì¦ê°€
 	uint64_t resultHead = mHead + static_cast<uint64_t>(inByteCount);
 	if (resultHead > mCapacity)
 	{
 		ReallocBuffer(std::max(mCapacity * 2, resultHead));
 	}
 
-	//¸Ş¸ğ¸®º¹»ç
+	//ë©”ëª¨ë¦¬ë³µì‚¬
 	std::memcpy(mBuffer + mHead, inData, inByteCount);
 
-	//ÇØ´õÀÌµ¿
+	//í•´ë”ì´ë™
 	mHead = resultHead;
 }
 

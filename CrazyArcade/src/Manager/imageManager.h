@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Common/singletonBase.h"
 #include "Image.h"
 
@@ -17,16 +17,16 @@ public:
 	HRESULT init();
 	void release();
 
-	//Å°°ªÀ¸·Î ºó ºñÆ®¸Ê Ãß°¡
+	//í‚¤ê°’ìœ¼ë¡œ ë¹ˆ ë¹„íŠ¸ë§µ ì¶”ê°€
 	Image* addImage(string strKey, int width, int height);
 	Image* addImage(string strKey, const TCHAR* fileName, int width, int height, bool isTrans = false, COLORREF transCollor = RGB(0, 0, 0));
 	Image* addImage(string strKey, const TCHAR* fileName, int x, int y, int width, int height, bool isTrans = false, COLORREF transCollor = RGB(0, 0, 0));
 
-	//ÇÁ·¹ÀÓ ºñÆ®¸Ê Ãß°¡
+	//í”„ë ˆì„ ë¹„íŠ¸ë§µ ì¶”ê°€
 	Image* addFrameImage(string strKey, const TCHAR* fileName, int width, int height, int frameX, int frameY, bool isTrans, COLORREF transCollor);
 	Image* addFrameImage(string strKey, const TCHAR* fileName, float x, float y, int width, int height, int frameX, int frameY, bool isTrans, COLORREF transCollor);
 	
-	//ÀÌ¹ÌÁö Ã£±â, »èÁ¦
+	//ì´ë¯¸ì§€ ì°¾ê¸°, ì‚­ì œ
 	Image* findImage(string strkey);
 	bool deleteImage(string strKey);
 	bool deleteAll();

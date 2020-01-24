@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Common/gameNode.h"
 
 class mainGame :  public gameNode

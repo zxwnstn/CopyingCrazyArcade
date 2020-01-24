@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "CrazyArcadeClass/Obj/Block/Block.h"
 #include "Network/packet.h"
 

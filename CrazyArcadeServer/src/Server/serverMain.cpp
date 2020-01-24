@@ -1,4 +1,4 @@
-#include "packet.h"
+ï»¿#include "packet.h"
 
 //critical section
 int clientNumber;
@@ -14,19 +14,19 @@ void echo(TCPSocketPtr servsock, TCPSocketPtr clientSocket)
 	mtx.unlock();
 
 	int thisclientnumber = clientNumber;
-	std::cout << thisclientnumber << "¹ø Å¬¶óÀÌ¾ðÆ®°¡ Á¢¼ÓÇÏ¿´½À´Ï´Ù!!" << std::endl;
+	std::cout << thisclientnumber << "ë²ˆ í´ë¼ì´ì–¸íŠ¸ê°€ ì ‘ì†í•˜ì˜€ìŠµë‹ˆë‹¤!!" << std::endl;
 
 	//Send IDpacket
 	IDpacket idPacket;
 	idPacket.packetType = (char)PacketTpye::PLAYER;
-	idPacket.clientID = (char)thisclientnumber;
+	idPacket.NetID = (char)thisclientnumber;
 
 	OutputMemoryStream out;
 	idPacket.Write(out);
 	char* Buffer = static_cast<char*>(malloc(PACKET_MAX));
 	memcpy(Buffer, out.GetBufferPtr(), out.GetLength());
 	clientSocket->Send(Buffer, out.GetLength());
-	std::cout << thisclientnumber << "¹ø Å¬¶óÀÌ¾ðÆ®·Î IDÆÐÅ¶À» º¸³Â½À´Ï´Ù.\n";
+	std::cout << thisclientnumber << "ë²ˆ í´ë¼ì´ì–¸íŠ¸ë¡œ IDíŒ¨í‚·ì„ ë³´ëƒˆìŠµë‹ˆë‹¤.\n";
 
 	//Send initPacket
 	InitiationPacket initPacket;
@@ -34,7 +34,7 @@ void echo(TCPSocketPtr servsock, TCPSocketPtr clientSocket)
 		initPacket.clientCharacter[i] = i;
 		initPacket.clientCharacterPosX[i] = i;
 		initPacket.clientCharacterPosY[i] = i;
-		initPacket.clientID[i] = i;
+		initPacket.NetID[i] = i;
 	}
 	initPacket.blocks = createVillageBlocksData();
 	initPacket.show();
@@ -44,14 +44,14 @@ void echo(TCPSocketPtr servsock, TCPSocketPtr clientSocket)
 	char* Buffer2 = static_cast<char*>(malloc(PACKET_MAX));
 	memcpy(Buffer2, out2.GetBufferPtr(), out2.GetLength());
 	clientSocket->Send(Buffer2, out2.GetLength());
-	std::cout << thisclientnumber << "¹ø Å¬¶óÀÌ¾ðÆ®·Î ÀÌ´ÖÆÐÅ¶À» º¸³Â½À´Ï´Ù.\n";
+	std::cout << thisclientnumber << "ë²ˆ í´ë¼ì´ì–¸íŠ¸ë¡œ ì´ë‹›íŒ¨í‚·ì„ ë³´ëƒˆìŠµë‹ˆë‹¤.\n";
 
 	//Receive client Move data
 	while (true) {
 		MovePacket moveData;
 		char* Buffer3 = static_cast<char*>(malloc(PACKET_MAX));
 		int size = clientSocket->Receive(Buffer3, 1470);
-		if (size < 0) {	// Á¾·á½Ã Á¶°Ç
+		if (size < 0) {	// ì¢…ë£Œì‹œ ì¡°ê±´
 			break;
 		}
 		InputMemoryStream in(Buffer3, size);
@@ -61,7 +61,7 @@ void echo(TCPSocketPtr servsock, TCPSocketPtr clientSocket)
 	}
 	//free(Buffer);
 	//free(Buffer2);
-	std::cout << thisclientnumber << "¹ø Å¬¶óÀÌ¾ðÆ® Á¢¼Ó Á¾·á" << '\n' << std::endl;
+	std::cout << thisclientnumber << "ë²ˆ í´ë¼ì´ì–¸íŠ¸ ì ‘ì† ì¢…ë£Œ" << '\n' << std::endl;
 }
 
 int main()
@@ -76,8 +76,8 @@ int main()
 	TCPSocketPtr ServSock = SocketUtil::CreateTCPSocket(INET);
 
 	ServSock->Bind(servAddr);
-	std::cout << "¼­¹ö¸¦ ½ÃÀÛÇÕ´Ï´Ù!" << std::endl;
-	std::cout << "Å¬¶óÀÌ¾ðÆ® Á¢¼Ó ´ë±âÁß..." << std::endl;
+	std::cout << "ì„œë²„ë¥¼ ì‹œìž‘í•©ë‹ˆë‹¤!" << std::endl;
+	std::cout << "í´ë¼ì´ì–¸íŠ¸ ì ‘ì† ëŒ€ê¸°ì¤‘..." << std::endl;
 
 	srand(time(NULL));
 

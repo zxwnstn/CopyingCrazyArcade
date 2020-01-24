@@ -1,4 +1,4 @@
-#include "Etc/stdafx.h"
+О╩©#include "Etc/stdafx.h"
 #include "Item.h"
 
 
@@ -14,7 +14,7 @@ Item::Item(const IRECT & _rect, const BlockPosition _pos, ItemType _type)
 	
 	//image match
 	if (type != ItemType::ItemNone) 
-	curImage = IMAGEMANAGER->findImage("╬фюлеш");
+	curImage = IMAGEMANAGER->findImage("Л∙└Л²╢М┘°");
 	
 	switch (type)
 	{

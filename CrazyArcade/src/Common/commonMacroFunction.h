@@ -1,23 +1,23 @@
-#pragma once
+ï»¿#pragma once
 #include <Windows.h>
 #include "utils.h"
 //==================================================
-//commonMacroFunction(ÇÊ¿äÇÑ ºÎºĞÀº Á÷Á¢ ¸¸µé¾îº¸½Ã¿À)
+//commonMacroFunction(í•„ìš”í•œ ë¶€ë¶„ì€ ì§ì ‘ ë§Œë“¤ì–´ë³´ì‹œì˜¤)
 //==================================================
 
-//Æ÷ÀÎÆ®
+//í¬ì¸íŠ¸
 inline POINT PointMake(int x, int y)
 {
 	POINT pt = { x ,y };
 	return pt;
 }
-//¼±±×¸®´Â ÇÔ¼ö
+//ì„ ê·¸ë¦¬ëŠ” í•¨ìˆ˜
 inline void LineMake(HDC hdc, int x1, int y1, int x2, int y2)
 {
 	MoveToEx(hdc, x1, y1, NULL);
 	LineTo(hdc, x2, y2);
 }
-//RECT¸¸µé±â(ÁÂ»ó´Ü ±âÁØ)
+//RECTë§Œë“¤ê¸°(ì¢Œìƒë‹¨ ê¸°ì¤€)
 inline RECT RectMake(int x, int y, int width, int height)
 {
 	RECT rc = { x,y, x + width, y + height };
@@ -28,7 +28,7 @@ inline UTIL::FRECT FRectMake(float x, float y, float width, float height)
 	UTIL::FRECT rc = { x,y, x + width, y + height };
 	return rc;
 }
-//RECT¸¸µé±â(Áß½ÉÁ¡À¸·Î ºÎÅÍ)
+//RECTë§Œë“¤ê¸°(ì¤‘ì‹¬ì ìœ¼ë¡œ ë¶€í„°)
 inline RECT RectMakeCenter(int x, int y, int width, int height)
 {
 	RECT rc = { x - width / 2, y - height / 2, x + width / 2, y + height / 2 };
@@ -41,7 +41,7 @@ inline UTIL::FRECT FRectMakeCenter(float x, float y, float width, float height)
 
 	return rc;
 }
-//»ç°¢Çü ±×¸®±â
+//ì‚¬ê°í˜• ê·¸ë¦¬ê¸°
 inline void RectangleMake(HDC hdc, int x, int y, int width, int height)
 {
 	Rectangle(hdc, x, y, x + width, y + height);
@@ -58,7 +58,7 @@ inline void DrawColorRect(HDC hdc, const RECT& rect, COLORREF color = RGB(0, 0, 
 	SelectObject(hdc, oldBrush);
 	DeleteObject(curBrush);
 }
-//»ç°¢Çü ±×¸®±â(Áß½ÉÁ¡)
+//ì‚¬ê°í˜• ê·¸ë¦¬ê¸°(ì¤‘ì‹¬ì )
 inline void RectangleMakeCenter(HDC hdc, int x, int y, int width, int height)
 {
 	Rectangle(hdc, x - (width / 2), y - (height / 2), x + (width / 2), y + (height / 2));
@@ -66,12 +66,12 @@ inline void RectangleMakeCenter(HDC hdc, int x, int y, int width, int height)
 inline void DrawRect(HDC hdc, const RECT& rect) {
 	Rectangle(hdc, rect.left, rect.top, rect.right, rect.bottom);
 }
-//¿ø±×¸®±â
+//ì›ê·¸ë¦¬ê¸°
 inline void EllipseMake(HDC hdc, int x, int y, int width, int height)
 {
 	Ellipse(hdc, x, y, x + width, y + height);
 }
-//¿ø±×¸®±â(Áß½ÉÁ¡)
+//ì›ê·¸ë¦¬ê¸°(ì¤‘ì‹¬ì )
 inline void EllipseMakeCenter(HDC hdc, int x, int y, int width, int height)
 {
 	Ellipse(hdc, x - (width / 2), y - (height / 2), x + (width / 2), y + (height / 2));

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <iostream>
 #include <thread>
 #include <mutex>
@@ -24,6 +24,7 @@ public:
 	virtual void Write(OutputMemoryStream& outStream) = 0;
 	virtual void Read(InputMemoryStream& inStream) = 0;
 	virtual PacketTpye GetPacketTpye() = 0;
+	virtual int GetNetID() = 0;
 	virtual void show() = 0;
 };
 
@@ -34,12 +35,13 @@ class IDpacket
 {
 public:
 	char packetType = (char)PacketTpye::PLAYER;
-	char clientID;
+	char NetID;
 
 public:
 	void Write(OutputMemoryStream& outStream) override;
 	void Read(InputMemoryStream& inStream) override;
 	PacketTpye GetPacketTpye() override;
+	int GetNetID() override;
 	void show() override;
 };
 
@@ -64,6 +66,7 @@ public:
 	void Write(OutputMemoryStream& outStream) override;
 	void Read(InputMemoryStream& inStream) override;
 	PacketTpye GetPacketTpye() override;
+	int GetNetID() override;
 	void show() override;
 };//data size =  6 BYTE
 
@@ -76,7 +79,7 @@ class InitiationPacket
 {
 public:
 	char packetType = (char)PacketTpye::PLAYER;
-	char clientID[2];
+	char NetID[2];
 	char clientCharacterPosX[2];
 	char clientCharacterPosY[2];
 	char clientCharacter[2];		// 0 bazzi, 1 dao
@@ -88,6 +91,7 @@ public:
 	void Write(OutputMemoryStream& outStream) override;
 	void Read(InputMemoryStream& inStream) override;
 	PacketTpye GetPacketTpye() override;
+	int GetNetID() override;
 	void show() override;
 };//data size = 1178 BYTE
 
@@ -97,12 +101,13 @@ class MovePacket
 {
 public:
 	char packetType = (char)PacketTpye::PLAYER;
-	char netID;
+	char NetID;
 	char playerMoveDir;			//0, up 1, down 2, right 3, left 4, noMove;
 
 public:
 	void Write(OutputMemoryStream& outStream) override;
 	void Read(InputMemoryStream& inStream) override;
 	PacketTpye GetPacketTpye() override;
+	int GetNetID() override;
 	void show() override;
 };//data size = 2 BYTE

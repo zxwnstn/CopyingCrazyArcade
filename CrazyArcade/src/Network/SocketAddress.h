@@ -1,4 +1,4 @@
-class SocketAddress
+﻿class SocketAddress
 {
 public:
 	SocketAddress( uint64_t inAddress, uint16_t inPort )

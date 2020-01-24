@@ -1,4 +1,4 @@
-#include "Etc/stdafx.h"
+ï»¿#include "Etc/stdafx.h"
 #include "Bomb.h"
 #include "CrazyArcadeClass/Manager/BlockManager.h"
 
@@ -11,7 +11,7 @@ Bomb::Bomb(const POINT & _pos, int _explosionRange)
 	bPos.x = (_pos.x - MAPOFFSET_X) / BLOCK_WIDTH;
 	bPos.y = (_pos.y - MAPOFFSET_Y) / BLOCK_HEIGHT;
 	collisionRect = GET_SINGLE(BlockManager)->getIRectFromIdx(bPos.x, bPos.y);
-	curImage = IMAGEMANAGER->findImage("¹°ÆøÅº");
+	curImage = IMAGEMANAGER->findImage("ë¬¼í­íƒ„");
 }
 
 Bomb::~Bomb()

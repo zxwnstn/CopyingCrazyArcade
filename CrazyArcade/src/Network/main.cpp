@@ -1,4 +1,4 @@
-//#include "PCH.h"
+ï»¿//#include "PCH.h"
 //#include <iostream>
 //#include <thread>
 //#include <mutex>
@@ -30,15 +30,15 @@
 //	inStream.Write(mPosY);
 //}
 //
-//int clientNumber = 0; //critical section Ã³¸®ÇÊ¿äÇÔ.
+//int clientNumber = 0; //critical section ì²˜ë¦¬í•„ìš”í•¨.
 //Player c1{ };
 //
 //
 //void print(const Player& remsg, const int thisclientNumber)
 //{
-//	std::cout << thisclientNumber << "¹ø Å¬¶óÀÌ¾ğÆ® Á¤º¸" << std::endl;
-//	std::cout << "ÀÌ¸§ : " << remsg.mPlayerId << std::endl;
-//	std::cout << "ÇöÀçÀ§Ä¡ : " << remsg.mPosX<< ", " << remsg.mPosY << '\n' << std::endl;
+//	std::cout << thisclientNumber << "ë²ˆ í´ë¼ì´ì–¸íŠ¸ ì •ë³´" << std::endl;
+//	std::cout << "ì´ë¦„ : " << remsg.mPlayerId << std::endl;
+//	std::cout << "í˜„ì¬ìœ„ì¹˜ : " << remsg.mPosX<< ", " << remsg.mPosY << '\n' << std::endl;
 //}
 //
 //bool wait = true;
@@ -48,7 +48,7 @@
 //void echo(TCPSocketPtr ServSock, TCPSocketPtr ClientSocket)
 //{
 //	clientNumber++; // critical section
-//	std::cout << clientNumber << "¹ø Å¬¶óÀÌ¾ğÆ®°¡ Á¢¼ÓÇÏ¿´½À´Ï´Ù!!" << std::endl;
+//	std::cout << clientNumber << "ë²ˆ í´ë¼ì´ì–¸íŠ¸ê°€ ì ‘ì†í•˜ì˜€ìŠµë‹ˆë‹¤!!" << std::endl;
 //	int thisclientNumber = clientNumber;
 //	while (true) {
 //		Player user;
@@ -56,7 +56,7 @@
 //		char* Buffer = static_cast<char*>(malloc(1470));
 //
 //		int size = ClientSocket->Receive(Buffer, 1470);
-//		if (user.mPlayerId == -1) // Ã³À½ Á¢¼ÓÇÒ ¶§ ¾ÆÀÌµğ³Ñ¹ö ºÎ¿©
+//		if (user.mPlayerId == -1) // ì²˜ìŒ ì ‘ì†í•  ë•Œ ì•„ì´ë””ë„˜ë²„ ë¶€ì—¬
 //			user.mPlayerId = thisclientNumber;
 //		if (size < 0) {
 //			break;
@@ -71,7 +71,7 @@
 //			break;
 //		}
 //	}
-//	std::cout << thisclientNumber << "¹ø Å¬¶óÀÌ¾ğÆ® Á¢¼Ó Á¾·á" << '\n' << std::endl;
+//	std::cout << thisclientNumber << "ë²ˆ í´ë¼ì´ì–¸íŠ¸ ì ‘ì† ì¢…ë£Œ" << '\n' << std::endl;
 //}
 //
 //int main()
@@ -80,14 +80,14 @@
 //	auto err = WSAStartup(MAKEWORD(2, 2), &wsaData);
 //
 //	SocketAddressFactory fac;
-//	SocketAddress servAddr(INADDR_ANY, 9190);//Áß¿ä!
+//	SocketAddress servAddr(INADDR_ANY, 9190);//ì¤‘ìš”!
 //	SocketAddress clientAddr;
 //
 //	TCPSocketPtr ServSock = SocketUtil::CreateTCPSocket(INET);
 //
 //	ServSock->Bind(servAddr);
-//	std::cout << "¼­¹ö¸¦ ½ÃÀÛÇÕ´Ï´Ù!" << std::endl;
-//	std::cout << "Å¬¶óÀÌ¾ğÆ® Á¢¼Ó ´ë±âÁß..." << std::endl;
+//	std::cout << "ì„œë²„ë¥¼ ì‹œì‘í•©ë‹ˆë‹¤!" << std::endl;
+//	std::cout << "í´ë¼ì´ì–¸íŠ¸ ì ‘ì† ëŒ€ê¸°ì¤‘..." << std::endl;
 //
 //	ServSock->Listen(5);
 //

@@ -1,4 +1,4 @@
-#include "Etc/stdafx.h"
+ï»¿#include "Etc/stdafx.h"
 #include "BombManager.h"
 
 #include "BlockManager.h"
@@ -29,7 +29,7 @@ void BombManager::update(float deltaTime)
 	for (auto it = bombs.begin(); it != bombs.end(); ) {
 		if ((*it)->isTimeEnd()) {
 			generateBoom((*it)->getPos(), (*it)->getExplosionRange());
-			GET_SINGLE(SoundManager)->playSound("Æø¹ßÀ½", 2);
+			GET_SINGLE(SoundManager)->playSound("í­ë°œìŒ", 2);
 			it = bombs.erase(it);
 		}
 		else ++it;
@@ -172,10 +172,10 @@ void BombManager::generateBoom(const BlockPosition& startPoint, int explosionRan
 		blocks[startPoint.y][startPoint.x].triggerDis(0);
 	}
 	booms.push_back(make_shared<Boom>(BoomState::BoomCenter, 0.f, startPoint));
-	rangeCheckAndGenBoom(startPoint, -1, 0, explosionRange);//ÁÂ
-	rangeCheckAndGenBoom(startPoint, 1, 0, explosionRange);	//¿ì
-	rangeCheckAndGenBoom(startPoint, 0, -1, explosionRange);//»ó
-	rangeCheckAndGenBoom(startPoint, 0, 1, explosionRange);	//ÇÏ
+	rangeCheckAndGenBoom(startPoint, -1, 0, explosionRange);//ì¢Œ
+	rangeCheckAndGenBoom(startPoint, 1, 0, explosionRange);	//ìš°
+	rangeCheckAndGenBoom(startPoint, 0, -1, explosionRange);//ìƒ
+	rangeCheckAndGenBoom(startPoint, 0, 1, explosionRange);	//í•˜
 
 
 }

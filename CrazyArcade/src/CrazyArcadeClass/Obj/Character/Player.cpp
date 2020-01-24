@@ -1,4 +1,4 @@
-#include "Player.h"
+ï»¿#include "Player.h"
 #include "CrazyArcadeClass/Manager/BombManager.h"
 #include "CrazyArcadeClass/Manager/CharacterManager.h"
 #include "CrazyArcadeClass/Manager/BlockManager.h"
@@ -10,7 +10,7 @@
 Player::Player(int x, int y)
 	: character(x, y)
 {
-	characterPointer = IMAGEMANAGER->findImage("ÇÃ1Æ÷ÀÎÅÍ");
+	characterPointer = IMAGEMANAGER->findImage("í”Œ1í¬ì¸í„°");
 }
 Player::~Player()
 {
@@ -25,14 +25,14 @@ bool Player::init(CharacterType _type)
 	switch (type)
 	{
 	case CharacterType::Dao:
-		moveImage = IMAGEMANAGER->findImage("´Ù¿ÀÀÌµ¿");
-		deadImage = IMAGEMANAGER->findImage("´Ù¿ÀÁ×À½");
-		inBalloonImage = IMAGEMANAGER->findImage("´Ù¿ÀÇ³¼±¾È");
+		moveImage = IMAGEMANAGER->findImage("ë‹¤ì˜¤ì´ë™");
+		deadImage = IMAGEMANAGER->findImage("ë‹¤ì˜¤ì£½ìŒ");
+		inBalloonImage = IMAGEMANAGER->findImage("ë‹¤ì˜¤í’ì„ ì•ˆ");
 		break;
 	case CharacterType::Bazzi:
-		moveImage = IMAGEMANAGER->findImage("¹èÂîÀÌµ¿");
-		deadImage = IMAGEMANAGER->findImage("¹èÂîÁ×À½");
-		inBalloonImage = IMAGEMANAGER->findImage("¹èÂîÇ³¼±¾È");
+		moveImage = IMAGEMANAGER->findImage("ë°°ì°Œì´ë™");
+		deadImage = IMAGEMANAGER->findImage("ë°°ì°Œì£½ìŒ");
+		inBalloonImage = IMAGEMANAGER->findImage("ë°°ì°Œí’ì„ ì•ˆ");
 		break;
 	}
 	return true;
