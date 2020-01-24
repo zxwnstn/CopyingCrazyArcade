@@ -1,4 +1,4 @@
-﻿#include "Etc/stdafx.h"
+#include "Etc/stdafx.h"
 #include "Game/mainGame.h"
 #pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console" )
 
@@ -10,7 +10,7 @@ bool m_bLoop = true;
 bool m_showFPS = false;
 bool m_showRect = false;
 bool m_debugMode = false;
-LPTSTR m_lpszClass = TEXT("경일 프로그래밍 18기");
+LPTSTR m_lpszClass = TEXT("Crazy Arcade");
 
 //메인게임
 
