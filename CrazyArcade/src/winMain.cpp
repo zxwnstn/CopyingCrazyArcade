@@ -55,7 +55,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	setWindowSize(WINSTARTX, WINSTARTY, WINSIZEX, WINSIZEY);
 	ShowWindow(m_hWnd, nCmdShow);
-	ShowCursor(false);
+	//ShowCursor(false);
 	//SetFocus(m_hWnd);
 
 	if (FAILED(mg.init()))

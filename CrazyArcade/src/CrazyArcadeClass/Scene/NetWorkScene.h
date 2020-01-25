@@ -44,6 +44,6 @@ private:
 	bool exitMouseSetted;
 
 	bool SceneFinal = false;
-
+	Image* loadingImage;
 
 };

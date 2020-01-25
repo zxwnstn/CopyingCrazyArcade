@@ -55,7 +55,7 @@ public:
 
 public:
 	int getID()							{ return netID; }
-
+	virtual void sendMovePacket() {};
 //member var
 protected:
 	//theses are character basic info

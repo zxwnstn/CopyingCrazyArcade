@@ -10,7 +10,7 @@ public:
 
 	void update(float _deltaTime) override;
 	void update(float _deltaTime, int _dir, int _isBomb) override;
-	void sendMovePacket();
+	void sendMovePacket() override;
 	bool init(CharacterType _type) override;
 };
 

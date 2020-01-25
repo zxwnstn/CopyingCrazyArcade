@@ -70,6 +70,13 @@ void CharacterManager::update(float deltaTime)
 	{
 		if (isInNetWork)
 		{
+			for (int i = 0; i < characters.size(); ++i)
+			{
+				if (characters[i]->getID() == GET_SINGLE(NetworkManager)->getThisClientNetID())
+				{
+					characters[i]->sendMovePacket();
+				}
+			}
 			auto worldDatas = GET_SINGLE(NetworkManager)->recvWorldData().WorldData;
 			for (auto worldData : worldDatas) 
 			{

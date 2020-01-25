@@ -18,6 +18,7 @@ HRESULT NetWorkScene::init()
 
 	//map
 	IMAGEMANAGER->addImage("인게임씬배경", L"images/map.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
+	loadingImage = IMAGEMANAGER->addImage("로딩씬", TEXT("images/LoadingScene.bmp"), WINSIZEX, WINSIZEY);
 
 	//character
 	IMAGEMANAGER->addImage("플레이어", L"images/bazziReadyCharacter.bmp", 54, 63, true, RGB(255, 0, 255));
@@ -121,16 +122,6 @@ HRESULT NetWorkScene::init()
 	bgmSelector = RND->getInt(100);
 	exitMouseSetted = false;
 
-	GET_SINGLE(SoundManager)->playSound("게임스타트", 2);
-
-	if (bgmSelector > 70)
-		GET_SINGLE(SoundManager)->playSound("붐힐", 0);
-	else
-		GET_SINGLE(SoundManager)->playSound("크리스마스", 0);
-
-	std::cout << TEXT("인게임씬 이닛 완료") << std::endl;
-
-
 	//send ready packet this is temporary
 	cout << TEXT("준비가 되면 y또는 Y를 입력하세요") << endl;
 	while (1)
@@ -142,8 +133,19 @@ HRESULT NetWorkScene::init()
 			break;
 		}
 	}
-	GET_SINGLE(NetworkManager)->sendReadyPacket();
 
+	GET_SINGLE(SoundManager)->playSound("게임스타트", 2);
+
+	if (bgmSelector > 70)
+		GET_SINGLE(SoundManager)->playSound("붐힐", 0);
+	else
+		GET_SINGLE(SoundManager)->playSound("크리스마스", 0);
+
+	std::cout << TEXT("인게임씬 이닛 완료") << std::endl;
+
+
+	
+	GET_SINGLE(NetworkManager)->sendReadyPacket();
 
 	return S_OK;
 }

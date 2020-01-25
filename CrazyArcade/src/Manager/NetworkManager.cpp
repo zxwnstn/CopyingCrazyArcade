@@ -26,20 +26,14 @@ void NetworkManager::init(string _ip)
 	clientSock = SocketUtil::CreateTCPSocket(INET);
 	clientSock->Connect(clientAddr);
 
-	char* Buffer = static_cast<char*>(malloc(PACKET_MAX));
-	int size = clientSock->Receive(Buffer, PACKET_MAX);
-	//temp
-	InputMemoryStream in(Buffer,size);
-	idpacket.Read(in);
-
-	std::cout << TEXT("서버에 접속 했습니다.") << NetID << std::endl;
+	std::cout << TEXT("서버에 접속 했습니다.") << std::endl;
 }
 
 void NetworkManager::sendReadyPacket()
 {
 	OutputMemoryStream out;
 	ReadyPacket readyPacket;
-	readyPacket.NetID = NetID;
+	readyPacket.NetID = thisClientNetID;
 
 	readyPacket.Write(out);
 	char* Buffer = static_cast<char*>(malloc(1470));
@@ -60,9 +54,9 @@ WorldState NetworkManager::recvWorldData()
 	return worldState;
 }
 
-int NetworkManager::getNetID()
+int NetworkManager::getThisClientNetID()
 {
-	return NetID;
+	return thisClientNetID;
 }
 
 void NetworkManager::recvID()
@@ -74,9 +68,9 @@ void NetworkManager::recvID()
 	InputMemoryStream in(Buffer, size);
 	idPacket.Read(in);
 
-	NetID = idPacket.NetID;
+	thisClientNetID = idPacket.NetID;
 
-	std::cout << TEXT("아이디를 부여 받았습니다 ID : ") << NetID << std::endl;
+	std::cout << "아이디를 부여 받았습니다 ID : " << thisClientNetID << std::endl;
 }
 
 InitiationPacket NetworkManager::recvInitData()

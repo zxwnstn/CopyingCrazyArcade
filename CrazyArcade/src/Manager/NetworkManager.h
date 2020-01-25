@@ -9,17 +9,26 @@ public:
 	void init(string _ip);
 	void recvID();
 	InitiationPacket recvInitData();
-	void sendMoveData(char _clientID, char _playerMoveDir);
-	MovePacket recvMoveData();
+	void sendMovePacket(MovePacket& movePacket);
+	void sendReadyPacket();
+	WorldState recvWorldData();
+	
+
+
+	//for client
+public:
+	void pushID(int id) { IDs.push_back(id); }
 
 public:
-	int getNetID();
+	int getThisClientNetID();
 
 private:
 	string server_ip;
 	TCPSocketPtr clientSock;
-	int NetID;
-	IDpacket idpacket;
+
+private:
+	int thisClientNetID;
+	std::vector<int> IDs;
 
 private:
 	DECLARE_SINGLE(NetworkManager)

@@ -8,7 +8,7 @@ NetPlayer::NetPlayer(int x, int y, int _netID, bool _isInNetWork)
 	netID = _netID;
 	isInNetWork = _isInNetWork;
 
-	if (isInNetWork && netID == GET_SINGLE(NetworkManager)->getNetID()) 
+	if (isInNetWork && netID == GET_SINGLE(NetworkManager)->getThisClientNetID()) 
 	{
 		characterPointer = IMAGEMANAGER->findImage("플1포인터");
 	}
@@ -66,7 +66,7 @@ void NetPlayer::update(float _deltaTime, int _dir, int _isBomb)
 
 			inBush = isInBush();
 
-			if (_isBomb) {
+			if (_isBomb == 1) {
 				dropBomb();
 			}
 		}
@@ -86,10 +86,10 @@ void NetPlayer::update(float _deltaTime, int _dir, int _isBomb)
 		else ++it;
 	}
 
-	if (isInNetWork && netID == GET_SINGLE(NetworkManager)->getNetID()) 
+	/*if (isInNetWork && netID == GET_SINGLE(NetworkManager)->getThisClientNetID()) 
 	{
 		sendMovePacket();
-	}
+	}*/
 }
 
 void NetPlayer::sendMovePacket()
@@ -135,12 +135,9 @@ void NetPlayer::sendMovePacket()
 	}
 	if (KEYMANAGER->isStayKeyDown(P1_EVENT))
 	{
-		if (!isAlreadMove)
-		{
-			isAlreadMove = true;
-			movePacket.isBomb = 1;
-		}
+		movePacket.isBomb = 1;
 	}
+
 	GET_SINGLE(NetworkManager)->sendMovePacket(movePacket);
 }
 
