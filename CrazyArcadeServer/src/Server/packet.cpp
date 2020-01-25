@@ -36,12 +36,24 @@ int BlockData::GetNetID()
 {
 	return 0;
 }
+int BlockData::GetData()
+{
+	return 0;
+}
+int BlockData::GetDir()
+{
+	return 0;
+}
+int BlockData::GetBomb()
+{
+	return 0;
+}
 void BlockData::show()
 {
 	std::cout << "block position x : " << (int)posX << " y : " << (int)posY << "\n";
-	
+
 	std::cout << "block type : ";
-	switch ((int)blockType){
+	switch ((int)blockType) {
 	case 0:
 		std::cout << "soft block\n";
 		break;
@@ -92,7 +104,7 @@ void BlockData::show()
 
 	if ((int)blockType == 1) {
 		std::cout << "hard block color : ";
-		switch ((int)blockIndex){
+		switch ((int)blockIndex) {
 		case 0:
 			std::cout << "red\n";
 			break;
@@ -131,7 +143,7 @@ void BlockData::show()
 
 
 void InitiationPacket::Write(OutputMemoryStream & outStream) {
-	
+
 	outStream.Write(packetType);
 
 	for (int i = 0; i < 2; i++)
@@ -146,7 +158,7 @@ void InitiationPacket::Write(OutputMemoryStream & outStream) {
 	outStream.WriteVector(blocks);
 }
 void InitiationPacket::Read(InputMemoryStream & inStream) {
-	
+
 	inStream.Read(packetType);
 
 	for (int i = 0; i < 2; i++)
@@ -168,6 +180,18 @@ int InitiationPacket::GetNetID()
 {
 	return 0;
 }
+int InitiationPacket::GetData()
+{
+	return 0;
+}
+int InitiationPacket::GetDir()
+{
+	return 0;
+}
+int InitiationPacket::GetBomb()
+{
+	return 0;
+}
 void InitiationPacket::show()
 {
 	std::cout << "character info\n";
@@ -175,7 +199,7 @@ void InitiationPacket::show()
 		std::cout << "client Id : " << (int)NetID[i] << "\n";
 		std::cout << "select charcter : ";
 
-		switch (clientCharacter[i]){
+		switch (clientCharacter[i]) {
 		case 0:
 			std::cout << "bazzi\n";
 			break;
@@ -210,7 +234,19 @@ PacketTpye MovePacket::GetPacketTpye()
 }
 int MovePacket::GetNetID()
 {
-	return 0;
+	return NetID;
+}
+int MovePacket::GetData()
+{
+	return playerMoveDir;
+}
+int MovePacket::GetDir()
+{
+	return playerMoveDir;
+}
+int MovePacket::GetBomb()
+{
+	return isBomb;
 }
 void MovePacket::show()
 {
@@ -255,6 +291,21 @@ PacketTpye IDpacket::GetPacketTpye()
 }
 
 int IDpacket::GetNetID()
+{
+	return 0;
+}
+
+int IDpacket::GetData()
+{
+	return 0;
+}
+
+int IDpacket::GetDir()
+{
+	return 0;
+}
+
+int IDpacket::GetBomb()
 {
 	return 0;
 }

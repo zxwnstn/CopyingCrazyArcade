@@ -2,32 +2,38 @@
 
 void WorldState::Write(OutputMemoryStream & out)
 {
-	//out.Write(PacketTpye::WorldState);
-	// WorldDate를 순차대로 Write하자(iterator로 돌면될듯)
+	out.Write(WorldData.size());
+	for (auto Datas = WorldData.begin(); Datas != WorldData.end(); Datas++)
+	{
+		out.Write(Datas->second.netid);
+		out.Write(Datas->second.dir);
+		out.Write(Datas->second.bomb);
+	}
 }
 
 void WorldState::Read(InputMemoryStream & in)
 {
-	//in.Read(PacketTpye::WorldState);
-	//Write와 마찬가지..
+	int range = 0;
+	int NetID = 0;
+	int playerMoveDir = 0;
+	int isBomb = 0;
+	in.Read(range);
+	for (int i = 0; i < range; i++)
+	{
+		in.Read(NetID);
+		in.Read(playerMoveDir);
+		in.Read(isBomb);
+		WorldData[NetID].dir = playerMoveDir;
+		WorldData[NetID].bomb = isBomb;
+	}
 }
 
 void WorldState::PacketClassify(CrazyPacket * packet) 
 {
 	if (packet->GetPacketTpye() == PacketTpye::PLAYER)
 	{
-
+		WorldData[packet->GetNetID()].netid = packet->GetNetID();
+		WorldData[packet->GetNetID()].dir = packet->GetDir();
+		WorldData[packet->GetNetID()].bomb = packet->GetBomb();
 	}
-
-	if (packet->GetPacketTpye() == PacketTpye::BOMB)
-	{
-
-	}
-	//Header부터 확인한다.
-	//if (Header == PacketTpye::PLAYER)
-	//{
-	//	//Player라면 NetID를 체크
-	//	WorldData[NetID].x = 1.0f; //값갱신;
-	//	WorldData[NetId].y = 2.0f;
-	//}
 }
