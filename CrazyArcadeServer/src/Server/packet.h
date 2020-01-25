@@ -11,7 +11,7 @@
 #pragma comment(lib, "ws2_32")
 #define PACKET_MAX 1470
 
-enum class PacketTpye
+enum PacketTpye
 {
 	WorldState,
 	PLAYER,
@@ -25,6 +25,9 @@ public:
 	virtual void Read(InputMemoryStream& inStream) = 0;
 	virtual PacketTpye GetPacketTpye() = 0;
 	virtual int GetNetID() = 0;
+	virtual int GetData() = 0;
+	virtual int GetDir() = 0;
+	virtual int GetBomb() = 0;
 	virtual void show() = 0;
 };
 
@@ -42,6 +45,9 @@ public:
 	void Read(InputMemoryStream& inStream) override;
 	PacketTpye GetPacketTpye() override;
 	int GetNetID() override;
+	int GetData() override;
+	int GetDir() override;
+	int GetBomb()override;
 	void show() override;
 };
 
@@ -67,6 +73,9 @@ public:
 	void Read(InputMemoryStream& inStream) override;
 	PacketTpye GetPacketTpye() override;
 	int GetNetID() override;
+	int GetData() override;
+	int GetDir() override;
+	int GetBomb()override;
 	void show() override;
 };//data size =  6 BYTE
 
@@ -92,6 +101,9 @@ public:
 	void Read(InputMemoryStream& inStream) override;
 	PacketTpye GetPacketTpye() override;
 	int GetNetID() override;
+	int GetData() override;
+	int GetDir() override;
+	int GetBomb()override;
 	void show() override;
 };//data size = 1178 BYTE
 
@@ -100,14 +112,18 @@ class MovePacket
 	: public CrazyPacket
 {
 public:
-	char packetType = (char)PacketTpye::PLAYER;
-	char NetID;
-	char playerMoveDir;			//0, up 1, down 2, right 3, left 4, noMove;
+	int packetType = PacketTpye::PLAYER;
+	int NetID;
+	int playerMoveDir;			//0, up 1, down 2, right 3, left 4, noMove;
+	int isBomb;
 
 public:
 	void Write(OutputMemoryStream& outStream) override;
 	void Read(InputMemoryStream& inStream) override;
 	PacketTpye GetPacketTpye() override;
 	int GetNetID() override;
+	int GetData() override;
+	int GetDir() override;
+	int GetBomb()override;
 	void show() override;
 };//data size = 2 BYTE
