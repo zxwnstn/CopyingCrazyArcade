@@ -57,49 +57,60 @@ bool CharacterManager::init(std::vector<netCharacterInitData> _initDatas)
 {
 	isInNetWork = true;
 	for (auto _initData : _initDatas){
-		if (_initData.netID == GET_SINGLE(NetworkManager)->getNetID()) {
-			auto player = make_shared<Player>(_initData.posX, _initData.posY, isInNetWork);
-			player->init(_initData.type);
-			characters.push_back(player);
-		}
-		else {
-			auto player = make_shared<NetPlayer>(_initData.posX, _initData.posY, _initData.netID, isInNetWork);
-			player->init(_initData.type);
-			characters.push_back(player);
-		}		
+		auto player = make_shared<NetPlayer>(_initData.posX, _initData.posY, _initData.netID, isInNetWork);
+		GET_SINGLE(NetworkManager)->pushID(_initData.netID);
+		player->init(_initData.type);
+		characters.push_back(player);
 	}
 	return true;
 }
 void CharacterManager::update(float deltaTime)
 {
-	if (isInNetWork) 
+	if (!charactersAllDead)
 	{
-		//TEMPORARY
-		auto worldPacket = GET_SINGLE(NetworkManager)->recvMoveData();
-		
-
-	}
-	else 
-	{
-		if (!charactersAllDead) {
+		if (isInNetWork)
+		{
+			auto worldDatas = GET_SINGLE(NetworkManager)->recvWorldData().WorldData;
+			for (auto worldData : worldDatas) 
+			{
+				for (int i = 0; i < characters.size(); ++i) 
+				{
+					if (characters[i]->getID() == worldData.second.netid)
+					{
+						characters[i]->update(deltaTime, worldData.second.dir, worldData.second.bomb);
+						break;
+					}
+				}
+			}
+		}
+		else
+		{
 			for (auto&e : characters)
+			{
 				e->update(deltaTime);
-			collision();
-			int deadCount = 0;
-			for (auto&e : characters) {
-				if (e->isPlayerDead())
-					deadCount++;
 			}
-			if (deadCount + 1 == characters.size()) {
-				charactersAllDead = true;
+		}
+		collision();
+		int deadCount = 0;
+		for (auto&e : characters) 
+		{
+			if (e->isPlayerDead())
+			{
+				deadCount++;
 			}
-			if (deadCount == characters.size()) {
-				charactersAllDead = true;
-				draw = true;
-			}
+		}
+		if (deadCount + 1 == characters.size()) 
+		{
+			charactersAllDead = true;
+		}
+		if (deadCount == characters.size()) 
+		{
+			charactersAllDead = true;
+			draw = true;
 		}
 	}
 }
+
 void CharacterManager::render(HDC hdc)
 {
 	for (auto&e : characters)

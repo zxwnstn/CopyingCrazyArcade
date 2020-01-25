@@ -1,4 +1,5 @@
 ﻿#include "NetPlayer.h"
+#include "Manager/NetworkManager.h"
 #define TEMP_VALUE 0
 
 NetPlayer::NetPlayer(int x, int y, int _netID, bool _isInNetWork)
@@ -6,6 +7,11 @@ NetPlayer::NetPlayer(int x, int y, int _netID, bool _isInNetWork)
 {
 	netID = _netID;
 	isInNetWork = _isInNetWork;
+
+	if (isInNetWork && netID == GET_SINGLE(NetworkManager)->getNetID()) 
+	{
+		characterPointer = IMAGEMANAGER->findImage("플1포인터");
+	}
 }
 
 
@@ -15,6 +21,10 @@ NetPlayer::~NetPlayer()
 
 void NetPlayer::update(float _deltaTime)
 {
+}
+
+void NetPlayer::update(float _deltaTime, int _dir, int _isBomb)
+{
 	deltaTime = _deltaTime;
 	//player movement
 	if (state != CharacterState::CharacterDead) {
@@ -22,28 +32,28 @@ void NetPlayer::update(float _deltaTime)
 			bool isAreadyMove = false;
 			Direction moveResult = eNoMove;
 			prevState = state;
-			if (TEMP_VALUE) {
+			if (_dir == 0) {
 				moveResult = move(eUp, speed);
 				isAreadyMove = true;
 				state = CharacterState::CharacterOnUpMove;
 				state |= CharacterState::CharacterOnMove;
 			}
-			if (TEMP_VALUE) {
+			else if (_dir == 1) {
 				moveResult = move(eDown, speed);
 				isAreadyMove = true;
 				state = CharacterState::CharacterOnDownMove;
 				state |= CharacterState::CharacterOnMove;
 			}
-			if (TEMP_VALUE) {
-				moveResult = move(eLeft, speed);
-				isAreadyMove = true;
-				state = CharacterState::CharacterOnLeftMove;
-				state |= CharacterState::CharacterOnMove;
-			}
-			if (TEMP_VALUE) {
+			else if (_dir == 2) {
 				moveResult = move(eRight, speed);
 				isAreadyMove = true;
 				state = CharacterState::CharacterOnRightMove;
+				state |= CharacterState::CharacterOnMove;
+			}
+			if (_dir == 3) {
+				moveResult = move(eLeft, speed);
+				isAreadyMove = true;
+				state = CharacterState::CharacterOnLeftMove;
 				state |= CharacterState::CharacterOnMove;
 			}
 			if (!isAreadyMove) {
@@ -56,7 +66,7 @@ void NetPlayer::update(float _deltaTime)
 
 			inBush = isInBush();
 
-			if (TEMP_VALUE) {
+			if (_isBomb) {
 				dropBomb();
 			}
 		}
@@ -76,10 +86,66 @@ void NetPlayer::update(float _deltaTime)
 		else ++it;
 	}
 
-	if (isInNetWork) {
-		//send packet to server
+	if (isInNetWork && netID == GET_SINGLE(NetworkManager)->getNetID()) 
+	{
+		sendMovePacket();
 	}
 }
+
+void NetPlayer::sendMovePacket()
+{
+	MovePacket movePacket;
+
+	movePacket.NetID = netID;
+	movePacket.isBomb = 0;
+	movePacket.playerMoveDir = 4;
+	bool isAlreadMove = false;
+
+	if (KEYMANAGER->isStayKeyDown(P1_UP)) 
+	{
+		if (!isAlreadMove)
+		{
+			isAlreadMove = true;
+			movePacket.playerMoveDir = 0;
+		}
+	}
+	if (KEYMANAGER->isStayKeyDown(P1_DOWN))
+	{
+		if (!isAlreadMove)
+		{
+			isAlreadMove = true;
+			movePacket.playerMoveDir = 1;
+		}
+	}
+	if (KEYMANAGER->isStayKeyDown(P1_RIGHT))
+	{
+		if (!isAlreadMove)
+		{
+			isAlreadMove = true;
+			movePacket.playerMoveDir = 2;
+		}
+	}
+	if (KEYMANAGER->isStayKeyDown(P1_LEFT))
+	{
+		if (!isAlreadMove)
+		{
+			isAlreadMove = true;
+			movePacket.playerMoveDir = 3;
+		}
+	}
+	if (KEYMANAGER->isStayKeyDown(P1_EVENT))
+	{
+		if (!isAlreadMove)
+		{
+			isAlreadMove = true;
+			movePacket.isBomb = 1;
+		}
+	}
+	GET_SINGLE(NetworkManager)->sendMovePacket(movePacket);
+}
+
+
+
 
 bool NetPlayer::init(CharacterType _type)
 {

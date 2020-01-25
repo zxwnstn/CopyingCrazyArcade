@@ -2,6 +2,7 @@
 #include "mainGame.h"
 #include "CrazyArcadeClass/Scene/InGameScene.h"
 #include "CrazyArcadeClass/Scene/MainMenu.h"
+#include "CrazyArcadeClass/Scene/NetWorkScene.h"
 #include "Manager/SoundManager.h"
 
 mainGame::mainGame()
@@ -18,6 +19,7 @@ HRESULT mainGame::init()
 	
 	SCENEMANAGER->addScene("인게임", new InGameScene);
 	SCENEMANAGER->addScene("메인메뉴", new MainMenu);
+	SCENEMANAGER->addScene("TCP/IP", new NetWorkScene);
 	SCENEMANAGER->changeScene("메인메뉴");
 
 	return S_OK;

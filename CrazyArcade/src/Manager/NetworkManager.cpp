@@ -31,32 +31,33 @@ void NetworkManager::init(string _ip)
 	//temp
 	InputMemoryStream in(Buffer,size);
 	idpacket.Read(in);
-	std::cout << "서버에 접속 했습니다. ID : "<< idpacket.NetID << std::endl;
+
+	std::cout << TEXT("서버에 접속 했습니다.") << NetID << std::endl;
 }
 
-void NetworkManager::sendMoveData(char _clientID, char _playerMoveDir)
+void NetworkManager::sendReadyPacket()
 {
-	//write
 	OutputMemoryStream out;
-	MovePacket md;
+	ReadyPacket readyPacket;
+	readyPacket.NetID = NetID;
 
-	md.Write(out);
+	readyPacket.Write(out);
 	char* Buffer = static_cast<char*>(malloc(1470));
 	memcpy(Buffer, out.GetBufferPtr(), out.GetLength());
 
 	clientSock->Send(Buffer, out.GetLength());
 }
 
-MovePacket NetworkManager::recvMoveData()
+WorldState NetworkManager::recvWorldData()
 {
-	MovePacket moveData;
+	WorldState worldState;
 
 	char* Buffer = static_cast<char*>(malloc(1470));
 	int size = clientSock->Receive(Buffer, 1470);
 	InputMemoryStream in(Buffer, size);
-	moveData.Read(in);
+	worldState.Read(in);
 
-	return moveData;
+	return worldState;
 }
 
 int NetworkManager::getNetID()
@@ -74,6 +75,8 @@ void NetworkManager::recvID()
 	idPacket.Read(in);
 
 	NetID = idPacket.NetID;
+
+	std::cout << TEXT("아이디를 부여 받았습니다 ID : ") << NetID << std::endl;
 }
 
 InitiationPacket NetworkManager::recvInitData()
@@ -86,4 +89,16 @@ InitiationPacket NetworkManager::recvInitData()
 	initData.Read(in);
 
 	return initData;
+}
+
+void NetworkManager::sendMovePacket(MovePacket & movePacket)
+{
+	//write
+	OutputMemoryStream out;
+
+	movePacket.Write(out);
+	char* Buffer = static_cast<char*>(malloc(1470));
+	memcpy(Buffer, out.GetBufferPtr(), out.GetLength());
+
+	clientSock->Send(Buffer, out.GetLength());
 }

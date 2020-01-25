@@ -90,7 +90,7 @@ HRESULT NetWorkScene::init()
 	vector<netCharacterInitData> characterInitDatas;
 	for (int i = 0; i < 2; ++i) {
 		netCharacterInitData cInitData;
-		cInitData.netID = initData.netID[i];
+		cInitData.netID = initData.NetID[i];
 		cInitData.posX = initData.clientCharacterPosX[i];
 		cInitData.posY = initData.clientCharacterPosY[i];
 		cInitData.type = (CharacterType)initData.clientCharacter[i];
@@ -129,6 +129,22 @@ HRESULT NetWorkScene::init()
 		GET_SINGLE(SoundManager)->playSound("크리스마스", 0);
 
 	std::cout << TEXT("인게임씬 이닛 완료") << std::endl;
+
+
+	//send ready packet this is temporary
+	cout << TEXT("준비가 되면 y또는 Y를 입력하세요") << endl;
+	while (1)
+	{
+		char ready;
+		cin >> ready;
+		if (ready == 'y' || ready == 'Y')
+		{
+			break;
+		}
+	}
+	GET_SINGLE(NetworkManager)->sendReadyPacket();
+
+
 	return S_OK;
 }
 

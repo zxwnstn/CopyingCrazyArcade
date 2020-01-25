@@ -171,8 +171,10 @@ void character::debugRender(HDC hdc)
 
 void character::afterRender(HDC hdc)
 {
-	if (!inBush)
-		characterPointer->render(hdc, blockCollisionRect.left + 20, blockCollisionRect.top - 55);
+	if (!inBush) {
+		if(characterPointer)
+			characterPointer->render(hdc, blockCollisionRect.left + 20, blockCollisionRect.top - 55);
+	}
 }
 
 //move

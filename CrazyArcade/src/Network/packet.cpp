@@ -28,12 +28,32 @@ void BlockData::Read(InputMemoryStream & inStream)
 	inStream.Read(&tileIndex, sizeof(tileIndex));
 	inStream.Read(&innerItem, sizeof(innerItem));
 }
+PacketTpye BlockData::GetPacketTpye()
+{
+	return PacketTpye();
+}
+int BlockData::GetNetID()
+{
+	return 0;
+}
+int BlockData::GetData()
+{
+	return 0;
+}
+int BlockData::GetDir()
+{
+	return 0;
+}
+int BlockData::GetBomb()
+{
+	return 0;
+}
 void BlockData::show()
 {
 	std::cout << "block position x : " << (int)posX << " y : " << (int)posY << "\n";
-	
+
 	std::cout << "block type : ";
-	switch ((int)blockType){
+	switch ((int)blockType) {
 	case 0:
 		std::cout << "soft block\n";
 		break;
@@ -84,7 +104,7 @@ void BlockData::show()
 
 	if ((int)blockType == 1) {
 		std::cout << "hard block color : ";
-		switch ((int)blockIndex){
+		switch ((int)blockIndex) {
 		case 0:
 			std::cout << "red\n";
 			break;
@@ -118,15 +138,16 @@ void BlockData::show()
 			break;
 		}
 	}
+	std::cout << "\n";
 }
 
 
 void InitiationPacket::Write(OutputMemoryStream & outStream) {
-	
+
 	outStream.Write(packetType);
 
 	for (int i = 0; i < 2; i++)
-		outStream.Write(netID[i]);
+		outStream.Write(NetID[i]);
 	for (int i = 0; i < 2; i++)
 		outStream.Write(clientCharacterPosX[i]);
 	for (int i = 0; i < 2; i++)
@@ -134,15 +155,14 @@ void InitiationPacket::Write(OutputMemoryStream & outStream) {
 	for (int i = 0; i < 2; i++)
 		outStream.Write(clientCharacter[i]);
 
-	for (auto block : blocks)
-		block.Write(outStream);
+	outStream.WriteVector(blocks);
 }
 void InitiationPacket::Read(InputMemoryStream & inStream) {
-	
+
 	inStream.Read(packetType);
 
 	for (int i = 0; i < 2; i++)
-		inStream.Read(netID[i]);
+		inStream.Read(NetID[i]);
 	for (int i = 0; i < 2; i++)
 		inStream.Read(clientCharacterPosX[i]);
 	for (int i = 0; i < 2; i++)
@@ -150,21 +170,36 @@ void InitiationPacket::Read(InputMemoryStream & inStream) {
 	for (int i = 0; i < 2; i++)
 		inStream.Read(clientCharacter[i]);
 
-	for (int i = 0; i < 195; ++i) {
-		BlockData block;
-		block.Read(inStream);
-		block.show();
-		blocks.push_back(block);
-	}
+	inStream.ReadVector(blocks, 195);
+}
+PacketTpye InitiationPacket::GetPacketTpye()
+{
+	return PacketTpye();
+}
+int InitiationPacket::GetNetID()
+{
+	return 0;
+}
+int InitiationPacket::GetData()
+{
+	return 0;
+}
+int InitiationPacket::GetDir()
+{
+	return 0;
+}
+int InitiationPacket::GetBomb()
+{
+	return 0;
 }
 void InitiationPacket::show()
 {
 	std::cout << "character info\n";
 	for (int i = 0; i < 2; ++i) {
-		std::cout << "net ID : " << (int)netID[i] << "\n";
+		std::cout << "client Id : " << (int)NetID[i] << "\n";
 		std::cout << "select charcter : ";
 
-		switch (clientCharacter[i]){
+		switch (clientCharacter[i]) {
 		case 0:
 			std::cout << "bazzi\n";
 			break;
@@ -172,12 +207,12 @@ void InitiationPacket::show()
 			std::cout << "dao\n";
 			break;
 		}
-		std::cout << "character position x : " << (int)clientCharacterPosX << " y " << (int)clientCharacterPosY << "\n";
+		std::cout << "character position x : " << (int)clientCharacterPosX[i] << " y " << (int)clientCharacterPosY[i] << "\n";
 	}
 
 	std::cout << "block info\n";
-	for (auto block : blocks) {
-		block.show();
+	for (auto _block : blocks) {
+		_block.show();
 	}
 }
 
@@ -192,6 +227,26 @@ void MovePacket::Read(InputMemoryStream& inStream) {
 	inStream.Read(packetType);
 	inStream.Read(NetID);
 	inStream.Read(playerMoveDir);
+}
+PacketTpye MovePacket::GetPacketTpye()
+{
+	return PacketTpye::PLAYER;
+}
+int MovePacket::GetNetID()
+{
+	return NetID;
+}
+int MovePacket::GetData()
+{
+	return playerMoveDir;
+}
+int MovePacket::GetDir()
+{
+	return playerMoveDir;
+}
+int MovePacket::GetBomb()
+{
+	return isBomb;
 }
 void MovePacket::show()
 {
@@ -230,7 +285,74 @@ void IDpacket::Read(InputMemoryStream & inStream)
 	inStream.Read(NetID);
 }
 
+PacketTpye IDpacket::GetPacketTpye()
+{
+	return PacketTpye();
+}
+
+int IDpacket::GetNetID()
+{
+	return 0;
+}
+
+int IDpacket::GetData()
+{
+	return 0;
+}
+
+int IDpacket::GetDir()
+{
+	return 0;
+}
+
+int IDpacket::GetBomb()
+{
+	return 0;
+}
+
 void IDpacket::show()
 {
-	std::cout << "granted netID : " << (int)NetID << "\n";
+	std::cout << "Granted Client ID : " << (int)NetID << "\n";
+}
+
+
+void ReadyPacket::Write(OutputMemoryStream & outStream)
+{
+	outStream.Write(packetType);
+	outStream.Write(NetID);
+}
+
+void ReadyPacket::Read(InputMemoryStream & inStream)
+{
+	inStream.Read(packetType);
+	inStream.Read(NetID);
+}
+
+PacketTpye ReadyPacket::GetPacketTpye()
+{
+	return PacketTpye::READY;
+}
+
+int ReadyPacket::GetNetID()
+{
+	return NetID;
+}
+
+int ReadyPacket::GetData()
+{
+	return 0;
+}
+
+int ReadyPacket::GetDir()
+{
+	return 0;
+}
+
+int ReadyPacket::GetBomb()
+{
+	return 0;
+}
+
+void ReadyPacket::show()
+{
 }

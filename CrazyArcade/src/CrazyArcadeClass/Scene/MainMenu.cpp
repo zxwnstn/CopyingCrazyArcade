@@ -64,6 +64,12 @@ void MainMenu::update(float deltaTime)
 		mouseSettedTcp = false;
 	}
 
+	if (mouseSettedTcp) {
+		if (KEYMANAGER->isOnceKeyDown(GAME_LMOUSE)) {
+			GET_SINGLE(SoundManager)->stopChannel(0);
+			SCENEMANAGER->changeScene("TCP/IP");
+		}
+	}
 	if (mouseSettedStart) {
 		if (KEYMANAGER->isOnceKeyDown(GAME_LMOUSE)) {
 			GET_SINGLE(SoundManager)->stopChannel(0);

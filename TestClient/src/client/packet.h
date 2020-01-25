@@ -10,7 +10,7 @@
 
 enum class PacketTpye
 {
-	WorldState,
+	WorldStates,
 	PLAYER,
 	BOMB,
 };
