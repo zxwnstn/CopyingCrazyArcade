@@ -222,11 +222,13 @@ void MovePacket::Write(OutputMemoryStream& outStream) {
 	outStream.Write(packetType);
 	outStream.Write(NetID);
 	outStream.Write(playerMoveDir);
+	outStream.Write(isBomb);
 }
 void MovePacket::Read(InputMemoryStream& inStream) {
 	inStream.Read(packetType);
 	inStream.Read(NetID);
 	inStream.Read(playerMoveDir);
+	inStream.Read(isBomb);
 }
 PacketTpye MovePacket::GetPacketTpye()
 {
@@ -287,7 +289,7 @@ void IDpacket::Read(InputMemoryStream & inStream)
 
 PacketTpye IDpacket::GetPacketTpye()
 {
-	return PacketTpye();
+	return PacketTpye::READY;
 }
 
 int IDpacket::GetNetID()
@@ -313,4 +315,46 @@ int IDpacket::GetBomb()
 void IDpacket::show()
 {
 	std::cout << "Granted Client ID : " << (int)NetID << "\n";
+}
+
+
+void ReadyPacket::Write(OutputMemoryStream & outStream)
+{
+	outStream.Write(packetType);
+	outStream.Write(NetID);
+}
+
+void ReadyPacket::Read(InputMemoryStream & inStream)
+{
+	inStream.Read(packetType);
+	inStream.Read(NetID);
+}
+
+PacketTpye ReadyPacket::GetPacketTpye()
+{
+	return PacketTpye();
+}
+
+int ReadyPacket::GetNetID()
+{
+	return NetID;
+}
+
+int ReadyPacket::GetData()
+{
+	return 0;
+}
+
+int ReadyPacket::GetDir()
+{
+	return 0;
+}
+
+int ReadyPacket::GetBomb()
+{
+	return 0;
+}
+
+void ReadyPacket::show()
+{
 }

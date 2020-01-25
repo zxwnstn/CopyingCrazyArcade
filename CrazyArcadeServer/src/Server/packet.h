@@ -11,11 +11,13 @@
 #pragma comment(lib, "ws2_32")
 #define PACKET_MAX 1470
 
-enum PacketTpye
+enum class PacketTpye
 {
-	WorldState,
+	WorldStates,
 	PLAYER,
 	BOMB,
+	READY,
+	DONE
 };
 
 //packet interface
@@ -29,6 +31,22 @@ public:
 	virtual int GetDir() = 0;
 	virtual int GetBomb() = 0;
 	virtual void show() = 0;
+};
+
+class ReadyPacket
+	:public CrazyPacket
+{
+public:
+	char packetType = (char)PacketTpye::READY;
+	char NetID;
+	void Write(OutputMemoryStream& outStream) override;
+	void Read(InputMemoryStream& inStream) override;
+	PacketTpye GetPacketTpye() override;
+	int GetNetID() override;
+	int GetData() override;
+	int GetDir() override;
+	int GetBomb()override;
+	void show() override;
 };
 
 
@@ -112,7 +130,7 @@ class MovePacket
 	: public CrazyPacket
 {
 public:
-	int packetType = PacketTpye::PLAYER;
+	int packetType = (int)PacketTpye::PLAYER;
 	int NetID;
 	int playerMoveDir;			//0, up 1, down 2, right 3, left 4, noMove;
 	int isBomb;
