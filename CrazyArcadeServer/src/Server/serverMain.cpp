@@ -1,10 +1,14 @@
 ﻿#include "packet.h"
+#include "WorldState.h"
 
 //critical section
 int clientNumber;
 bool wait = true;
 std::mutex mtx;
 
+WorldState ws;
+int readyNumber = 0;
+int startNumber = 2;
 
 void echo(TCPSocketPtr servsock, TCPSocketPtr clientSocket)
 {
@@ -46,6 +50,28 @@ void echo(TCPSocketPtr servsock, TCPSocketPtr clientSocket)
 	clientSocket->Send(Buffer2, out2.GetLength());
 	std::cout << thisclientnumber << "번 클라이언트로 이닛패킷을 보냈습니다.\n";
 
+	//맵초기화 완료 패킷 수신
+	ReadyPacket readyData;
+	char* Buf = static_cast<char*>(malloc(PACKET_MAX));
+	int size = clientSocket->Receive(Buf, 1470);
+	InputMemoryStream in(Buf, size);
+	readyData.Read(in);
+	readyNumber++;
+
+	ws.WorldData[clientNumber].netid = clientNumber;
+	ws.WorldData[clientNumber].dir = 0;
+	ws.WorldData[clientNumber].bomb = 0;
+
+	//while (readyNumber != startNumber) //4명되면 시작
+	//{
+	//}
+	OutputMemoryStream start;
+	ws.Write(start);
+	char* startbuf = static_cast<char*>(malloc(PACKET_MAX));
+	memcpy(startbuf, start.GetBufferPtr(), start.GetLength());
+	clientSocket->Send(startbuf, start.GetLength());
+	
+
 	//Receive client Move data
 	while (true) {
 		MovePacket moveData;
@@ -57,10 +83,15 @@ void echo(TCPSocketPtr servsock, TCPSocketPtr clientSocket)
 		InputMemoryStream in(Buffer3, size);
 		moveData.Read(in);
 		moveData.show();
-		//free(Buffer3);
+		
+		ws.PacketClassify(&moveData);
+
+		OutputMemoryStream WorldPacket;
+		ws.Write(WorldPacket);
+		char* Buffer = static_cast<char*>(malloc(PACKET_MAX));
+		memcpy(Buffer, WorldPacket.GetBufferPtr(), WorldPacket.GetLength());
+		clientSocket->Send(Buffer, WorldPacket.GetLength());
 	}
-	//free(Buffer);
-	//free(Buffer2);
 	std::cout << thisclientnumber << "번 클라이언트 접속 종료" << '\n' << std::endl;
 }
 

@@ -13,6 +13,8 @@ enum class PacketTpye
 	WorldStates,
 	PLAYER,
 	BOMB,
+	READY,
+	DONE
 };
 
 //packet interface
@@ -89,9 +91,9 @@ class MovePacket
 	: public CrazyPacket
 {
 public:
-	char packetType = (char)PacketTpye::PLAYER;
-	char NetID;
-	char playerMoveDir;			//0, up 1, down 2, right 3, left 4, noMove;
+	int packetType = (char)PacketTpye::PLAYER;
+	int NetID;
+	int playerMoveDir;			//0, up 1, down 2, right 3, left 4, noMove;
 
 public:
 	void Write(OutputMemoryStream& outStream) override;
