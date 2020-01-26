@@ -18,13 +18,15 @@ BlockData protoTileRoad((char)BlockNone, (char)tileGray, 0);
 BlockData protoTileRoadCenterLine((char)BlockNone, (char)tileCenterLine, 0);
 BlockData protoTileRoadAcrossWalk((char)BlockNone, (char)tileAcrossWalk, 0);
 
-BlockData protoTree((char)BlockSoft, (char)tileGreenBlock, 0);
+BlockData protoTree((char)BlockTree, (char)tileGreenBlock, 0);
 BlockData protoBush((char)BlockBush, (char)tileGreenBlock, 0);
 
 std::vector<BlockData> createVillageBlocksData() {
 
 	vector<BlockData> ret;
 	ret.resize(195);
+
+	
 
 	if (1) {
 		ret[0] = protoTileGreen;
@@ -248,6 +250,9 @@ std::vector<BlockData> createVillageBlocksData() {
 		ret[194] = protoTileGreen;
 	}
 
+	for (int i = 0; i < ret.size(); ++i) {
+		ret[i].innerItem = 3;
+	}
 	for (int i = 0; i < 195; ++i) {
 		ret[i].posX = i % 15;
 		ret[i].posY = i / 15;

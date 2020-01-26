@@ -10,6 +10,8 @@ struct Data
 	int netid;
 	int dir;
 	int bomb;
+	int x;
+	int y;
 };
 
 

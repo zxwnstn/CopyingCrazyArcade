@@ -36,7 +36,7 @@ void echo(TCPSocketPtr servsock, TCPSocketPtr clientSocket)
 	InitiationPacket initPacket;
 	for (int i = 0; i < 2; ++i) {
 		initPacket.clientCharacter[i] = i;
-		initPacket.NetID[i] = i + 1;
+		initPacket.NetID[i] = 1 + i;
 	}
 	initPacket.clientCharacterPosX[0] = 0;
 	initPacket.clientCharacterPosY[0] = 0;
