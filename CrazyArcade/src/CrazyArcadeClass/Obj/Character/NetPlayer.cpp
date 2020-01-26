@@ -23,9 +23,13 @@ void NetPlayer::update(float _deltaTime)
 {
 }
 
-void NetPlayer::update(float _deltaTime, int _dir, int _isBomb)
+void NetPlayer::update(float _deltaTime, int _dir, int _isBomb, int x, int y)
 {
+
 	deltaTime = _deltaTime;
+	pos.x = x;
+	pos.y = y;
+	rectSetFromPos();
 	//player movement
 	if (state != CharacterState::CharacterDead) {
 		if (state != CharacterState::CharacterInBalloon) {

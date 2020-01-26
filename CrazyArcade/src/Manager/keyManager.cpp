@@ -24,9 +24,8 @@ HRESULT keyManager::init()
 	playerKey[P1_LEFT] = VK_LEFT;
 	playerKey[P1_RIGHT] = VK_RIGHT;
 	playerKey[P1_EVENT] = VK_SPACE;
-	playerKey[P1_USEITEM] = VK_TAB;
+	playerKey[P1_USEITEM] = VK_DELETE;
 	
-
 	playerKey[P2_UP] = 'R';
 	playerKey[P2_DOWN] = 'F';
 	playerKey[P2_LEFT] = 'D';

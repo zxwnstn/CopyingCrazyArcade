@@ -84,7 +84,7 @@ void CharacterManager::update(float deltaTime)
 				{
 					if (characters[i]->getID() == worldData.second.netid)
 					{
-						characters[i]->update(deltaTime, worldData.second.dir, worldData.second.bomb);
+						characters[i]->update(deltaTime, worldData.second.dir, worldData.second.bomb, worldData.second.x, worldData.second.y);
 						break;
 					}
 				}

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Etc/stdafx.h"
 #include "CrazyArcadeClass/Obj/Item/Item.h"
 #include "CrazyArcadeClass/Obj/Bomb/Bomb.h"
@@ -14,7 +14,7 @@ public:
 	//update
 	virtual void update(float deltaTime) = 0;
 	virtual bool init(CharacterType _type) = 0;
-	virtual void update(float deltaTime, int speed, int isBomb) {}
+	virtual void update(float deltaTime, int speed, int isBomb, int x, int y) {}
 
 	//init
 	void rectSetFromPos();
@@ -65,7 +65,7 @@ protected:
 	Image*			moveImage;
 	Image*			inBalloonImage;
 	Image*			deadImage;
-	Image*			characterPointer;
+	Image*			characterPointer = nullptr;
 	CharacterType	type;
 	bool			adjustSpeedHorizen = true;
 	bool			adjustSpeedVertical = true;

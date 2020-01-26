@@ -8,7 +8,7 @@ void Block::init(int _innerItem)
 {
 	if (type == BlockType::BlockSoft) {
 		innerItem = nullptr;
-		if (_innerItem != -1) {
+		if (_innerItem != 3) {
 			innerItem = make_shared<Item>(collisionRect, bPos, (ItemType)_innerItem);
 		}
 		else {

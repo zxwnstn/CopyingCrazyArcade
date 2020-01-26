@@ -78,8 +78,7 @@ HRESULT NetWorkScene::init()
 
 	//temparary ip
 	std::cout << "서버 주소를 입력해 주세요!" << endl;
-	string serverIP;
-	serverIP = "127.0.0.1:9190";
+	string serverIP = "222.235.79.120:9190";
 
 	//netWork initiation
 	GET_SINGLE(NetworkManager)->init(serverIP);
@@ -123,16 +122,16 @@ HRESULT NetWorkScene::init()
 	exitMouseSetted = false;
 
 	//send ready packet this is temporary
-	cout << TEXT("준비가 되면 y또는 Y를 입력하세요") << endl;
-	//while (1)
-	//{
-	//	char ready;
-	//	cin >> ready;
-	//	if (ready == 'y' || ready == 'Y')
-	//	{
-	//		break;
-	//	}
-	//}
+	/*cout << TEXT("준비가 되면 y또는 Y를 입력하세요") << endl;
+	while (1)
+	{
+		char ready;
+		cin >> ready;
+		if (ready == 'y' || ready == 'Y')
+		{
+			break;
+		}
+	}*/
 
 	GET_SINGLE(SoundManager)->playSound("게임스타트", 2);
 

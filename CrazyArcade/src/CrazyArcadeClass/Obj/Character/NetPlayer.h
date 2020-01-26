@@ -9,7 +9,7 @@ public:
 	~NetPlayer();
 
 	void update(float _deltaTime) override;
-	void update(float _deltaTime, int _dir, int _isBomb) override;
+	void update(float _deltaTime, int _dir, int _isBomb, int x, int y) override;
 	void sendMovePacket() override;
 	bool init(CharacterType _type) override;
 };
