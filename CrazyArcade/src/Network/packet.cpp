@@ -48,6 +48,14 @@ int BlockData::GetBomb()
 {
 	return 0;
 }
+int BlockData::GetX()
+{
+	return 0;
+}
+int BlockData::GetY()
+{
+	return 0;
+}
 void BlockData::show()
 {
 	std::cout << "block position x : " << (int)posX << " y : " << (int)posY << "\n";
@@ -192,6 +200,14 @@ int InitiationPacket::GetBomb()
 {
 	return 0;
 }
+int InitiationPacket::GetX()
+{
+	return 0;
+}
+int InitiationPacket::GetY()
+{
+	return 0;
+}
 void InitiationPacket::show()
 {
 	std::cout << "character info\n";
@@ -250,6 +266,14 @@ int MovePacket::GetBomb()
 {
 	return isBomb;
 }
+int MovePacket::GetX()
+{
+	return x;
+}
+int MovePacket::GetY()
+{
+	return y;
+}
 void MovePacket::show()
 {
 	std::cout << NetID << "\n";
@@ -289,7 +313,7 @@ void IDpacket::Read(InputMemoryStream & inStream)
 
 PacketTpye IDpacket::GetPacketTpye()
 {
-	return PacketTpye();
+	return PacketTpye::READY;
 }
 
 int IDpacket::GetNetID()
@@ -308,6 +332,16 @@ int IDpacket::GetDir()
 }
 
 int IDpacket::GetBomb()
+{
+	return 0;
+}
+
+int IDpacket::GetX()
+{
+	return 0;
+}
+
+int IDpacket::GetY()
 {
 	return 0;
 }
@@ -332,7 +366,7 @@ void ReadyPacket::Read(InputMemoryStream & inStream)
 
 PacketTpye ReadyPacket::GetPacketTpye()
 {
-	return PacketTpye::READY;
+	return PacketTpye();
 }
 
 int ReadyPacket::GetNetID()
@@ -351,6 +385,16 @@ int ReadyPacket::GetDir()
 }
 
 int ReadyPacket::GetBomb()
+{
+	return 0;
+}
+
+int ReadyPacket::GetX()
+{
+	return 0;
+}
+
+int ReadyPacket::GetY()
 {
 	return 0;
 }

@@ -28,6 +28,8 @@ public:
 	virtual int GetData() = 0;
 	virtual int GetDir() = 0;
 	virtual int GetBomb() = 0;
+	virtual int GetX() = 0;
+	virtual int GetY() = 0;
 	virtual void show() = 0;
 };
 
@@ -48,6 +50,8 @@ public:
 	int GetData() override;
 	int GetDir() override;
 	int GetBomb()override;
+	int GetX() override;
+	int GetY()override;
 	void show() override;
 };
 
@@ -76,6 +80,8 @@ public:
 	int GetData() override;
 	int GetDir() override;
 	int GetBomb()override;
+	int GetX() override;
+	int GetY()override;
 	void show() override;
 };//data size =  6 BYTE
 
@@ -104,6 +110,8 @@ public:
 	int GetData() override;
 	int GetDir() override;
 	int GetBomb()override;
+	int GetX() override;
+	int GetY()override;
 	void show() override;
 };//data size = 1178 BYTE
 
@@ -127,6 +135,8 @@ public:
 	int GetData() override;
 	int GetDir() override;
 	int GetBomb()override;
+	int GetX() override;
+	int GetY()override;
 	void show() override;
 };//data size = 2 BYTE
 
@@ -143,5 +153,7 @@ public:
 	int GetData() override;
 	int GetDir() override;
 	int GetBomb()override;
+	int GetX() override;
+	int GetY()override;
 	void show() override;
 };
