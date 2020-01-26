@@ -23,6 +23,7 @@ void WorldState::Read(InputMemoryStream & in)
 		in.Read(NetID);
 		in.Read(playerMoveDir);
 		in.Read(isBomb);
+		WorldData[NetID].netid = NetID;
 		WorldData[NetID].dir = playerMoveDir;
 		WorldData[NetID].bomb = isBomb;
 	}

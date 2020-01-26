@@ -36,10 +36,13 @@ void echo(TCPSocketPtr servsock, TCPSocketPtr clientSocket)
 	InitiationPacket initPacket;
 	for (int i = 0; i < 2; ++i) {
 		initPacket.clientCharacter[i] = i;
-		initPacket.clientCharacterPosX[i] = i;
-		initPacket.clientCharacterPosY[i] = i;
-		initPacket.NetID[i] = i;
+		initPacket.NetID[i] = i + 1;
 	}
+	initPacket.clientCharacterPosX[0] = 0;
+	initPacket.clientCharacterPosY[0] = 0;
+	initPacket.clientCharacterPosX[1] = 13;
+	initPacket.clientCharacterPosY[1] = 0;
+
 	initPacket.blocks = createVillageBlocksData();
 	initPacket.show();
 
@@ -62,15 +65,15 @@ void echo(TCPSocketPtr servsock, TCPSocketPtr clientSocket)
 	ws.WorldData[clientNumber].dir = 0;
 	ws.WorldData[clientNumber].bomb = 0;
 
-	//while (readyNumber != startNumber) //4명되면 시작
-	//{
-	//}
+	while (readyNumber != startNumber) //4명되면 시작
+	{
+	}
 	OutputMemoryStream start;
 	ws.Write(start);
 	char* startbuf = static_cast<char*>(malloc(PACKET_MAX));
 	memcpy(startbuf, start.GetBufferPtr(), start.GetLength());
 	clientSocket->Send(startbuf, start.GetLength());
-	
+
 
 	//Receive client Move data
 	while (true) {
@@ -83,7 +86,7 @@ void echo(TCPSocketPtr servsock, TCPSocketPtr clientSocket)
 		InputMemoryStream in(Buffer3, size);
 		moveData.Read(in);
 		moveData.show();
-		
+
 		ws.PacketClassify(&moveData);
 
 		OutputMemoryStream WorldPacket;
@@ -92,6 +95,7 @@ void echo(TCPSocketPtr servsock, TCPSocketPtr clientSocket)
 		memcpy(Buffer, WorldPacket.GetBufferPtr(), WorldPacket.GetLength());
 		clientSocket->Send(Buffer, WorldPacket.GetLength());
 	}
+	readyNumber--;
 	std::cout << thisclientnumber << "번 클라이언트 접속 종료" << '\n' << std::endl;
 }
 

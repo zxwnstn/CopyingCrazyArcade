@@ -19,12 +19,12 @@ HRESULT keyManager::init()
 		_keyDown.set(i, false);
 	}
 
-	playerKey[P1_UP] = VK_NUMPAD5;
-	playerKey[P1_DOWN] = VK_NUMPAD2;
-	playerKey[P1_LEFT] = VK_NUMPAD1;
-	playerKey[P1_RIGHT] = VK_NUMPAD3;
-	playerKey[P1_EVENT] = VK_END;
-	playerKey[P1_USEITEM] = VK_DELETE;
+	playerKey[P1_UP] = VK_UP;
+	playerKey[P1_DOWN] = VK_DOWN;
+	playerKey[P1_LEFT] = VK_LEFT;
+	playerKey[P1_RIGHT] = VK_RIGHT;
+	playerKey[P1_EVENT] = VK_SPACE;
+	playerKey[P1_USEITEM] = VK_TAB;
 	
 
 	playerKey[P2_UP] = 'R';
