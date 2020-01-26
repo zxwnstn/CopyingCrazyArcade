@@ -75,6 +75,7 @@ void CharacterManager::update(float deltaTime)
 				if (characters[i]->getID() == GET_SINGLE(NetworkManager)->getThisClientNetID())
 				{
 					characters[i]->sendMovePacket();
+					break;
 				}
 			}
 			auto worldDatas = GET_SINGLE(NetworkManager)->recvWorldData().WorldData;

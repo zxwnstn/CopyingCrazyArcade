@@ -11,12 +11,7 @@ void Block::init(int _innerItem)
 		if (_innerItem != 3) {
 			innerItem = make_shared<Item>(collisionRect, bPos, (ItemType)_innerItem);
 		}
-		else {
-			if (RND->getInt(100) < innerItemCreatePer) {
-				ItemType type = (ItemType)RND->getInt(3);
-				innerItem = make_shared<Item>(collisionRect, bPos, type);
-			}
-		}		
+		
 	}
 
 	shawdowImage = IMAGEMANAGER->findImage("그림자");

@@ -85,7 +85,8 @@ void echo(TCPSocketPtr servsock, TCPSocketPtr clientSocket)
 		}
 		InputMemoryStream in(Buffer3, size);
 		moveData.Read(in);
-		moveData.show();
+		std::cout <<"클라ID : "<< moveData.NetID << "  " << moveData.x << "  " << moveData.y << std::endl;
+		//moveData.show();
 
 		ws.PacketClassify(&moveData);
 
@@ -97,6 +98,15 @@ void echo(TCPSocketPtr servsock, TCPSocketPtr clientSocket)
 	}
 	readyNumber--;
 	std::cout << thisclientnumber << "번 클라이언트 접속 종료" << '\n' << std::endl;
+	for (auto it = ws.WorldData.begin(); it != ws.WorldData.end(); ++it) 
+	{
+		if (it->first == thisclientnumber) 
+		{
+			ws.WorldData.erase(thisclientnumber);
+			break;
+		}
+	}
+	clientNumber = 0;
 }
 
 int main()

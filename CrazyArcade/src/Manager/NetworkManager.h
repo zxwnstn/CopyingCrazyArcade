@@ -12,7 +12,7 @@ public:
 	void sendMovePacket(MovePacket& movePacket);
 	void sendReadyPacket();
 	WorldState recvWorldData();
-	
+	void close();
 
 
 	//for client

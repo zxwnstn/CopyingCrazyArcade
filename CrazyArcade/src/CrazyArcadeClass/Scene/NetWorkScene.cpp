@@ -258,6 +258,7 @@ void NetWorkScene::uiUpdate(float deltaTime)
 		if (KEYMANAGER->isOnceKeyDown(GAME_LMOUSE)) {
 			for (int i = 0; i < 10; ++i)
 				GET_SINGLE(SoundManager)->stopChannel(i);
+			GET_SINGLE(NetworkManager)->close();
 			SCENEMANAGER->changeScene("메인메뉴");
 			SceneFinal = true;
 		}
@@ -281,6 +282,7 @@ void NetWorkScene::uiUpdate(float deltaTime)
 		if (pastStart > 3.f) {
 			for (int i = 0; i < 10; ++i)
 				GET_SINGLE(SoundManager)->stopChannel(i);
+			GET_SINGLE(NetworkManager)->close();
 			SCENEMANAGER->changeScene("메인메뉴");
 		}
 	}

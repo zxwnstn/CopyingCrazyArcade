@@ -54,6 +54,12 @@ WorldState NetworkManager::recvWorldData()
 	return worldState;
 }
 
+void NetworkManager::close()
+{
+	clientSock->~TCPSocket();
+	clientSock = nullptr;
+}
+
 int NetworkManager::getThisClientNetID()
 {
 	return thisClientNetID;

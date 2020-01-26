@@ -8,7 +8,7 @@ NetPlayer::NetPlayer(int x, int y, int _netID, bool _isInNetWork)
 	netID = _netID;
 	isInNetWork = _isInNetWork;
 
-	if (isInNetWork && netID == GET_SINGLE(NetworkManager)->getThisClientNetID()) 
+	if (isInNetWork && netID == GET_SINGLE(NetworkManager)->getThisClientNetID())
 	{
 		characterPointer = IMAGEMANAGER->findImage("플1포인터");
 	}
@@ -26,10 +26,17 @@ void NetPlayer::update(float _deltaTime)
 void NetPlayer::update(float _deltaTime, int _dir, int _isBomb, int x, int y)
 {
 
+	cout << netID << endl;
+	cout << x << "  " << y << endl;
+	cout << pos.x << "  " << pos.y << endl;
+
 	deltaTime = _deltaTime;
-	pos.x = x;
-	pos.y = y;
-	rectSetFromPos();
+	if (x != pos.x || y != pos.y) {
+		pos.x = x;
+		pos.y = y;
+		rectSetFromPos();
+	}
+
 	//player movement
 	if (state != CharacterState::CharacterDead) {
 		if (state != CharacterState::CharacterInBalloon) {
@@ -90,7 +97,7 @@ void NetPlayer::update(float _deltaTime, int _dir, int _isBomb, int x, int y)
 		else ++it;
 	}
 
-	/*if (isInNetWork && netID == GET_SINGLE(NetworkManager)->getThisClientNetID()) 
+	/*if (isInNetWork && netID == GET_SINGLE(NetworkManager)->getThisClientNetID())
 	{
 		sendMovePacket();
 	}*/
@@ -103,9 +110,14 @@ void NetPlayer::sendMovePacket()
 	movePacket.NetID = netID;
 	movePacket.isBomb = 0;
 	movePacket.playerMoveDir = 4;
+	movePacket.x = pos.x;
+	movePacket.y = pos.y;
 	bool isAlreadMove = false;
 
-	if (KEYMANAGER->isStayKeyDown(P1_UP)) 
+	if (movePacket.x == 0 && movePacket.y == 0)
+		return;
+
+	if (KEYMANAGER->isStayKeyDown(P1_UP))
 	{
 		if (!isAlreadMove)
 		{

@@ -19,13 +19,15 @@ void WorldState::Read(InputMemoryStream & in)
 	int NetID = 0;
 	int playerMoveDir = 0;
 	int isBomb = 0;
-	int x, y;
+	int x, y = 0;
 	in.Read(range);
 	for (int i = 0; i < range; i++)
 	{
 		in.Read(NetID);
 		in.Read(playerMoveDir);
 		in.Read(isBomb);
+		in.Read(x);
+		in.Read(y);
 		WorldData[NetID].netid = NetID;
 		WorldData[NetID].dir = playerMoveDir;
 		WorldData[NetID].bomb = isBomb;

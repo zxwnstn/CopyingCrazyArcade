@@ -239,12 +239,16 @@ void MovePacket::Write(OutputMemoryStream& outStream) {
 	outStream.Write(NetID);
 	outStream.Write(playerMoveDir);
 	outStream.Write(isBomb);
+	outStream.Write(x);
+	outStream.Write(y);
 }
 void MovePacket::Read(InputMemoryStream& inStream) {
 	inStream.Read(packetType);
 	inStream.Read(NetID);
 	inStream.Read(playerMoveDir);
 	inStream.Read(isBomb);
+	inStream.Read(x);
+	inStream.Read(y);
 }
 PacketTpye MovePacket::GetPacketTpye()
 {
