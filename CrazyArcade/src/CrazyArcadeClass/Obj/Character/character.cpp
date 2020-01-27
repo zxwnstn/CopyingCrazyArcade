@@ -1,4 +1,4 @@
-#include "character.h"
+ï»¿#include "character.h"
 #include "CrazyArcadeClass/Manager/BlockManager.h"
 #include "CrazyArcadeClass/Manager/ItemManager.h"
 #include "CrazyArcadeClass/Manager/BombManager.h"
@@ -171,8 +171,10 @@ void character::debugRender(HDC hdc)
 
 void character::afterRender(HDC hdc)
 {
-	if (!inBush)
-		characterPointer->render(hdc, blockCollisionRect.left + 20, blockCollisionRect.top - 55);
+	if (!inBush) {
+		if(characterPointer)
+			characterPointer->render(hdc, blockCollisionRect.left + 20, blockCollisionRect.top - 55);
+	}
 }
 
 //move
@@ -182,6 +184,8 @@ Direction character::move(Direction dir, int dist)
 	{
 	//UP move can be change Right or Left
 	case eUp:
+
+
 		if(!adjustSpeedVertical)
 			dist = adjustSpeed(eUp);
 		blockCollisionRect.moveUp(dist);
@@ -465,7 +469,7 @@ void character::dropBomb()
 					(*character)->setDropArea(lastDrop_rect);
 			}
 
-			GET_SINGLE(SoundManager)->playSound("ÆøÅº³õ±â", 4);
+			GET_SINGLE(SoundManager)->playSound("í­íƒ„ë†“ê¸°", 4);
 			curBombList.push_back(newBomb);
 			GET_SINGLE(BombManager)->GetBombs().push_back(newBomb);
 			checkSequenceDrop();
@@ -490,14 +494,14 @@ void character::checkSequenceDrop()
 }
 void character::fallDown()
 {
-	GET_SINGLE(SoundManager)->playSound("Ç³¼±°®È÷±â", 5);
+	GET_SINGLE(SoundManager)->playSound("í’ì„ ê°–ížˆê¸°", 5);
 	state = CharacterState::CharacterInBalloon;
 	frameIndex = 0;
 	frameCounter = 0;
 }
 void character::die()
 {
-	GET_SINGLE(SoundManager)->playSound("Ç³¼±Æø¹ß", 1);
+	GET_SINGLE(SoundManager)->playSound("í’ì„ í­ë°œ", 1);
 	state = CharacterState::CharacterDead;
 	frameIndex = 0;
 	frameCounter = 0;
@@ -511,7 +515,7 @@ bool character::isInBush()
 			if (blocks[i][j].getType() == BlockType::BlockBush &&
 				isRectRectCollision(blocks[i][j].getCollisionRect(), otherCollisionRect)) {
 				if (inBush == false)
-					GET_SINGLE(SoundManager)->playSound("ºÎ½¬µé¾î°¡±â", 6);
+					GET_SINGLE(SoundManager)->playSound("ë¶€ì‰¬ë“¤ì–´ê°€ê¸°", 6);
 				return true;
 			}
 	return false;

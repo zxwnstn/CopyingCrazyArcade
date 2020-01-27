@@ -1,10 +1,14 @@
-#include "Etc/stdafx.h"
+ï»¿#include "Etc/stdafx.h"
 #include "CharacterManager.h"
 #include "CrazyArcadeClass/Obj/Character/Player.h"
 #include "CrazyArcadeClass/Obj/Character/Player2.h"
+#include "CrazyArcadeClass/Obj/Character/NetPlayer.h"
 #include "CrazyArcadeClass/Manager/ItemManager.h"
 #include "CrazyArcadeClass/Manager/BlockManager.h"
+#include "Manager/NetworkManager.h"
 #include "Manager/SoundManager.h"
+
+#include <chrono>
 
 DEFINITION_SINGLE(CharacterManager)
 
@@ -51,27 +55,77 @@ bool CharacterManager::init()
 	}
 	return true;
 }
+bool CharacterManager::init(std::vector<netCharacterInitData> _initDatas)
+{
+	isInNetWork = true;
+	for (auto _initData : _initDatas){
+		auto player = make_shared<NetPlayer>(_initData.posX, _initData.posY, _initData.netID, isInNetWork);
+		GET_SINGLE(NetworkManager)->pushID(_initData.netID);
+		player->init(_initData.type);
+		characters.push_back(player);
+	}
+	return true;
+}
 void CharacterManager::update(float deltaTime)
 {
-	if (!charactersAllDead) {
-		for (auto&e : characters)
-			e->update(deltaTime);
+	if (!charactersAllDead)
+	{
+		if (isInNetWork)
+		{
+			chrono::system_clock::time_point tp1;
+			chrono::system_clock::time_point tp2;
+			for (int i = 0; i < characters.size(); ++i)
+			{
+				if (characters[i]->getID() == GET_SINGLE(NetworkManager)->getThisClientNetID())
+				{
+					characters[i]->sendMovePacket();
+					tp1 = chrono::system_clock::now();
+					break;
+				}
+			} 
+			auto worldDatas = GET_SINGLE(NetworkManager)->recvWorldData().WorldData;
+			tp2 = chrono::system_clock::now();
+			GET_SINGLE(NetworkManager)->SetRTT((tp2 - tp1).count() / 1000.f);
+			for (auto worldData : worldDatas) 
+			{
+				for (int i = 0; i < characters.size(); ++i) 
+				{
+					if (characters[i]->getID() == worldData.second.netid)
+					{
+						characters[i]->update(deltaTime, worldData.second.dir, worldData.second.bomb, worldData.second.x, worldData.second.y);
+						break;
+					}
+				}
+			}
+		}
+		else
+		{
+			for (auto&e : characters)
+			{
+				e->update(deltaTime);
+			}
+		}
 		collision();
 		int deadCount = 0;
-		for (auto&e : characters) {
+		for (auto&e : characters) 
+		{
 			if (e->isPlayerDead())
+			{
 				deadCount++;
+			}
 		}
-		if (deadCount + 1 == characters.size()) {
+		if (deadCount + 1 == characters.size()) 
+		{
 			charactersAllDead = true;
 		}
-		if (deadCount == characters.size()) {
+		if (deadCount == characters.size()) 
+		{
 			charactersAllDead = true;
 			draw = true;
 		}
 	}
-
 }
+
 void CharacterManager::render(HDC hdc)
 {
 	for (auto&e : characters)
@@ -104,7 +158,7 @@ void CharacterManager::collisionItem()
 	for (auto character = characters.begin(); character != characters.end(); ++character) {
 		for (auto item = items.begin(); item != items.end(); ) {
 			if (isRectRectCollision((*item)->getCollisionRect(), (*character)->getOtherCollisionRect())) {
-				GET_SINGLE(SoundManager)->playSound("¾ÆÀÌÅÛ¾ò±â", 4);
+				GET_SINGLE(SoundManager)->playSound("ì•„ì´í…œì–»ê¸°", 4);
 				switch ((*item)->getType())
 				{
 				case ItemType::ItemRangeUp:

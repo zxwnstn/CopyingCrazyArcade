@@ -1,8 +1,8 @@
-#pragma once
+﻿#pragma once
 
 class Item{
 public:
-	Item(const IRECT& _rect, const BlockPosition _pos);
+	Item(const IRECT& _rect, const BlockPosition _pos, ItemType type);
 	~Item();
 
 public:
@@ -34,8 +34,5 @@ private:
 private:
 	const int xMargin = 5;
 	const int yMargin = 5;
-	
-	//100 is max;
-	int ItemCreationPer = 40;
 };
 

@@ -1,7 +1,7 @@
-#include "Etc/stdafx.h"
+ï»¿#include "Etc/stdafx.h"
 #include "InGameScene.h"
 #include "Manager/SoundManager.h"
-
+#include "Manager/NetworkManager.h"
 InGameScene::InGameScene()
 {
 }
@@ -16,65 +16,64 @@ HRESULT InGameScene::init()
 	//=============== inGameScene image settup ======================//
 
 	//map
-	IMAGEMANAGER->addImage		("ÀÎ°ÔÀÓ¾À¹è°æ", "images/map.bmp",					WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage		("ì¸ê²Œì„ì”¬ë°°ê²½", L"images/map.bmp",					WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
 
 	//character
-	IMAGEMANAGER->addImage		("ÇÃ·¹ÀÌ¾î",	"images/bazziReadyCharacter.bmp",	54, 63, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage		("ÇÃ1Æ÷ÀÎÅÍ",	"images/1p.bmp",					24, 35, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage		("ÇÃ2Æ÷ÀÎÅÍ",	"images/2p.bmp",					24, 35, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage	("¹èÂîÀÌµ¿",	"images/BazziMove.bmp",				560, 320, 7, 4, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage	("¹èÂîÇ³¼±¾È",	"images/bazziBubble.bmp",			960, 65, 16, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage	("¹èÂîÁ×À½",	"images/bazziDie.bmp",				770, 110, 11, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage	("´Ù¿ÀÀÌµ¿",	"images/DaoMove.bmp",				560, 320, 7, 4, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage	("´Ù¿ÀÇ³¼±¾È",	"images/DaoBubble.bmp",				960, 65, 16, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage	("´Ù¿ÀÁ×À½",	"images/DaoDie.bmp",				770, 110, 11, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage		("í”Œë ˆì´ì–´",	L"images/bazziReadyCharacter.bmp",	54, 63, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage		("í”Œ1í¬ì¸í„°",	L"images/1p.bmp",					24, 35, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage		("í”Œ2í¬ì¸í„°",	L"images/2p.bmp",					24, 35, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage	("ë°°ì°Œì´ë™",	L"images/BazziMove.bmp",			560, 320, 7, 4, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage	("ë°°ì°Œí’ì„ ì•ˆ",	L"images/bazziBubble.bmp",			960, 65, 16, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage	("ë°°ì°Œì£½ìŒ",	L"images/bazziDie.bmp",				770, 110, 11, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage	("ë‹¤ì˜¤ì´ë™",	L"images/DaoMove.bmp",				560, 320, 7, 4, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage	("ë‹¤ì˜¤í’ì„ ì•ˆ",	L"images/DaoBubble.bmp",			960, 65, 16, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage	("ë‹¤ì˜¤ì£½ìŒ",	L"images/DaoDie.bmp",				770, 110, 11, 1, true, RGB(255, 0, 255));
 
 	//block
-	IMAGEMANAGER->addImage		("ÇÏµåºí·Ï",	"images/house.bmp",					180, 90, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage		("¼ÒÇÁÆ®ºí·Ï",	"images/box.bmp",					180, 67, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage		("Å¸ÀÏ",		"images/Tile.bmp",					300, 60);
-	IMAGEMANAGER->addImage		("±×¸²ÀÚ",		"images/shadow.bmp",				62,  62, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage		("³ª¹«",		"images/tree.bmp",					60,  95, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage		("ºÎ½¬",		"images/bush.bmp",					60, 84, true,RGB(255, 0, 255));
-	IMAGEMANAGER->addImage		("ºÎ½¬±×¸²ÀÚ",	"images/bushShadow.bmp",			60, 84, true,RGB(255, 0, 255));
+	IMAGEMANAGER->addImage		("í•˜ë“œë¸”ë¡",	L"images/house.bmp",				180, 90, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage		("ì†Œí”„íŠ¸ë¸”ë¡",	L"images/box.bmp",					180, 67, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage		("íƒ€ì¼",		L"images/Tile.bmp",					300, 60);
+	IMAGEMANAGER->addImage		("ê·¸ë¦¼ì",		L"images/shadow.bmp",				62,  62, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage		("ë‚˜ë¬´",		L"images/tree.bmp",					60,  95, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage		("ë¶€ì‰¬",		L"images/bush.bmp",					60, 84, true,RGB(255, 0, 255));
+	IMAGEMANAGER->addImage		("ë¶€ì‰¬ê·¸ë¦¼ì",	L"images/bushShadow.bmp",			60, 84, true,RGB(255, 0, 255));
 
 	//bomb
-	IMAGEMANAGER->addFrameImage	("¹°ÆøÅº",		"images/bomb_already.bmp",			222, 75, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage	("ë¬¼í­íƒ„",		L"images/bomb_already.bmp",			222, 75, 4, 1, true, RGB(255, 0, 255));
 
 	//boom
-	IMAGEMANAGER->addFrameImage	("Æø¹ßÀ§ÂÊ³¡",	"images/bomb_top.bmp",				540, 60, 9, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage	("Æø¹ßÀ§ÂÊ",	"images/bomb_top_ex.bmp",			540, 60, 9, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage	("Æø¹ß¾Æ·¡ÂÊ³¡","images/bomb_bottom.bmp",			540, 60, 9, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage	("Æø¹ß¾Æ·¡ÂÊ",	"images/bomb_bottom_ex.bmp",		540, 60, 9, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage	("Æø¹ß¿À¸¥ÂÊ³¡","images/bomb_right.bmp",			540, 60, 9, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage	("Æø¹ß¿À¸¥ÂÊ",	"images/bomb_right_ex.bmp",			540, 60, 9, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage	("Æø¹ß¿ŞÂÊ³¡",	"images/bomb_left.bmp",				540, 60, 9, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage	("Æø¹ß¿ŞÂÊ",	"images/bomb_left_ex.bmp",			540, 60, 9, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage	("Æø¹ß¼¾ÅÍ",	"images/bomb_center.bmp",			540, 60, 9, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage	("í­ë°œìœ„ìª½ë",	L"images/bomb_top.bmp",				540, 60, 9, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage	("í­ë°œìœ„ìª½",	L"images/bomb_top_ex.bmp",			540, 60, 9, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage	("í­ë°œì•„ë˜ìª½ë",L"images/bomb_bottom.bmp",			540, 60, 9, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage	("í­ë°œì•„ë˜ìª½",	L"images/bomb_bottom_ex.bmp",		540, 60, 9, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage	("í­ë°œì˜¤ë¥¸ìª½ë",L"images/bomb_right.bmp",			540, 60, 9, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage	("í­ë°œì˜¤ë¥¸ìª½",	L"images/bomb_right_ex.bmp",		540, 60, 9, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage	("í­ë°œì™¼ìª½ë",	L"images/bomb_left.bmp",			540, 60, 9, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage	("í­ë°œì™¼ìª½",	L"images/bomb_left_ex.bmp",			540, 60, 9, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage	("í­ë°œì„¼í„°",	L"images/bomb_center.bmp",			540, 60, 9, 1, true, RGB(255, 0, 255));
 	//item
-	IMAGEMANAGER->addFrameImage	("¾ÆÀÌÅÛ",		"images/item.bmp", 160, 234, 3, 4, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage	("ì•„ì´í…œ",		L"images/item.bmp", 160, 234, 3, 4, true, RGB(255, 0, 255));
 
 	//============================================================//
 	//===================== sound settup =========================//
 
-	GET_SINGLE(SoundManager)->addStream("ºÕÈú",				"music/Boomhill.mp3", 0);
-	GET_SINGLE(SoundManager)->addStream("Å©¸®½º¸¶½º",		"music/Xmas.mp3", 0);
-
-	GET_SINGLE(SoundManager)->addSound("Æø¹ßÀ½",			"music/boom.mp3");
-	GET_SINGLE(SoundManager)->addSound("ÆøÅº³õ±â",			"music/dropBomb.mp3");
-	GET_SINGLE(SoundManager)->addSound("°ÔÀÓ½ºÅ¸Æ®",		"music/game_start.mp3");
-	GET_SINGLE(SoundManager)->addSound("ºÎ½¬µé¾î°¡±â",		"music/bushIn.mp3");
-	GET_SINGLE(SoundManager)->addSound("¾ÆÀÌÅÛ»ı¼º",		"music/ItemGen.mp3");
-	GET_SINGLE(SoundManager)->addSound("¾ÆÀÌÅÛ¾ò±â",		"music/ItemGet.mp3");
-	GET_SINGLE(SoundManager)->addSound("ÆĞ¹è",				"music/defeat.mp3");
-	GET_SINGLE(SoundManager)->addSound("µå·Î¿ì",			"music/draw.mp3");
-	GET_SINGLE(SoundManager)->addSound("¾ÆÀÌÅÛ¾ò±â",		"music/ItemGet.mp3");
-	GET_SINGLE(SoundManager)->addSound("¼±ÅÃ",				"music/select.mp3");
-
-	GET_SINGLE(SoundManager)->addSound("Ç³¼±°®È÷±â",		"music/inBalloon.mp3");
-	GET_SINGLE(SoundManager)->addSound("Ç³¼±Æø¹ß",			"music/ballon_explosion.mp3");
+	GET_SINGLE(SoundManager)->addStream("ë¶í",				"music/Boomhill.mp3", true);
+	GET_SINGLE(SoundManager)->addStream("í¬ë¦¬ìŠ¤ë§ˆìŠ¤",		"music/Xmas.mp3", true);
+															
+	GET_SINGLE(SoundManager)->addSound("í­ë°œìŒ",			"music/boom.mp3");
+	GET_SINGLE(SoundManager)->addSound("í­íƒ„ë†“ê¸°",			"music/dropBomb.mp3");
+	GET_SINGLE(SoundManager)->addSound("ê²Œì„ìŠ¤íƒ€íŠ¸",		"music/game_start.mp3");
+	GET_SINGLE(SoundManager)->addSound("ë¶€ì‰¬ë“¤ì–´ê°€ê¸°",		"music/bushIn.mp3");
+	GET_SINGLE(SoundManager)->addSound("ì•„ì´í…œìƒì„±",		"music/ItemGen.mp3");
+	GET_SINGLE(SoundManager)->addSound("ì•„ì´í…œì–»ê¸°",		"music/ItemGet.mp3");
+	GET_SINGLE(SoundManager)->addSound("íŒ¨ë°°",				"music/defeat.mp3");
+	GET_SINGLE(SoundManager)->addSound("ë“œë¡œìš°",			"music/draw.mp3");
+	GET_SINGLE(SoundManager)->addSound("ì•„ì´í…œì–»ê¸°",		"music/ItemGet.mp3");
+	GET_SINGLE(SoundManager)->addSound("ì„ íƒ",				"music/select.mp3");
+															
+	GET_SINGLE(SoundManager)->addSound("í’ì„ ê°–íˆê¸°",		"music/inBalloon.mp3");
+	GET_SINGLE(SoundManager)->addSound("í’ì„ í­ë°œ",			"music/ballon_explosion.mp3");
 	
-
 	//InGameScene manager init
 	GET_SINGLE(BlockManager)->init();
 	GET_SINGLE(CharacterManager)->init();
@@ -82,8 +81,8 @@ HRESULT InGameScene::init()
 	GET_SINGLE(ItemManager)->init();
 
 	//for debugMode
-	sprintf(str, "DEBUG ENABLED A : speed up S : limit up D : range up");
-	len = strlen(str);
+	_stprintf(str, L"DEBUG ENABLED A : speed up S : limit up D : range up");
+	len = _tcslen(str);
 
 	gameEnd = false;
 	gameStart = true;
@@ -98,13 +97,14 @@ HRESULT InGameScene::init()
 	bgmSelector = RND->getInt(100);
 	exitMouseSetted = false;
 
-	GET_SINGLE(SoundManager)->playSound("°ÔÀÓ½ºÅ¸Æ®", 2);
+	GET_SINGLE(SoundManager)->playSound("ê²Œì„ìŠ¤íƒ€íŠ¸", 2);
 
 	if (bgmSelector > 70)
-		GET_SINGLE(SoundManager)->playSound("ºÕÈú", 0);
+		GET_SINGLE(SoundManager)->playSound("ë¶í", 0);
 	else
-		GET_SINGLE(SoundManager)->playSound("Å©¸®½º¸¶½º", 0);
+		GET_SINGLE(SoundManager)->playSound("í¬ë¦¬ìŠ¤ë§ˆìŠ¤", 0);
 
+	std::cout << TEXT("ì¸ê²Œì„ì”¬ ì´ë‹› ì™„ë£Œ") << std::endl;
 	return S_OK;
 }
 
@@ -139,7 +139,7 @@ void InGameScene::update(float deltaTime)
 void InGameScene::render()
 {
 	DrawColorRect(getMemDC(), IRECT(0, 0, WINSIZEX, WINSIZEY), RGB(95, 95, 95));
-	IMAGEMANAGER->render("ÀÎ°ÔÀÓ¾À¹è°æ", getMemDC(), 0, 0);
+	IMAGEMANAGER->render("ì¸ê²Œì„ì”¬ë°°ê²½", getMemDC(), 0, 0);
 
 	GET_SINGLE(BlockManager)->render(getMemDC());
 	GET_SINGLE(BombManager)->render(getMemDC());
@@ -157,7 +157,7 @@ void InGameScene::afterRender()
 {
 	GET_SINGLE(BlockManager)->afterRender(getMemDC());
 	if(!mouseDis)
-		IMAGEMANAGER->render("¸¶¿ì½º", getMemDC(), m_ptMouse.x, m_ptMouse.y);
+		IMAGEMANAGER->render("ë§ˆìš°ìŠ¤", getMemDC(), m_ptMouse.x, m_ptMouse.y);
 	GET_SINGLE(CharacterManager)->afterRender(getMemDC());
 }
 
@@ -206,7 +206,7 @@ void InGameScene::uiUpdate(float deltaTime)
 	if (isPointRectCollision(m_ptMouse, exitButtonRect)) {
 		if (!exitMouseSetted) {
 			exitMouseSetted = true;
-			GET_SINGLE(SoundManager)->playSound("¸¶¿ì½ºÈ°¼º", 7);
+			GET_SINGLE(SoundManager)->playSound("ë§ˆìš°ìŠ¤í™œì„±", 7);
 		}
 	}
 	else {
@@ -217,7 +217,7 @@ void InGameScene::uiUpdate(float deltaTime)
 		if (KEYMANAGER->isOnceKeyDown(GAME_LMOUSE)) {
 			for (int i = 0; i < 10; ++i)
 				GET_SINGLE(SoundManager)->stopChannel(i);
-			SCENEMANAGER->changeScene("¸ŞÀÎ¸Ş´º");
+			SCENEMANAGER->changeScene("ë©”ì¸ë©”ë‰´");
 			SceneFinal = true;
 		}
 	}
@@ -228,9 +228,9 @@ void InGameScene::uiUpdate(float deltaTime)
 		if (pastStart > 0.3f) {
 			GET_SINGLE(SoundManager)->stopChannel(0);
 			if(gameDraw)
-				GET_SINGLE(SoundManager)->playSound("µå·Î¿ì", 0);
+				GET_SINGLE(SoundManager)->playSound("ë“œë¡œìš°", 0);
 			else
-				GET_SINGLE(SoundManager)->playSound("ÆĞ¹è", 0);
+				GET_SINGLE(SoundManager)->playSound("íŒ¨ë°°", 0);
 			pastStart = 0.f;
 			SceneFinal = true;
 		}
@@ -240,7 +240,7 @@ void InGameScene::uiUpdate(float deltaTime)
 		if (pastStart > 3.f){
 			for (int i = 0; i < 10; ++i)
 				GET_SINGLE(SoundManager)->stopChannel(i);
-			SCENEMANAGER->changeScene("¸ŞÀÎ¸Ş´º");
+			SCENEMANAGER->changeScene("ë©”ì¸ë©”ë‰´");
 		}
 	}
 	

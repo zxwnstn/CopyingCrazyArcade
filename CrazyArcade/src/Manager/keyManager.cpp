@@ -1,4 +1,4 @@
-#include "Etc/stdafx.h"
+ï»¿#include "Etc/stdafx.h"
 #include "Manager/keyManager.h"
 
 keyManager::keyManager()
@@ -12,21 +12,20 @@ keyManager::~keyManager()
 
 HRESULT keyManager::init()
 {
-	//Å°°¡ ÀüºÎ ´­·ÁÀÖÁö ¾ÊÀº »óÅÂ·Î ÃÊ±âÈ­ÇÏÀÚ
+	//í‚¤ê°€ ì „ë¶€ ëˆŒë ¤ìˆì§€ ì•Šì€ ìƒíƒœë¡œ ì´ˆê¸°í™”í•˜ì
 	for (int i = 0; i < KEYMAX; i++)
 	{
 		_keyUp.set(i, false);
 		_keyDown.set(i, false);
 	}
 
-	playerKey[P1_UP] = VK_NUMPAD5;
-	playerKey[P1_DOWN] = VK_NUMPAD2;
-	playerKey[P1_LEFT] = VK_NUMPAD1;
-	playerKey[P1_RIGHT] = VK_NUMPAD3;
-	playerKey[P1_EVENT] = VK_END;
+	playerKey[P1_UP] = VK_UP;
+	playerKey[P1_DOWN] = VK_DOWN;
+	playerKey[P1_LEFT] = VK_LEFT;
+	playerKey[P1_RIGHT] = VK_RIGHT;
+	playerKey[P1_EVENT] = VK_SPACE;
 	playerKey[P1_USEITEM] = VK_DELETE;
 	
-
 	playerKey[P2_UP] = 'R';
 	playerKey[P2_DOWN] = 'F';
 	playerKey[P2_LEFT] = 'D';
@@ -48,55 +47,66 @@ void keyManager::release()
 
 bool keyManager::isOnceKeyDown(int key)
 {
-	//GetAsyncKeyStateÇöÀç Å°ÀÇ »óÅÂ¸¦ ¾Ë¾Æ¿À´Â ³à¼®
-	//Å°°¡ ´­·ÁÁ³À»¶§³ª ¶³¾îÁ³À»¶§ È£Ãâ
-	//0x8000 ÀÌÀü¿¡´Â ´©¸¥ÀûÀÌ ¾ø°í È£Ãâ½ÃÁ¡¿¡¼­ ´­¸°»óÅÂ
-	if (GetAsyncKeyState(playerKey[key]) & 0x8000)
+
+	//GetAsyncKeyStateí˜„ì¬ í‚¤ì˜ ìƒíƒœë¥¼ ì•Œì•„ì˜¤ëŠ” ë…€ì„
+	//í‚¤ê°€ ëˆŒë ¤ì¡Œì„ë•Œë‚˜ ë–¨ì–´ì¡Œì„ë•Œ í˜¸ì¶œ
+	//0x8000 ì´ì „ì—ëŠ” ëˆ„ë¥¸ì ì´ ì—†ê³  í˜¸ì¶œì‹œì ì—ì„œ ëˆŒë¦°ìƒíƒœ
+	if (GetFocus())
 	{
-		if (!_keyDown[playerKey[key]])
+		if (GetAsyncKeyState(playerKey[key]) & 0x8000)
 		{
-			_keyDown.set(playerKey[key], true);
-			return true;
+			if (!_keyDown[playerKey[key]])
+			{
+				_keyDown.set(playerKey[key], true);
+				return true;
+			}
 		}
-	}
-	else
-	{
-		_keyDown.set(playerKey[key], false);
+		else
+		{
+			_keyDown.set(playerKey[key], false);
+		}
 	}
 	return false;
 }
 
 bool keyManager::isOnceKeyUp(int key)
 {
-	if (GetAsyncKeyState(key) & 0x8000)
+	if (GetFocus())
 	{
-		_keyUp.set(playerKey[key],true);
-	}
-	else
-	{
-		if (_keyUp[playerKey[key]])
+		if (GetAsyncKeyState(key) & 0x8000)
 		{
-			_keyUp.set(playerKey[key], false);
-			return true;
+			_keyUp.set(playerKey[key], true);
+		}
+		else
+		{
+			if (_keyUp[playerKey[key]])
+			{
+				_keyUp.set(playerKey[key], false);
+				return true;
+			}
 		}
 	}
-
 	return false;
 }
 
 bool keyManager::isStayKeyDown(int key)
 {
-	if (GetAsyncKeyState(playerKey[key]) & 0x8000)return true;
+	if (GetFocus())
+	{
+		if (GetAsyncKeyState(playerKey[key]) & 0x8000)return true;
+	}
 	return false;
 }
 
 bool keyManager::isToggleKey(int key)
 {
 
-	//GetKeyState :ÇöÀç Å°ÀÇ Åä±Û»óÅÂ
-	//0x0001ÀÌÀü¿¡ ´©¸¥ÀûÀÌ ÀÖ°í È£Ãâ½ÃÁ¡¿¡¼­ ¾È´­¸° »óÅÂ
-
-	if (GetKeyState(playerKey[key]) & 0x0001)return true;
+	//GetKeyState :í˜„ì¬ í‚¤ì˜ í† ê¸€ìƒíƒœ
+	//0x0001ì´ì „ì— ëˆ„ë¥¸ì ì´ ìˆê³  í˜¸ì¶œì‹œì ì—ì„œ ì•ˆëˆŒë¦° ìƒíƒœ
+	if (GetFocus())
+	{
+		if (GetKeyState(playerKey[key]) & 0x0001)return true;
+	}
 	return false;
 }
 

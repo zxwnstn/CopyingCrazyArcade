@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Common/singletonBase.h"
 #include <bitset>
 using namespace std;

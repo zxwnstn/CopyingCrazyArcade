@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Etc/stdafx.h"
 #include "CrazyArcadeClass/Obj/Item/Item.h"
 #include "CrazyArcadeClass/Obj/Bomb/Bomb.h"
@@ -14,6 +14,7 @@ public:
 	//update
 	virtual void update(float deltaTime) = 0;
 	virtual bool init(CharacterType _type) = 0;
+	virtual void update(float deltaTime, int speed, int isBomb, int x, int y) {}
 
 	//init
 	void rectSetFromPos();
@@ -52,6 +53,9 @@ public:
 	void bombLimitUp()					{ if(bombLimit < 10) bombLimit++; }
 	void getUsableItem(ItemType type)	{ usableItemList[int(type)] = true;}
 
+public:
+	int getID()							{ return netID; }
+	virtual void sendMovePacket() {};
 //member var
 protected:
 	//theses are character basic info
@@ -61,7 +65,7 @@ protected:
 	Image*			moveImage;
 	Image*			inBalloonImage;
 	Image*			deadImage;
-	Image*			characterPointer;
+	Image*			characterPointer = nullptr;
 	CharacterType	type;
 	bool			adjustSpeedHorizen = true;
 	bool			adjustSpeedVertical = true;
@@ -103,9 +107,17 @@ protected:
 	float			frameDyingTimer = 0.1f;
 	float			deltaTime;
 
-private:
+protected:
 	//this for inertia witch is not consider use
 	const int slipperyDist = 3;
-
+	//this is for network play
+	bool isInNetWork = false;
+	int netID;
 };
 
+struct netCharacterInitData {
+	int netID;
+	CharacterType	type;
+	int posX;
+	int posY;
+};

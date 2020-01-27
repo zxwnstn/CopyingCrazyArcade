@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "CrazyArcadeClass/Obj/Item/Item.h"
 
 class Block {
@@ -12,9 +12,10 @@ public:
 
 	void init(int x, int y);
 	void init(BlockType _blockType, int x, int y, int _tileIdex = 0, int _blockIndex = 0);
+	void init(BlockType _blockType, int x, int y, int _tileIdex, int _blockIndex, int _innerItem);
 
 private:
-	void init();
+	void init(int _innerItem = -1);
 
 public:
 	//interface
@@ -41,6 +42,7 @@ private:
 	Image*				shawdowImage = nullptr;
 	int					curBlockIdx = 0;
 	int					tileIdx = 0;
+	const int			innerItemCreatePer = 40;
 
 	//inneritem
 	shared_ptr<Item>	innerItem;
@@ -59,5 +61,6 @@ private:
 	float				onDisPastTime = 0.f;
 	float				onDisTime = 0.3f;
 	int					alpha = 255;
+
 };
 

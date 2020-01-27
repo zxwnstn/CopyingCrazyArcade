@@ -1,4 +1,4 @@
-#pragma once
+Ôªø#pragma once
 #include "Common/singletonBase.h"
 #include "Image.h"
 
@@ -17,16 +17,16 @@ public:
 	HRESULT init();
 	void release();
 
-	//≈∞∞™¿∏∑Œ ∫Û ∫Ò∆Æ∏  √ﬂ∞°
+	//ÌÇ§Í∞íÏúºÎ°ú Îπà ÎπÑÌä∏Îßµ Ï∂îÍ∞Ä
 	Image* addImage(string strKey, int width, int height);
-	Image* addImage(string strKey, const char* fileName, int width, int height, bool isTrans = false, COLORREF transCollor = RGB(0, 0, 0));
-	Image* addImage(string strKey, const char* fileName, int x, int y, int width, int height, bool isTrans = false, COLORREF transCollor = RGB(0, 0, 0));
+	Image* addImage(string strKey, const TCHAR* fileName, int width, int height, bool isTrans = false, COLORREF transCollor = RGB(0, 0, 0));
+	Image* addImage(string strKey, const TCHAR* fileName, int x, int y, int width, int height, bool isTrans = false, COLORREF transCollor = RGB(0, 0, 0));
 
-	//«¡∑π¿” ∫Ò∆Æ∏  √ﬂ∞°
-	Image* addFrameImage(string strKey, const char* fileName, int width, int height, int frameX, int frameY, bool isTrans, COLORREF transCollor);
-	Image* addFrameImage(string strKey, const char* fileName, float x, float y, int width, int height, int frameX, int frameY, bool isTrans, COLORREF transCollor);
+	//ÌîÑÎ†àÏûÑ ÎπÑÌä∏Îßµ Ï∂îÍ∞Ä
+	Image* addFrameImage(string strKey, const TCHAR* fileName, int width, int height, int frameX, int frameY, bool isTrans, COLORREF transCollor);
+	Image* addFrameImage(string strKey, const TCHAR* fileName, float x, float y, int width, int height, int frameX, int frameY, bool isTrans, COLORREF transCollor);
 	
-	//¿ÃπÃ¡ˆ √£±‚, ªË¡¶
+	//Ïù¥ÎØ∏ÏßÄ Ï∞æÍ∏∞, ÏÇ≠Ï†ú
 	Image* findImage(string strkey);
 	bool deleteImage(string strKey);
 	bool deleteAll();

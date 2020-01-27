@@ -1,4 +1,4 @@
-#include "Player.h"
+ï»¿#include "Player.h"
 #include "CrazyArcadeClass/Manager/BombManager.h"
 #include "CrazyArcadeClass/Manager/CharacterManager.h"
 #include "CrazyArcadeClass/Manager/BlockManager.h"
@@ -7,10 +7,11 @@
 #include "CrazyArcadeClass/Type.h"
 
 
-Player::Player(int x, int y)
+Player::Player(int x, int y, bool _isInNetWork)
 	: character(x, y)
 {
-	characterPointer = IMAGEMANAGER->findImage("ÇÃ1Æ÷ÀÎÅÍ");
+	characterPointer = IMAGEMANAGER->findImage("í”Œ1í¬ì¸í„°");
+	isInNetWork = _isInNetWork;
 }
 Player::~Player()
 {
@@ -25,14 +26,14 @@ bool Player::init(CharacterType _type)
 	switch (type)
 	{
 	case CharacterType::Dao:
-		moveImage = IMAGEMANAGER->findImage("´Ù¿ÀÀÌµ¿");
-		deadImage = IMAGEMANAGER->findImage("´Ù¿ÀÁ×À½");
-		inBalloonImage = IMAGEMANAGER->findImage("´Ù¿ÀÇ³¼±¾È");
+		moveImage = IMAGEMANAGER->findImage("ë‹¤ì˜¤ì´ë™");
+		deadImage = IMAGEMANAGER->findImage("ë‹¤ì˜¤ì£½ìŒ");
+		inBalloonImage = IMAGEMANAGER->findImage("ë‹¤ì˜¤í’ì„ ì•ˆ");
 		break;
 	case CharacterType::Bazzi:
-		moveImage = IMAGEMANAGER->findImage("¹èÂîÀÌµ¿");
-		deadImage = IMAGEMANAGER->findImage("¹èÂîÁ×À½");
-		inBalloonImage = IMAGEMANAGER->findImage("¹èÂîÇ³¼±¾È");
+		moveImage = IMAGEMANAGER->findImage("ë°°ì°Œì´ë™");
+		deadImage = IMAGEMANAGER->findImage("ë°°ì°Œì£½ìŒ");
+		inBalloonImage = IMAGEMANAGER->findImage("ë°°ì°Œí’ì„ ì•ˆ");
 		break;
 	}
 	return true;
@@ -100,4 +101,9 @@ void Player::update(float _deltaTime)
 			it = curBombList.erase(it);
 		else ++it;
 	}
+
+	if (isInNetWork) {
+		//sendPacket
+	}
+
 }

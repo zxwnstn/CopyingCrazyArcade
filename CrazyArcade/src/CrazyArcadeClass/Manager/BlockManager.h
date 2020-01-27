@@ -1,5 +1,6 @@
-#pragma once
+﻿#pragma once
 #include "CrazyArcadeClass/Obj/Block/Block.h"
+#include "Network/packet.h"
 
 class BlockManager{
 public:
@@ -13,6 +14,8 @@ public:
 	void collision();
 	//this is for mapEddit
 	bool init(vector<vector<BlockType>>& _blocks);
+	//this is for network
+	bool init(std::vector<BlockData>);
 
 public:
 	//getter

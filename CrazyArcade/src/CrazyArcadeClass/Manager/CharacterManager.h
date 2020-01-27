@@ -1,11 +1,11 @@
-#pragma once
+﻿#pragma once
 #include "CrazyArcadeClass/Obj/character/character.h"
-
 
 class CharacterManager{
 public:
 	//interface
 	bool init();
+	bool init(std::vector<netCharacterInitData> _initData);
 	void update(float deltaTime);
 	void render(HDC hdc);
 	void debugRender(HDC hdc);
@@ -24,6 +24,8 @@ public:
 public:
 	bool charactersAllDead = false;
 	bool draw = false;
+	bool isInNetWork = false;
+
 private:
 	vector<shared_ptr<character>> characters;
 

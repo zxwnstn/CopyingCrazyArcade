@@ -1,4 +1,4 @@
-#include "Etc/stdafx.h"
+﻿#include "Etc/stdafx.h"
 #include "ItemManager.h"
 #include "BombManager.h"
 DEFINITION_SINGLE(ItemManager)

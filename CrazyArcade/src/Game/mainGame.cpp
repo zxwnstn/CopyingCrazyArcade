@@ -1,7 +1,8 @@
-#include "Etc/stdafx.h"
+ï»¿#include "Etc/stdafx.h"
 #include "mainGame.h"
 #include "CrazyArcadeClass/Scene/InGameScene.h"
 #include "CrazyArcadeClass/Scene/MainMenu.h"
+#include "CrazyArcadeClass/Scene/NetWorkScene.h"
 #include "Manager/SoundManager.h"
 
 mainGame::mainGame()
@@ -16,9 +17,10 @@ HRESULT mainGame::init()
 	gameNode::init(true);
 	//image init
 	
-	SCENEMANAGER->addScene("ÀÎ°ÔÀÓ", new InGameScene);
-	SCENEMANAGER->addScene("¸ŞÀÎ¸Ş´º", new MainMenu);
-	SCENEMANAGER->changeScene("¸ŞÀÎ¸Ş´º");
+	SCENEMANAGER->addScene("ì¸ê²Œì„", new InGameScene);
+	SCENEMANAGER->addScene("ë©”ì¸ë©”ë‰´", new MainMenu);
+	SCENEMANAGER->addScene("TCP/IP", new NetWorkScene);
+	SCENEMANAGER->changeScene("ë©”ì¸ë©”ë‰´");
 
 	return S_OK;
 }

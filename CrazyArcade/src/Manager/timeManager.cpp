@@ -1,4 +1,4 @@
-#include "Etc/stdafx.h"
+ï»¿#include "Etc/stdafx.h"
 #include "timeManager.h"
 
 
@@ -32,32 +32,36 @@ void timeManager::update(float lock)
 
 void timeManager::render(HDC hdc)
 {
-	char str[256];
+	TCHAR str[256];
 
 	string strFrame;
-	//¹è°æ¸ðµå
+	//ë°°ê²½ëª¨ë“œ
 	SetBkMode(hdc, TRANSPARENT);
-	//»ö»ó
+	//ìƒ‰ìƒ
 	SetTextColor(hdc, RGB(0, 0, 255));
-	//µð¹ö±× ¸ðµå¶ó¸é
+	//ë””ë²„ê·¸ ëª¨ë“œë¼ë©´
 	if (_timer != nullptr)
 	{
 		//FPS
-		sprintf_s(str, "FPS :  %d", _timer->getFrameRate());
-		TextOut(hdc, 0, 0, str, strlen(str));
+		_tprintf_s(str, L"FPS :  %d", _timer->getFrameRate());
+		TextOut(hdc, 0, 0, str, _tcslen(str));
 
-		//ÀüÃ¼ °æ°ú ½Ã°£
-		sprintf_s(str, "worldTime :  %.2f", _timer->getWorldTime());
-		TextOut(hdc, 0, 20, str, strlen(str));
-		//ÇÑÇÁ·¹ÀÓ´ç °æ°ú½Ã°£
-		sprintf_s(str, "ElapsedTime :  %.4f", _timer->getElapsedTime());
-		TextOut(hdc, 0, 40, str, strlen(str));
+		//ì „ì²´ ê²½ê³¼ ì‹œê°„
+		_stprintf_s(str, L"worldTime :  %.2f", _timer->getWorldTime());
+		TextOut(hdc, 0, 20, str, _tcslen(str));
+		//í•œí”„ë ˆìž„ë‹¹ ê²½ê³¼ì‹œê°„
+		_stprintf_s(str, L"ElapsedTime :  %.4f", _timer->getElapsedTime());
+		TextOut(hdc, 0, 40, str, _tcslen(str));
+
+		//RTT
+		_tprintf_s(str, L"RTT :  %d", _timer->getFrameRate());
+		TextOut(hdc, 0, 0, str, _tcslen(str));
 	}
 
 	if (_timer != nullptr)
 	{
 		//FPS
-		sprintf_s(str, "FPS :  %d", _timer->getFrameRate());
-		TextOut(hdc, 0, 0, str, strlen(str));
+		_stprintf_s(str, L"FPS :  %d", _timer->getFrameRate());
+		TextOut(hdc, 0, 0, str, _tcslen(str));
 	}
 }

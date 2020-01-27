@@ -1,4 +1,4 @@
-#include "Etc/stdafx.h"
+ï»¿#include "Etc/stdafx.h"
 #include "Common/gameNode.h"
 #include "sceneManager.h"
 
@@ -10,7 +10,7 @@ sceneManager::sceneManager()
 sceneManager::~sceneManager()
 {
 }
-//ÇöÀç¾ÀÀ» ³Î°ªÀ¸·Î ÃÊ±âÈ­ ÇÏÀÚ.
+//í˜„ìž¬ì”¬ì„ ë„ê°’ìœ¼ë¡œ ì´ˆê¸°í™” í•˜ìž.
 gameNode* sceneManager::_currentScene = nullptr;
 
 HRESULT sceneManager::init()
@@ -23,7 +23,7 @@ void sceneManager::release()
 	miSceneList iter = _mSceneList.begin();
 	for (iter; iter != _mSceneList.end();)
 	{
-		//»èÁ¦
+		//ì‚­ì œ
 		if (iter->second != NULL)
 		{
 			if (iter->second == _currentScene)iter->second->release();
@@ -87,16 +87,16 @@ HRESULT sceneManager::changeScene(string sceneName)
 {
 	miSceneList find = _mSceneList.find(sceneName);
 
-	//¸øÃ£À¸¸é E_FAIL
+	//ëª»ì°¾ìœ¼ë©´ E_FAIL
 	if (find == _mSceneList.end())return E_FAIL;
 
-	//¹Ù²Ù·Á´Â¾ÀÀÌ ÇöÀç¾ÀÀÌ¶û °°¾Æµµ E_FAIL
+	//ë°”ê¾¸ë ¤ëŠ”ì”¬ì´ í˜„ìž¬ì”¬ì´ëž‘ ê°™ì•„ë„ E_FAIL
 	if (find->second == _currentScene)return E_FAIL;
 
-	//¿©±â±îÁö ¿Ô´Ù¸é ¹®Á¦°¡ ¾ø´Ù Áï ¾ÀÀ» ÃÊ±âÈ­ÇÏ°í º¯°æÇÏÀÚ.
+	//ì—¬ê¸°ê¹Œì§€ ì™”ë‹¤ë©´ ë¬¸ì œê°€ ì—†ë‹¤ ì¦‰ ì”¬ì„ ì´ˆê¸°í™”í•˜ê³  ë³€ê²½í•˜ìž.
 	if (SUCCEEDED(find->second->init()))
 	{
-		//È¤½Ã ±âÁ¸¿¡ ¾ÀÀÌ ÀÖ´Ù¸é ¸±¸®Áî
+		//í˜¹ì‹œ ê¸°ì¡´ì— ì”¬ì´ ìžˆë‹¤ë©´ ë¦´ë¦¬ì¦ˆ
 		if (_currentScene)_currentScene->release();
 
 		_currentScene = find->second;

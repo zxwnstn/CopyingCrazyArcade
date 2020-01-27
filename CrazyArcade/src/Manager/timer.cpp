@@ -1,9 +1,9 @@
-#include "Etc/stdafx.h"
+ï»¿#include "Etc/stdafx.h"
 #include "timer.h"
 #include <mmsystem.h>
 #pragma comment(lib, "winmm.lib")
-//timeGetTime ÇÔ¼ö¸¦ »ç¿ëÇÏ±â À§ÇÑ ¶óÀÌºê·¯¸® Ãß°¡
-//À©µµ¿ì°¡ ½ÃÀÛµÇ°í ³­ µÚÀÇ ½Ã°£À» ¸®ÅÏÇÔ.
+//timeGetTime í•¨ìˆ˜ë¥¼ ì‚¬ìš©í•˜ê¸° ìœ„í•œ ë¼ì´ë¸ŒëŸ¬ë¦¬ ì¶”ê°€
+//ìœˆë„ìš°ê°€ ì‹œì‘ë˜ê³  ë‚œ ë’¤ì˜ ì‹œê°„ì„ ë¦¬í„´í•¨.
 
 timer::timer()
 {
@@ -16,24 +16,24 @@ timer::~timer()
 
 HRESULT timer::init()
 {
-	//QueryPerformanceCounter °íÇØ»óµµ Å¸ÀÌ¸ÓÀÇ ÇöÀç cpuÀÇ Å¬·°¼ö¸¦ ¾ò´Â ³à¼®
-	//QueryPerformanceFrequency °íÇØ»óµµ Å¸¤¿ÀÌ¸ÓÀÇ ÁÖÆÄ¼ö¸¦ ¹İÈ¯ÇÔ.
-	//°í¼º´É Å¸ÀÌ¸Ó Áö¿ø¿©ºÎ¸¦ Ã¼Å©ÇÏÀÚ.
-	//°í¼º´É Å¸ÀÌ¸Ó¸¦ Áö¿øÇÏ¸é ÃÊ´ç ¸¶ÀÌÅ©·Î¼¼ÄÁµå±îÁö °ªÀÌ µé¾î°¨.
+	//QueryPerformanceCounter ê³ í•´ìƒë„ íƒ€ì´ë¨¸ì˜ í˜„ì¬ cpuì˜ í´ëŸ­ìˆ˜ë¥¼ ì–»ëŠ” ë…€ì„
+	//QueryPerformanceFrequency ê³ í•´ìƒë„ íƒ€ã…ì´ë¨¸ì˜ ì£¼íŒŒìˆ˜ë¥¼ ë°˜í™˜í•¨.
+	//ê³ ì„±ëŠ¥ íƒ€ì´ë¨¸ ì§€ì›ì—¬ë¶€ë¥¼ ì²´í¬í•˜ì.
+	//ê³ ì„±ëŠ¥ íƒ€ì´ë¨¸ë¥¼ ì§€ì›í•˜ë©´ ì´ˆë‹¹ ë§ˆì´í¬ë¡œì„¸ì»¨ë“œê¹Œì§€ ê°’ì´ ë“¤ì–´ê°.
 	//(1/1000000)
 	if (QueryPerformanceFrequency((LARGE_INTEGER*)&_periodFrequency))
 	{
 		_isHardware = true;
 		QueryPerformanceCounter((LARGE_INTEGER*)&_lastTime);
 
-		//ÃÊ´ç ½Ã°£ °è»ê ¹üÀ§
+		//ì´ˆë‹¹ ì‹œê°„ ê³„ì‚° ë²”ìœ„
 		_timeScale = 1.0f / _periodFrequency;
 
 	}
 	else
 	{
 		_isHardware = false;
-		//¹Ğ¸®¼¼ÄÁµå ´ÜÀ§ÀÇ ½Ã°£À¸·Î ÃÊ´ç 1000¹ø Ä«¿îÆ®
+		//ë°€ë¦¬ì„¸ì»¨ë“œ ë‹¨ìœ„ì˜ ì‹œê°„ìœ¼ë¡œ ì´ˆë‹¹ 1000ë²ˆ ì¹´ìš´íŠ¸
 		_lastTime = timeGetTime();
 		_timeScale = 0.001f;
 	}
@@ -48,24 +48,24 @@ HRESULT timer::init()
 
 void timer::tick(float lockFPS)
 {
-	//°í¼º´É Å¸ÀÌ¸Ó¸¦ Áö¿øÇÑ´Ù¸é
+	//ê³ ì„±ëŠ¥ íƒ€ì´ë¨¸ë¥¼ ì§€ì›í•œë‹¤ë©´
 	if (_isHardware)
 	{
-		//ÃÊÁ¤¹Ğ ¸¶ÀÌÅ©·ÎÃÊ ´ÜÀ§·Î °è»êÇÔ.(1/1000000)
+		//ì´ˆì •ë°€ ë§ˆì´í¬ë¡œì´ˆ ë‹¨ìœ„ë¡œ ê³„ì‚°í•¨.(1/1000000)
 		QueryPerformanceCounter((LARGE_INTEGER*)&_curTime);
 	}
 	else
-	{//Áö¿øÇÏÁö ¾ÊÀ¸¸é timeÇÔ¼ö¸¦ ÀÌ¿ë.(1/1000)
+	{//ì§€ì›í•˜ì§€ ì•Šìœ¼ë©´ timeí•¨ìˆ˜ë¥¼ ì´ìš©.(1/1000)
 		_curTime = timeGetTime();
 	}
-	//¸¶Áö¸· ½Ã°£°ú¤¿ ÇöÀç½Ã°£ÀÇ °æ°ú·®
+	//ë§ˆì§€ë§‰ ì‹œê°„ê³¼ã… í˜„ì¬ì‹œê°„ì˜ ê²½ê³¼ëŸ‰
 	_timeElapsed = (_curTime - _lastTime) * _timeScale;
 
 
 	if (lockFPS > 0.0f)
 	{
 
-		//°íÁ¤ ÇÁ·¹ÀÓÀÇ ½Ã°£À» ¸¸Á·ÇÒ¶§±îÁö µ¹·Á¶ó
+		//ê³ ì • í”„ë ˆì„ì˜ ì‹œê°„ì„ ë§Œì¡±í• ë•Œê¹Œì§€ ëŒë ¤ë¼
 		while (_timeElapsed < (1.0f / lockFPS) )
 		{
 			if (_isHardware)QueryPerformanceCounter((LARGE_INTEGER*)&_curTime);
@@ -76,12 +76,12 @@ void timer::tick(float lockFPS)
 	}
 
 
-	_lastTime = _curTime;				//¸¶Áö¸· ½Ã°£À» ±â·Ï
-	_FPSFrameCount++;					//ÀÚµ¿À¸·Î ÇÁ·¹ÀÓ Ä«¿îÆ® Áõ°¡
-	_FPStimeElapsed += _timeElapsed;	//ÃÊ´ç ÇÁ·¹ÀÓ ½Ã°£ °æ°ú·® Áõ°¡
-	_worldTime += _timeElapsed;			//ÀüÃ¼ ½Ã°£ °æ°ú·® Áõ°¡
+	_lastTime = _curTime;				//ë§ˆì§€ë§‰ ì‹œê°„ì„ ê¸°ë¡
+	_FPSFrameCount++;					//ìë™ìœ¼ë¡œ í”„ë ˆì„ ì¹´ìš´íŠ¸ ì¦ê°€
+	_FPStimeElapsed += _timeElapsed;	//ì´ˆë‹¹ í”„ë ˆì„ ì‹œê°„ ê²½ê³¼ëŸ‰ ì¦ê°€
+	_worldTime += _timeElapsed;			//ì „ì²´ ì‹œê°„ ê²½ê³¼ëŸ‰ ì¦ê°€
 
-										//ÇÁ·¹ÀÓ ÃÊ±âÈ­¸¦ 1ÃÊ¸¶´Ù ÁøÇà
+										//í”„ë ˆì„ ì´ˆê¸°í™”ë¥¼ 1ì´ˆë§ˆë‹¤ ì§„í–‰
 	if (_FPStimeElapsed > 1.0f)
 	{
 		_frameRate = _FPSFrameCount;
@@ -91,12 +91,23 @@ void timer::tick(float lockFPS)
 
 }
 
-unsigned long timer::getFrameRate(char * str) const
+unsigned long timer::getFrameRate(TCHAR * str) const
 {
 
 	if (str != NULL)
 	{
-		wsprintf(str, "FPS : %d", _frameRate);
+		_stprintf(str, L"FPS : %d", _frameRate);
 	}
 	return _frameRate;
 }
+
+unsigned long timer::getRTT(TCHAR * str) const
+{
+
+	if (str != NULL)
+	{
+		_stprintf(str, L"RTT : %d", _RTT);
+	}
+	return _RTT;
+}
+

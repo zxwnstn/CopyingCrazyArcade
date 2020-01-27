@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Common/singletonBase.h"
 
 
@@ -11,9 +11,9 @@ private:
 	typedef map<string, gameNode*>::iterator miSceneList;
 
 private:
-	//ÇöÀç¾À
+	//í˜„ì¬ì”¬
 	static gameNode* _currentScene;
-	//¸ñ·Ï
+	//ëª©ë¡
 	mSceneList _mSceneList;
 
 public:
@@ -28,7 +28,7 @@ public:
 	void afterRender();
 	void debugRender();
 	
-	//¾ÀÃß°¡ÇÏ±â
+	//ì”¬ì¶”ê°€í•˜ê¸°
 	gameNode* addScene(string sceneName, gameNode* scene);
 	HRESULT changeScene(string sceneName);
 };

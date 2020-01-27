@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Common/gameNode.h"
 #include "CrazyArcadeClass/Manager/BlockManager.h"
 #include "CrazyArcadeClass/Manager/BombManager.h"
@@ -24,7 +24,7 @@ private:
 
 private:
 	//for debug 
-	char str[100];
+	TCHAR str[100];
 	int len;
 	int bgmSelector;
 
@@ -45,6 +45,5 @@ private:
 	bool exitMouseSetted;
 
 	bool SceneFinal = false;
-
 };
 

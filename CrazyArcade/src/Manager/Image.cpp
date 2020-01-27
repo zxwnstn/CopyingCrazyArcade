@@ -1,4 +1,4 @@
-#include "Etc/stdafx.h"
+ï»¿#include "Etc/stdafx.h"
 #include "Image.h"
 
 //for alpha blending library
@@ -59,7 +59,7 @@ HRESULT Image::init(int width, int height)
 	return S_OK;
 }
 
-HRESULT Image::init(const char * fileName, int width, int height, bool isTrans, COLORREF transColor)
+HRESULT Image::init(const TCHAR * fileName, int width, int height, bool isTrans, COLORREF transColor)
 {
 	if (fileName == NULL)
 		return E_FAIL;
@@ -95,8 +95,8 @@ HRESULT Image::init(const char * fileName, int width, int height, bool isTrans, 
 	_blendImage->width = WINSIZEX;
 	_blendImage->height = WINSIZEY;
 
-	int len = strlen(fileName);
-	strcpy_s(_fileName, len + 1, fileName);
+	int len = _tcslen(fileName);
+	_tcscpy_s(_fileName, len + 1, fileName);
 	_isTrans = isTrans;
 	_transColor = transColor;
 
@@ -109,7 +109,7 @@ HRESULT Image::init(const char * fileName, int width, int height, bool isTrans, 
 	return S_OK;
 }
 
-HRESULT Image::init(const char * fileName, int width, int height, int frameX, int frameY, bool isTrans, COLORREF transColor)
+HRESULT Image::init(const TCHAR * fileName, int width, int height, int frameX, int frameY, bool isTrans, COLORREF transColor)
 {
 	if (fileName == NULL)
 		return E_FAIL;
@@ -154,8 +154,8 @@ HRESULT Image::init(const char * fileName, int width, int height, int frameX, in
 	_blendImage->width = WINSIZEX;
 	_blendImage->height = WINSIZEY;
 
-	int len = strlen(fileName);
-	strcpy_s(_fileName, len + 1, fileName);
+	int len = _tcslen(fileName);
+	_tcscpy_s(_fileName, len + 1, fileName);
 	_isTrans = isTrans;
 	_transColor = transColor;
 
@@ -168,7 +168,7 @@ HRESULT Image::init(const char * fileName, int width, int height, int frameX, in
 	return S_OK;
 }
 
-HRESULT Image::init(const char * fileName, int x, int y, int width, int height, int frameX, int frameY, bool isTrans, COLORREF transColor)
+HRESULT Image::init(const TCHAR * fileName, int x, int y, int width, int height, int frameX, int frameY, bool isTrans, COLORREF transColor)
 {
 	if (fileName == NULL)
 		return E_FAIL;
@@ -215,8 +215,8 @@ HRESULT Image::init(const char * fileName, int x, int y, int width, int height, 
 	_blendImage->width = WINSIZEX;
 	_blendImage->height = WINSIZEY;
 
-	int len = strlen(fileName);
-	strcpy_s(_fileName, len + 1, fileName);
+	int len = _tcslen(fileName);
+	_tcscpy_s(_fileName, len + 1, fileName);
 	_isTrans = isTrans;
 	_transColor = transColor;
 
@@ -253,13 +253,13 @@ void Image::release()
 void Image::render(HDC hdc)
 {
 	if (_isTrans) {
-		//ºñÆ®¸ÊÀ» ºÒ·¯¿Ã¶§, Æ¯Á¤»ö»óÀ» Á¦¿ÜÇÏ°í º¹»çÇÏ´Â ÇÔ¼ö
+		//ë¹„íŠ¸ë§µì„ ë¶ˆëŸ¬ì˜¬ë•Œ, íŠ¹ì •ìƒ‰ìƒì„ ì œì™¸í•˜ê³  ë³µì‚¬í•˜ëŠ” í•¨ìˆ˜
 		GdiTransparentBlt(hdc, 0, 0, _imageInfo->width, _imageInfo->height, _imageInfo->hMemDC,
 							   0, 0, _imageInfo->width, _imageInfo->height, _transColor);
 	}
 	else {
-		//SRCCOPY : °¡·Î¼¼·Î¸¦ ÀçÁ¤ÀÇÇØ¼­ º¹»çÇÏ°Ù´Ù.
-		//DC°£ µ¥ÀÌÅÍ¸¦ °í¼Ó º¹»ç
+		//SRCCOPY : ê°€ë¡œì„¸ë¡œë¥¼ ì¬ì •ì˜í•´ì„œ ë³µì‚¬í•˜ê²Ÿë‹¤.
+		//DCê°„ ë°ì´í„°ë¥¼ ê³ ì† ë³µì‚¬
 		BitBlt(hdc, 0, 0, _imageInfo->width, _imageInfo->height, 
 			_imageInfo->hMemDC, 0, 0, SRCCOPY);
 	}
@@ -277,7 +277,7 @@ void Image::render(HDC hdc, int destX, int destY)
 	}
 }
 
-//dest´Â memdc¿¡ ±×¸± ÁÂÇ¥ src´Â ÀÌ¹ÌÁö¸¦ °¡Á®¿Ã ÁÂÇ¥
+//destëŠ” memdcì— ê·¸ë¦´ ì¢Œí‘œ srcëŠ” ì´ë¯¸ì§€ë¥¼ ê°€ì ¸ì˜¬ ì¢Œí‘œ
 void Image::render(HDC hdc, int destX, int destY, int srcX, int srcY, int srcWidth, int srcHeight)
 {
 	if (_isTrans) {
@@ -320,7 +320,7 @@ void Image::frameRender(HDC hdc, int destX, int destY, int currentFrameX, int cu
 
 void Image::loopRender(HDC hdc, LPRECT drawArea, int offsetX, int offsetY)
 {
-	//º¸Á¤
+	//ë³´ì •
 	if (offsetX < 0) offsetX = _imageInfo->width + (offsetX % _imageInfo->width);
 	if (offsetY < 0) offsetY = _imageInfo->height + (offsetY % _imageInfo->height);
 
@@ -336,26 +336,26 @@ void Image::loopRender(HDC hdc, LPRECT drawArea, int offsetX, int offsetY)
 	int drawAreaW = drawArea->right - drawArea->left;
 	int drawAreaH = drawArea->bottom - drawArea->top;
 
-	//¼¼·Î loop
+	//ì„¸ë¡œ loop
 	for (int y = 0; y < drawAreaH; y += sourHeight) {
 		rcSour.top = (y + offsetY) % _imageInfo->height;
 		rcSour.bottom = _imageInfo->height;
 		sourHeight = rcSour.bottom - rcSour.top;
 
-		//¿µ¿ª ÀÌÅ»
+		//ì˜ì—­ ì´íƒˆ
 		if (y + sourHeight > drawAreaH) {
-			//³Ñ¾î°£ ±×¸²ÀÇ °ª¸¸Å­ ¹ÙÅÒÀ» ¿Ã·ÁÁØ´Ù.
+			//ë„˜ì–´ê°„ ê·¸ë¦¼ì˜ ê°’ë§Œí¼ ë°”í…€ì„ ì˜¬ë ¤ì¤€ë‹¤.
 			rcSour.bottom -= (y + sourHeight) - drawAreaH;
 			sourHeight = rcSour.bottom - rcSour.top;
 		}
 		rcDest.top = y + drawAreaY;
 		rcDest.bottom = rcDest.top + sourHeight;
-		//°¡·Î loop
+		//ê°€ë¡œ loop
 		for (int x = 0; x < drawAreaW; x += sourWidth) {
 			rcSour.left = (x + offsetX) % _imageInfo->width;
 			rcSour.right = _imageInfo->width;
 			sourWidth = rcSour.right - rcSour.left;
-			//¿µ¿ª ÀÌÅ»
+			//ì˜ì—­ ì´íƒˆ
 			if (x + sourWidth > drawAreaW) {
 				rcSour.right -= (x + sourWidth) - drawAreaW;
 				sourWidth = rcSour.right - rcSour.left;
@@ -370,7 +370,7 @@ void Image::loopRender(HDC hdc, LPRECT drawArea, int offsetX, int offsetY)
 
 void Image::loopAlphaRender(HDC hdc, LPRECT drawArea, int offsetX, int offsetY, BYTE alpha)
 {
-	//º¸Á¤
+	//ë³´ì •
 	if (offsetX < 0) offsetX = _imageInfo->width + (offsetX % _imageInfo->width);
 	if (offsetY < 0) offsetY = _imageInfo->height + (offsetY % _imageInfo->height);
 
@@ -386,26 +386,26 @@ void Image::loopAlphaRender(HDC hdc, LPRECT drawArea, int offsetX, int offsetY, 
 	int drawAreaW = drawArea->right - drawArea->left;
 	int drawAreaH = drawArea->bottom - drawArea->top;
 
-	//¼¼·Î loop
+	//ì„¸ë¡œ loop
 	for (int y = 0; y < drawAreaH; y += sourHeight) {
 		rcSour.top = (y + offsetY) % _imageInfo->height;
 		rcSour.bottom = _imageInfo->height;
 		sourHeight = rcSour.bottom - rcSour.top;
 
-		//¿µ¿ª ÀÌÅ»
+		//ì˜ì—­ ì´íƒˆ
 		if (y + sourHeight > drawAreaH) {
-			//³Ñ¾î°£ ±×¸²ÀÇ °ª¸¸Å­ ¹ÙÅÒÀ» ¿Ã·ÁÁØ´Ù.
+			//ë„˜ì–´ê°„ ê·¸ë¦¼ì˜ ê°’ë§Œí¼ ë°”í…€ì„ ì˜¬ë ¤ì¤€ë‹¤.
 			rcSour.bottom -= (y + sourHeight) - drawAreaH;
 			sourHeight = rcSour.bottom - rcSour.top;
 		}
 		rcDest.top = y + drawAreaY;
 		rcDest.bottom = rcDest.top + sourHeight;
-		//°¡·Î loop
+		//ê°€ë¡œ loop
 		for (int x = 0; x < drawAreaW; x += sourWidth) {
 			rcSour.left = (x + offsetX) % _imageInfo->width;
 			rcSour.right = _imageInfo->width;
 			sourWidth = rcSour.right - rcSour.left;
-			//¿µ¿ª ÀÌÅ»
+			//ì˜ì—­ ì´íƒˆ
 			if (x + sourWidth > drawAreaW) {
 				rcSour.right -= (x + sourWidth) - drawAreaW;
 				sourWidth = rcSour.right - rcSour.left;
@@ -418,7 +418,7 @@ void Image::loopAlphaRender(HDC hdc, LPRECT drawArea, int offsetX, int offsetY, 
 	}
 }
 
-//¾ËÆÄ°ª ¹üÀ§ 0 - 255, ¼ıÀÚ°¡ Ä¿Áú¼ö·Ï ÁøÇØÁø´Ù.
+//ì•ŒíŒŒê°’ ë²”ìœ„ 0 - 255, ìˆ«ìê°€ ì»¤ì§ˆìˆ˜ë¡ ì§„í•´ì§„ë‹¤.
 void Image::alphaRender(HDC hdc, BYTE alpha)
 {
 	_blendFunc.SourceConstantAlpha = alpha;

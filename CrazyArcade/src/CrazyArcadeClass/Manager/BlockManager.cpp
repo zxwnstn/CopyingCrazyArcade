@@ -1,4 +1,4 @@
-#include "Etc/stdafx.h"
+﻿#include "Etc/stdafx.h"
 #include "BlockManager.h"
 #include "CrazyArcadeClass/Obj/Bomb/Bomb.h"
 DEFINITION_SINGLE(BlockManager)
@@ -22,7 +22,7 @@ bool BlockManager::init()
 		blocks[0][1].init(BlockType::BlockSoft, 1, 0, tileGreenBlock, sbOrange);
 		blocks[0][2].init(BlockType::BlockSoft, 2, 0, tileGreenBlock, sbRed);
 		blocks[0][3].init(BlockType::BlockSoft, 3, 0, tileGreenBlock, sbOrange);
-		blocks[0][4].init(BlockType::BlockSoft, 4, 0, tileGreenBlock);
+		blocks[0][4].init(BlockType::BlockSoft, 4, 0, tileGreenBlock, sbRed);
 		blocks[0][5].init(BlockType::BlockBush, 5, 0, tileGreenBlock);
 
 		blocks[0][6].init(BlockType::BlockNone, 6, 0, tileGray);
@@ -281,6 +281,22 @@ bool BlockManager::init()
 }
 bool BlockManager::init(vector<vector<BlockType>>& _blocks)
 {
+	return true;
+}
+
+bool BlockManager::init(std::vector<BlockData> blockData)
+{
+	blocks.resize(NUM_BLOCK_Y);
+	for (int i = 0; i < NUM_BLOCK_Y; ++i)
+		blocks[i].resize(NUM_BLOCK_X);
+
+	for (int i = 0; i < blockData.size(); ++i) {
+		int x = i % NUM_BLOCK_X;
+		int y = i / NUM_BLOCK_X;
+		auto data = blockData[i];
+		blocks[y][x].init((BlockType)data.blockType, (int)data.posX, (int)data.posY, (int)data.tileIndex, (int)data.blockIndex, (int)data.innerItem);
+	}
+
 	return true;
 }
 
