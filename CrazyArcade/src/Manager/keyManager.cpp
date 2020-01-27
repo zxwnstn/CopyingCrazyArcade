@@ -47,6 +47,7 @@ void keyManager::release()
 
 bool keyManager::isOnceKeyDown(int key)
 {
+
 	//GetAsyncKeyState현재 키의 상태를 알아오는 녀석
 	//키가 눌려졌을때나 떨어졌을때 호출
 	//0x8000 이전에는 누른적이 없고 호출시점에서 눌린상태
@@ -70,7 +71,8 @@ bool keyManager::isOnceKeyDown(int key)
 
 bool keyManager::isOnceKeyUp(int key)
 {
-	if (GetFocus()) {
+	if (GetFocus())
+	{
 		if (GetAsyncKeyState(key) & 0x8000)
 		{
 			_keyUp.set(playerKey[key], true);
@@ -89,7 +91,8 @@ bool keyManager::isOnceKeyUp(int key)
 
 bool keyManager::isStayKeyDown(int key)
 {
-	if (GetFocus()) {
+	if (GetFocus())
+	{
 		if (GetAsyncKeyState(playerKey[key]) & 0x8000)return true;
 	}
 	return false;

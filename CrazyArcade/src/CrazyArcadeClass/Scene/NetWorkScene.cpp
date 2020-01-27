@@ -104,10 +104,6 @@ HRESULT NetWorkScene::init()
 	GET_SINGLE(BombManager)->init();
 	GET_SINGLE(ItemManager)->init();
 
-	//for debugMode
-	_stprintf(str, L"DEBUG ENABLED A : speed up S : limit up D : range up");
-	len = _tcslen(str);
-
 	gameEnd = false;
 	gameStart = true;
 	gameStartEnd = 1.5f;
@@ -120,18 +116,6 @@ HRESULT NetWorkScene::init()
 	lastMousePos = m_ptMouse;
 	bgmSelector = RND->getInt(100);
 	exitMouseSetted = false;
-
-	//send ready packet this is temporary
-	/*cout << TEXT("준비가 되면 y또는 Y를 입력하세요") << endl;
-	while (1)
-	{
-		char ready;
-		cin >> ready;
-		if (ready == 'y' || ready == 'Y')
-		{
-			break;
-		}
-	}*/
 
 	GET_SINGLE(SoundManager)->playSound("게임스타트", 2);
 
@@ -174,6 +158,8 @@ void NetWorkScene::update(float deltaTime)
 				pastStart = 0.f;
 			}
 		}
+
+		m_roundTripTime = GET_SINGLE(NetworkManager)->GetRTT();
 	}
 }
 
@@ -186,11 +172,14 @@ void NetWorkScene::render()
 	GET_SINGLE(BombManager)->render(getMemDC());
 	GET_SINGLE(ItemManager)->render(getMemDC());
 	GET_SINGLE(CharacterManager)->render(getMemDC());
+	
+	_stprintf(rtt, L"RTT : %2.1f (mSecond)", m_roundTripTime);
+	rttlen = _tcslen(rtt);
 
 	if (m_debugMode) {
 		SetBkMode(getMemDC(), TRANSPARENT);
-		SetTextColor(getMemDC(), RGB(255, 0, 0));
-		TextOut(getMemDC(), 100, 20, str, len);
+		SetTextColor(getMemDC(), RGB(0, 255, 0));
+		TextOut(getMemDC(), 100, 20, rtt, rttlen);
 	}
 }
 

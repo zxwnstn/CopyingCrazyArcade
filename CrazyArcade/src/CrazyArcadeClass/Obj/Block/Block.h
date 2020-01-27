@@ -15,7 +15,7 @@ public:
 	void init(BlockType _blockType, int x, int y, int _tileIdex, int _blockIndex, int _innerItem);
 
 private:
-	void init(int _innerItem = 3, bool isInNetwork = false);
+	void init(int _innerItem = -1);
 
 public:
 	//interface

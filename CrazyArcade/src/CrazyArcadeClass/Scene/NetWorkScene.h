@@ -24,7 +24,12 @@ private:
 private:
 	//for debug 
 	TCHAR str[100];
+	TCHAR rtt[100];
+
+	float m_roundTripTime = 0.0f;
+
 	int len;
+	int rttlen;
 	int bgmSelector;
 
 	//for character all die and game End

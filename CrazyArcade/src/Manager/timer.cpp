@@ -100,3 +100,14 @@ unsigned long timer::getFrameRate(TCHAR * str) const
 	}
 	return _frameRate;
 }
+
+unsigned long timer::getRTT(TCHAR * str) const
+{
+
+	if (str != NULL)
+	{
+		_stprintf(str, L"RTT : %d", _RTT);
+	}
+	return _RTT;
+}
+

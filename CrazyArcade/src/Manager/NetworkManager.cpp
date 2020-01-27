@@ -60,6 +60,16 @@ void NetworkManager::close()
 	clientSock = nullptr;
 }
 
+float NetworkManager::GetRTT()
+{
+	return rtt;
+}
+
+void NetworkManager::SetRTT(float _rtt)
+{
+	this->rtt = _rtt;
+}
+
 int NetworkManager::getThisClientNetID()
 {
 	return thisClientNetID;

@@ -4,27 +4,15 @@
 #include "CrazyArcadeClass/Manager/BlockManager.h"
 #include "Manager/SoundManager.h"
 
-void Block::init(int _innerItem, bool isInNetwork)
+void Block::init(int _innerItem)
 {
-	if (isInNetwork) {
-		if (type == BlockType::BlockSoft) {
-			innerItem = nullptr;
-			if (_innerItem != 3) {
-				innerItem = make_shared<Item>(collisionRect, bPos, (ItemType)_innerItem);
-			}
+	if (type == BlockType::BlockSoft) {
+		innerItem = nullptr;
+		if (_innerItem != 3) {
+			innerItem = make_shared<Item>(collisionRect, bPos, (ItemType)_innerItem);
 		}
+		
 	}
-	else {
-		if (type == BlockType::BlockSoft) {
-			innerItem = nullptr;
-			if (RND->getInt(100) < innerItemCreatePer) 
-			{
-				int temp = RND->getInt(3);
-				innerItem = make_shared<Item>(collisionRect, bPos, (ItemType)temp);
-			}
-		}
-	}
-
 
 	shawdowImage = IMAGEMANAGER->findImage("그림자");
 
@@ -82,7 +70,7 @@ void Block::init(BlockType _blockType, int x, int y, int _tileIdex, int _blockIn
 	curBlockIdx = _blockIndex;
 	collisionRect = GET_SINGLE(BlockManager)->getIRectFromIdx(x, y);
 
-	init(_innerItem, true);
+	init(_innerItem);
 }
 
 Block::Block()

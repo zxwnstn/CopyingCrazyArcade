@@ -52,6 +52,10 @@ void timeManager::render(HDC hdc)
 		//한프레임당 경과시간
 		_stprintf_s(str, L"ElapsedTime :  %.4f", _timer->getElapsedTime());
 		TextOut(hdc, 0, 40, str, _tcslen(str));
+
+		//RTT
+		_tprintf_s(str, L"RTT :  %d", _timer->getFrameRate());
+		TextOut(hdc, 0, 0, str, _tcslen(str));
 	}
 
 	if (_timer != nullptr)

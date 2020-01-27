@@ -101,4 +101,9 @@ void Player::update(float _deltaTime)
 			it = curBombList.erase(it);
 		else ++it;
 	}
+
+	if (isInNetWork) {
+		//sendPacket
+	}
+
 }

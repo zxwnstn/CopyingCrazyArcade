@@ -8,6 +8,8 @@
 #include "Manager/NetworkManager.h"
 #include "Manager/SoundManager.h"
 
+#include <chrono>
+
 DEFINITION_SINGLE(CharacterManager)
 
 CharacterManager::CharacterManager()
@@ -70,15 +72,20 @@ void CharacterManager::update(float deltaTime)
 	{
 		if (isInNetWork)
 		{
+			chrono::system_clock::time_point tp1;
+			chrono::system_clock::time_point tp2;
 			for (int i = 0; i < characters.size(); ++i)
 			{
 				if (characters[i]->getID() == GET_SINGLE(NetworkManager)->getThisClientNetID())
 				{
 					characters[i]->sendMovePacket();
+					tp1 = chrono::system_clock::now();
 					break;
 				}
-			}
+			} 
 			auto worldDatas = GET_SINGLE(NetworkManager)->recvWorldData().WorldData;
+			tp2 = chrono::system_clock::now();
+			GET_SINGLE(NetworkManager)->SetRTT((tp2 - tp1).count() / 1000.f);
 			for (auto worldData : worldDatas) 
 			{
 				for (int i = 0; i < characters.size(); ++i) 

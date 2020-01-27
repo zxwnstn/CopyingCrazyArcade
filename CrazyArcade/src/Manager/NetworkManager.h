@@ -13,7 +13,8 @@ public:
 	void sendReadyPacket();
 	WorldState recvWorldData();
 	void close();
-
+	float GetRTT();
+	void SetRTT(float _rtt);
 
 	//for client
 public:
@@ -25,6 +26,7 @@ public:
 private:
 	string server_ip;
 	TCPSocketPtr clientSock;
+	float rtt;
 
 private:
 	int thisClientNetID;

@@ -12,7 +12,7 @@ private :
 
 	unsigned long _frameRate;			//FPS
 	unsigned long _FPSFrameCount;		//FPS카운트
-
+	unsigned long _RTT;			//RTT
 
 	float _FPStimeElapsed;					//FPS마지막 시간과 현재시간의 경과량
 	float _worldTime;					//전체시간 경과량
@@ -30,6 +30,8 @@ public:
 	float getElapsedTime()const { return _timeElapsed; }
 	//전체 경과시간 가져오기
 	float getWorldTime()const { return _worldTime; }
+	//Round Trip Time
+	unsigned long timer::getRTT(TCHAR * str) const;
 
 
 
